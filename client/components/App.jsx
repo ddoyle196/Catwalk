@@ -1,8 +1,12 @@
 import React from 'react';
+import Config from '../../config.js';
 
 const App = () => {
   return (
-    <div>This is Tatooine's first React component! Respect where it's due!</div>
+    <div>
+      <div>This is Tatooine's first React component! Respect where it's due!</div>
+    </div>
+    
   )
 };
 
