@@ -1,3 +1,11 @@
+## NODE MODULES ##
 /node_modules
 
-config.js
+## COMPILED ##
+public/app.js
+
+## API KEYS ##
+config.example.js
+
+## MAC ##
+.DS_Store
