@@ -5,7 +5,7 @@
 public/app.js
 
 ## API KEYS ##
-config.example.js
+config.js
 
 ## MAC ##
 .DS_Store
