@@ -9,3 +9,6 @@ config.example.js
 
 ## MAC ##
 .DS_Store
+
+## DUMMY DATA ##
+client/components/dummy_data

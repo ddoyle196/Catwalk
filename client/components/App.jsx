@@ -1,9 +1,10 @@
 import React from 'react';
+import Overview from './overview/Overview';
 // import Config from '../../config.js';
 
 const App = () => (
   <div>
-    <div>This is Tatooine&apos;s first React component! Respect where it&apos;s due!</div>
+    <Overview />
   </div>
 );
 
