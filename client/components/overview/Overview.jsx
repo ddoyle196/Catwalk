@@ -5,8 +5,8 @@ import BottomProductInfo from './productInfo/BottomProductInfo';
 import StyleSelector from './styleSelector/StyleSelector';
 import AddToCart from './addToCart/AddToCart';
 
-import stylesDummyData from '../dummy_data/stylesDummyData.json';
-import productDummyData from '../dummy_data/productDummyData.json';
+// import stylesDummyData from '../dummy_data/stylesDummyData.json';
+// import productDummyData from '../dummy_data/productDummyData.json';
 
 class Overview extends React.Component {
   constructor(props) {
