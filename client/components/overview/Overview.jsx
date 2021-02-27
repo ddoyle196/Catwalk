@@ -54,8 +54,8 @@ class Overview extends React.Component {
   }
 
   render() {
-    const { product, styles } = this.state;
-    if (product === null || styles === null) {
+    const { product, styles, ratings } = this.state;
+    if (product === null || styles === null || ratings === null) {
       return null;
     }
     return (
@@ -65,7 +65,7 @@ class Overview extends React.Component {
             <ImageGallery styles={styles} />
           </div>
           <div className="overview-top-right-container">
-            <SideProductInfo product={product} />
+            <SideProductInfo product={product} ratings={ratings} />
             <StyleSelector styles={styles} />
             <AddToCart addToCartHandler={this.addToCartHandler} />
           </div>
