@@ -7,8 +7,8 @@ import QuestionsAnswers from './QuestionsAnswers/QuestionsAnswers';
 
 const App = () => (
   <div>
-    {/* <Overview /> */}
-    <RandR />
+    <Overview />
+    {/* <RandR /> */}
     <QuestionsAnswers />
   </div>
 );
