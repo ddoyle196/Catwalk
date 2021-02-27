@@ -52,12 +52,20 @@ class Overview extends React.Component {
       return null;
     }
     return (
-      <div>
-        <ImageGallery styles={styles} />
-        <SideProductInfo product={product} />
-        <StyleSelector styles={styles} />
-        <AddToCart addToCartHandler={this.addToCartHandler} />
-        <BottomProductInfo product={product} />
+      <div className="overview-container">
+        <div className="overview-top-container">
+          <div className="overview-top-left-container">
+            <ImageGallery styles={styles} />
+          </div>
+          <div className="overview-top-right-container">
+            <SideProductInfo product={product} />
+            <StyleSelector styles={styles} />
+            <AddToCart addToCartHandler={this.addToCartHandler} />
+          </div>
+        </div>
+        <div className="overview-bottom-container">
+          <BottomProductInfo product={product} />
+        </div>
       </div>
     );
   }
