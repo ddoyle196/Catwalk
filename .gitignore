@@ -12,3 +12,4 @@ config.js
 
 ## DUMMY DATA ##
 client/components/dummy_data
+client/components/RandR/dummy.js
