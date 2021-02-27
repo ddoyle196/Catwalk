@@ -23,7 +23,7 @@ app.get('/products/:id', (req, res) => {
     },
   })
     .then((response) => {
-      res.json(response);
+      res.json(response.data);
     })
     .catch((err) => {
       console.log(err);
@@ -31,6 +31,20 @@ app.get('/products/:id', (req, res) => {
 });
 
 // GET STYLES FOR A GIVEN PRODUCT
+app.get('/products/:id/styles', (req, res) => {
+  const productId = req.params.id;
+  axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe/products/${productId}/styles`, {
+    headers: {
+      Authorization: GITHUB_API_KEY,
+    },
+  })
+    .then((response) => {
+      res.json(response.data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
 
 app.listen(port, () => {
   // eslint-disable-next-line no-console

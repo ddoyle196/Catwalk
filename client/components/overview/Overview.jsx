@@ -1,4 +1,6 @@
+/* eslint-disable no-console */
 import React from 'react';
+import axios from 'axios';
 import ImageGallery from './imageGallery/ImageGallery';
 import SideProductInfo from './productInfo/SideProductInfo';
 import BottomProductInfo from './productInfo/BottomProductInfo';
@@ -12,10 +14,33 @@ class Overview extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      product: productDummyData,
-      styles: stylesDummyData.results,
+      product: null,
+      styles: null,
     };
     this.addToCartHandler.bind(this);
+  }
+
+  componentDidMount() {
+    this.getProductAndStyles(19378);
+  }
+
+  getProductAndStyles(productId) {
+    let product = {};
+    axios.get(`/products/${productId}`)
+      .then((response) => {
+        product = response.data;
+        axios.get(`products/${productId}/styles`)
+          .then((res) => {
+            this.setState({
+              product,
+              styles: res.data.results,
+            });
+          });
+      })
+      .catch((err) => {
+        // eslint-disable-next-line no-console
+        console.log(err);
+      });
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -26,6 +51,9 @@ class Overview extends React.Component {
 
   render() {
     const { product, styles } = this.state;
+    if (product === null || styles === null) {
+      return null;
+    }
     return (
       <div>
         <ImageGallery styles={styles} />
