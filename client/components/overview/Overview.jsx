@@ -13,6 +13,7 @@ class Overview extends React.Component {
     this.state = {
       product: null,
       styles: null,
+      ratings: null,
     };
     this.addToCartHandler.bind(this);
   }
@@ -23,15 +24,21 @@ class Overview extends React.Component {
 
   getProductAndStyles(productId) {
     let product = {};
+    let styles = [];
     axios.get(`/products/${productId}`)
       .then((response) => {
         product = response.data;
         axios.get(`products/${productId}/styles`)
           .then((res) => {
-            this.setState({
-              product,
-              styles: res.data.results,
-            });
+            styles = res.data.results;
+            axios.get(`metadata/${productId}`)
+              .then((r) => {
+                this.setState({
+                  product,
+                  styles,
+                  ratings: r.data.ratings,
+                });
+              });
           });
       })
       .catch((err) => {

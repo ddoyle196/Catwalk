@@ -46,6 +46,22 @@ app.get('/products/:id/styles', (req, res) => {
     });
 });
 
+// GET REVIEW METADATA FOR A GIVEN PRODUCT
+app.get('/metadata/:id', (req, res) => {
+  const productId = req.params.id;
+  axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe/reviews/meta?product_id=${productId}`, {
+    headers: {
+      Authorization: GITHUB_API_KEY,
+    },
+  })
+    .then((response) => {
+      res.json(response.data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
 app.listen(port, () => {
   // eslint-disable-next-line no-console
   console.log('Listening on port ', port);
