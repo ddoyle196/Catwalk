@@ -17,7 +17,7 @@ const QuestionsAnswers = class extends React.PureComponent {
   }
 
   componentDidMount() {
-    this.getQuestionListById(19378, 1, 5);
+    this.getQuestionListById(19378, 1, 1);
   }
 
   getQuestionListById(productId, page, count) {
