@@ -13,6 +13,7 @@ class Overview extends React.Component {
     this.state = {
       product: null,
       styles: null,
+      ratings: null,
     };
     this.addToCartHandler.bind(this);
   }
@@ -23,15 +24,21 @@ class Overview extends React.Component {
 
   getProductAndStyles(productId) {
     let product = {};
+    let styles = [];
     axios.get(`/products/${productId}`)
       .then((response) => {
         product = response.data;
         axios.get(`products/${productId}/styles`)
           .then((res) => {
-            this.setState({
-              product,
-              styles: res.data.results,
-            });
+            styles = res.data.results;
+            axios.get(`metadata/${productId}`)
+              .then((r) => {
+                this.setState({
+                  product,
+                  styles,
+                  ratings: r.data.ratings,
+                });
+              });
           });
       })
       .catch((err) => {
@@ -47,17 +54,25 @@ class Overview extends React.Component {
   }
 
   render() {
-    const { product, styles } = this.state;
-    if (product === null || styles === null) {
+    const { product, styles, ratings } = this.state;
+    if (product === null || styles === null || ratings === null) {
       return null;
     }
     return (
-      <div>
-        <ImageGallery styles={styles} />
-        <SideProductInfo product={product} />
-        <StyleSelector styles={styles} />
-        <AddToCart addToCartHandler={this.addToCartHandler} />
-        <BottomProductInfo product={product} />
+      <div className="overview-container">
+        <div className="overview-top-container">
+          <div className="overview-top-left-container">
+            <ImageGallery styles={styles} />
+          </div>
+          <div className="overview-top-right-container">
+            <SideProductInfo product={product} ratings={ratings} />
+            <StyleSelector styles={styles} />
+            <AddToCart addToCartHandler={this.addToCartHandler} />
+          </div>
+        </div>
+        <div className="overview-bottom-container">
+          <BottomProductInfo product={product} />
+        </div>
       </div>
     );
   }

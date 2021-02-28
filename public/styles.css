@@ -1,8 +1,62 @@
-/* OVERVIEW WIDGET */
+/******* OVERVIEW WIDGET *******/
+.overview-container {
+  padding-top: 2em;
+  padding-bottom: 2em;
+  width: 80%;
+  margin: auto;
+}
 
-/* QUESTIONS AND ANSWERS */
+.overview-top-container {
+  width: 100%;
+  margin-bottom: 1em;
+}
 
-/* RATINGS AND REVIEWS */
+.overview-top-left-container {
+  display: inline-block;
+  width: 70%;
+}
+
+.overview-top-right-container {
+  display: inline-block;
+  width: 30%;
+}
+
+.overview-bottom-container {
+  width: 100%;
+  height: auto;
+}
+
+/* OVERVIEW WIDGET -- IMAGE GALLERY */
+.image-gallery-container {
+  width: 100%;
+  height: fit-content;
+}
+
+.image-gallery-large-image {
+  width: 95%;
+  height: auto;
+}
+
+/* OVERVIEW WIDGET -- BOTTOM PRODUCT INFO */
+.bottom-product-info-container {
+  width: 90%;
+  margin: auto;
+}
+
+.bottom-product-info-left-container {
+  display: inline-block;
+  width: 70%;
+}
+
+.bottom-product-info-right-container {
+  display: inline-block;
+  width: 30%;
+}
+
+
+/******* QUESTIONS AND ANSWERS *******/
+
+/******* RATINGS AND REVIEWS *******/
 .histogramBlock {
   width: 30%;
   margin: 2.5%;

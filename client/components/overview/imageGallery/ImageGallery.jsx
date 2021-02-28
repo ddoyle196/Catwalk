@@ -2,9 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const ImageGallery = ({ styles }) => (
-  <div>
-    <h2>IMAGE GALLERY COMPONENT</h2>
-    <img src={styles[0].photos[0].url} alt="" />
+  <div className="image-gallery-container">
+    <img className="image-gallery-large-image" src={styles[0].photos[0].url} alt="" />
   </div>
 );
 
