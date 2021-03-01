@@ -1,5 +1,4 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
 import axios from 'axios';
 
 import { GITHUB_API_KEY } from '../../../config';
@@ -18,7 +17,7 @@ const QuestionsAnswers = class extends React.PureComponent {
   }
 
   componentDidMount() {
-    this.getQuestionListById(19378, 1, 2);
+    this.getQuestionListById(19378, 1, 1);
   }
 
   getQuestionListById(productId, page, count) {
@@ -33,7 +32,7 @@ const QuestionsAnswers = class extends React.PureComponent {
         });
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err); // Create error boundary
       });
   }
 
@@ -45,6 +44,7 @@ const QuestionsAnswers = class extends React.PureComponent {
           <Question
             key={singleQuestion.question_id}
             question={singleQuestion}
+            id={singleQuestion.question_id}
           />
         ))}
       </div>
