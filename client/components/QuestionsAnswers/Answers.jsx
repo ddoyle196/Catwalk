@@ -12,6 +12,7 @@ const Answers = class extends React.PureComponent {
     super(props);
     this.state = {
       reported: false,
+      helpfulness: false,
     };
     this.AddAnswerHelpfulness = this.AddAnswerHelpfulness.bind(this);
   }
@@ -36,7 +37,13 @@ const Answers = class extends React.PureComponent {
 
   AddAnswerHelpfulness() {
     const { id, AnswerHelpfulness } = this.props;
-    AnswerHelpfulness(id);
+    const { helpfulness } = this.state;
+    if (!helpfulness) {
+      AnswerHelpfulness(id);
+      this.setState({
+        helpfulness: true,
+      });
+    }
   }
 
   render() {
