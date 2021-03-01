@@ -64,6 +64,7 @@ const Question = class extends React.PureComponent {
                 <span>
                   {'Helpful? '}
                   <u
+                    className="pointer"
                     onClick={() => this.handleQuestionHelpfulness()}
                     onKeyDown={this.handleButtonClick}
                     role="button"

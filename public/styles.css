@@ -11,6 +11,10 @@
   width: 75%;
 }
 
+.pointer{
+  cursor: pointer;
+}
+
 .question-options{
   display: inline;
   float: left;
