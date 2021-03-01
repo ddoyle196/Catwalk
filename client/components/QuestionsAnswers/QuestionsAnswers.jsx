@@ -5,6 +5,7 @@ import { GITHUB_API_KEY } from '../../../config';
 import Question from './Questions';
 
 const urlQuestions = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe/qa/questions/'; // productId comes from Props
+const urlAnswers = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe/qa/answers/';
 
 const QuestionsAnswers = class extends React.PureComponent {
   constructor() {
@@ -15,6 +16,7 @@ const QuestionsAnswers = class extends React.PureComponent {
 
     this.getQuestionListById = this.getQuestionListById.bind(this);
     this.handleQuestionHelpfulness = this.handleQuestionHelpfulness.bind(this);
+    this.handleAnswerHelpfulness = this.handleAnswerHelpfulness.bind(this);
   }
 
   componentDidMount() {
@@ -23,6 +25,22 @@ const QuestionsAnswers = class extends React.PureComponent {
 
   handleQuestionHelpfulness(id) {
     axios.put(`${urlQuestions + id}/helpful`, '', {
+      headers: {
+        Authorization: GITHUB_API_KEY,
+      },
+    })
+      .then((result) => {
+        if (result.status === 204) {
+          this.getQuestionListById(19378, 1, 2); // Check
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  handleAnswerHelpfulness(id) {
+    axios.put(`${urlAnswers + id}/helpful`, '', {
       headers: {
         Authorization: GITHUB_API_KEY,
       },
@@ -63,6 +81,7 @@ const QuestionsAnswers = class extends React.PureComponent {
             question={singleQuestion}
             id={singleQuestion.question_id}
             handleQuestionHelpfulness={this.handleQuestionHelpfulness}
+            handleAnswerHelpfulness={this.handleAnswerHelpfulness}
           />
         ))}
       </div>

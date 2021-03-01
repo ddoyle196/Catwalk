@@ -4,6 +4,16 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 
 const Answers = class extends React.PureComponent {
+  constructor(props) {
+    super(props);
+    this.AddAnswerHelpfulness = this.AddAnswerHelpfulness.bind(this);
+  }
+
+  AddAnswerHelpfulness() {
+    const { id, AnswerHelpfulness } = this.props;
+    AnswerHelpfulness(id);
+  }
+
   render() {
     const { answer } = this.props;
     const {
@@ -16,7 +26,10 @@ const Answers = class extends React.PureComponent {
       <div>
         <div>
           <span>
-            { `A: ${body}`}
+            <b>
+              A:
+            </b>
+            { ` ${body}`}
           </span>
         </div>
         <div className="question-format">
@@ -30,7 +43,13 @@ const Answers = class extends React.PureComponent {
         <div className="question-format">
           <span>
             {'Helpful? '}
-            <u>
+            <u
+              className="pointer"
+              onClick={() => this.AddAnswerHelpfulness()}
+              onKeyDown={this.handleButtonClick}
+              role="button"
+              tabIndex={0}
+            >
               Yes
             </u>
             {` (${helpfulness})`}
@@ -49,6 +68,8 @@ const Answers = class extends React.PureComponent {
 };
 
 Answers.propTypes = {
+  id: PropTypes.number.isRequired,
+  AnswerHelpfulness: PropTypes.func.isRequired,
   answer: PropTypes.shape({
     body: PropTypes.string.isRequired,
     answerer_name: PropTypes.string.isRequired,

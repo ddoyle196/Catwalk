@@ -8,11 +8,17 @@ const Question = class extends React.PureComponent {
     super(props);
 
     this.AddQuestionHelpfulness = this.AddQuestionHelpfulness.bind(this);
+    this.AddAnswerHelpfulness = this.AddAnswerHelpfulness.bind(this);
   }
 
   AddQuestionHelpfulness() {
     const { id, handleQuestionHelpfulness } = this.props;
     handleQuestionHelpfulness(id);
+  }
+
+  AddAnswerHelpfulness(id) {
+    const { handleAnswerHelpfulness } = this.props;
+    handleAnswerHelpfulness(id);
   }
 
   render() {
@@ -27,7 +33,10 @@ const Question = class extends React.PureComponent {
         <div>
           <div className="question-blocks">
             <span>
-              { `Q: ${question_body}`}
+              <b>
+                Q:
+              </b>
+              { ` ${question_body}`}
             </span>
           </div>
           <div className="question-options">
@@ -61,7 +70,9 @@ const Question = class extends React.PureComponent {
           {Object.values(answers).map((answer) => (
             <Answers
               key={answer.id}
+              id={answer.id}
               answer={answer}
+              AnswerHelpfulness={this.AddAnswerHelpfulness}
             />
           ))}
         </div>
@@ -73,6 +84,7 @@ const Question = class extends React.PureComponent {
 Question.propTypes = {
   id: PropTypes.number.isRequired,
   handleQuestionHelpfulness: PropTypes.func.isRequired,
+  handleAnswerHelpfulness: PropTypes.func.isRequired,
   question: PropTypes.shape({
     question_body: PropTypes.string.isRequired,
     question_helpfulness: PropTypes.number.isRequired,
