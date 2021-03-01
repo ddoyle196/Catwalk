@@ -37,6 +37,16 @@
   height: auto;
 }
 
+/* OVERVIEW WIDGET -- SIDE PRODUCT INFO */
+.product-category {
+  margin-block-end: 0;
+}
+.expanded-product-name {
+  font-size: 2.5em;
+  margin-block-start: 0;
+  margin-block-end: 0;
+}
+
 /* OVERVIEW WIDGET -- BOTTOM PRODUCT INFO */
 .bottom-product-info-container {
   width: 90%;
