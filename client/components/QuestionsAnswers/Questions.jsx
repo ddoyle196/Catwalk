@@ -114,6 +114,7 @@ const Question = class extends React.PureComponent {
               id={answer.answer_id}
               answer={answer}
               AnswerHelpfulness={this.handleAnswerHelpfulness}
+              AnswerReport={this.handleAnswerReport}
             />
           ))}
         </div>

@@ -2,11 +2,36 @@
 import React from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
+import axios from 'axios';
+import { GITHUB_API_KEY } from '../../../config';
+
+const urlAnswers = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe/qa/answers/';
 
 const Answers = class extends React.PureComponent {
   constructor(props) {
     super(props);
+    this.state = {
+      reported: false,
+    };
     this.AddAnswerHelpfulness = this.AddAnswerHelpfulness.bind(this);
+  }
+
+  handleAnswerReport(id) {
+    axios.put(`${urlAnswers + id}/report`, '', {
+      headers: {
+        Authorization: GITHUB_API_KEY,
+      },
+    })
+      .then((result) => {
+        if (result.status === 204) {
+          this.setState({
+            reported: true,
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   AddAnswerHelpfulness() {
@@ -15,7 +40,8 @@ const Answers = class extends React.PureComponent {
   }
 
   render() {
-    const { answer } = this.props;
+    const { id, answer } = this.props;
+    const { reported } = this.state;
     const {
       body,
       answerer_name,
@@ -57,8 +83,14 @@ const Answers = class extends React.PureComponent {
         </div>
         <div className="question-format reset">
           <span>
-            <u>
-              Report
+            <u
+              className="pointer"
+              onClick={() => this.handleAnswerReport(id)}
+              onKeyDown={this.handleButtonClick}
+              role="button"
+              tabIndex={0}
+            >
+              { reported ? 'Reported' : 'Report'}
             </u>
           </span>
         </div>
