@@ -1,6 +1,32 @@
 /* OVERVIEW WIDGET */
 
 /* QUESTIONS AND ANSWERS */
+.questions-container{
+  width: 100%;
+}
+
+.question-blocks{
+  display: inline;
+  float: left;
+  width: 75%;
+}
+
+.question-options{
+  display: inline;
+  float: left;
+  width: 25%;
+}
+
+.question-format{
+  display: inline;
+  border-right: 2px solid rgb(187, 180, 180);
+  margin: 5px;
+  padding-inline: 10px;
+}
+
+.reset{
+  border: none;
+}
 
 /* RATINGS AND REVIEWS */
 .histogramBlock {

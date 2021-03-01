@@ -43,14 +43,59 @@ const QuestionsAnswers = class extends React.PureComponent {
       <div>
         {questions.map((singleQuestion) => (
           <div key={singleQuestion.question_id}>
-            <span>
-              Q:
-              {' '}
-              { singleQuestion.question_body }
-            </span>
-            <span>
-              { moment(singleQuestion.question_date).format('LL')}
-            </span>
+            <div>
+              <div className="question-blocks">
+                <span>
+                  { `Q: ${singleQuestion.question_body}`}
+                </span>
+              </div>
+              <div className="question-options">
+                <div>
+                  <div className="question-format">
+                    <span>
+                      {'Helpful? '}
+                      <u>
+                        Yes
+                      </u>
+                      {` (${singleQuestion.question_helpfulness})`}
+                    </span>
+                  </div>
+                  <div className="question-format reset">
+                    <span>
+                      <u>
+                        Add Answer
+                      </u>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div className="question-format">
+                <span>
+                  { `by ${singleQuestion.asker_name}, `}
+                </span>
+                <span>
+                  { moment(singleQuestion.question_date).format('LL')}
+                </span>
+              </div>
+              <div className="question-format">
+                <span>
+                  {'Helpful? '}
+                  <u>
+                    Yes
+                  </u>
+                  {` (${singleQuestion.question_helpfulness})`}
+                </span>
+              </div>
+              <div className="question-format reset">
+                <span>
+                  <u>
+                    Report
+                  </u>
+                </span>
+              </div>
+            </div>
           </div>
         ))}
       </div>
