@@ -1,14 +1,60 @@
 /* eslint-disable camelcase */
 import React from 'react';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 import Answers from './Answers';
+import { GITHUB_API_KEY } from '../../../config';
+
+const urlQuestions = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe/qa/questions/'; // productId comes from Props
+const urlAnswers = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe/qa/answers/';
 
 const Question = class extends React.PureComponent {
   constructor(props) {
     super(props);
+    this.state = {
+      answers: [],
+    };
 
+    this.getAnswersFromQuestionId = this.getAnswersFromQuestionId.bind(this);
     this.AddQuestionHelpfulness = this.AddQuestionHelpfulness.bind(this);
-    this.AddAnswerHelpfulness = this.AddAnswerHelpfulness.bind(this);
+    this.handleAnswerHelpfulness = this.handleAnswerHelpfulness.bind(this);
+  }
+
+  componentDidMount() {
+    this.getAnswersFromQuestionId(1, 2);
+  }
+
+  handleAnswerHelpfulness(id) {
+    axios.put(`${urlAnswers + id}/helpful`, '', {
+      headers: {
+        Authorization: GITHUB_API_KEY,
+      },
+    })
+      .then((result) => {
+        if (result.status === 204) {
+          this.getAnswersFromQuestionId(1, 2); // Check
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  getAnswersFromQuestionId(page, count) {
+    const { id } = this.props;
+    axios.get(`${urlQuestions + id}/answers?page=${page}&count=${count}`, {
+      headers: {
+        Authorization: GITHUB_API_KEY,
+      },
+    })
+      .then((response) => {
+        this.setState({
+          answers: response.data.results,
+        });
+      })
+      .catch((err) => {
+        console.log(err); // Create error boundary
+      });
   }
 
   AddQuestionHelpfulness() {
@@ -16,16 +62,11 @@ const Question = class extends React.PureComponent {
     handleQuestionHelpfulness(id);
   }
 
-  AddAnswerHelpfulness(id) {
-    const { handleAnswerHelpfulness } = this.props;
-    handleAnswerHelpfulness(id);
-  }
-
   render() {
     const { question } = this.props;
+    const { answers } = this.state;
     const {
       question_body,
-      answers,
       question_helpfulness,
     } = question;
     return (
@@ -67,12 +108,12 @@ const Question = class extends React.PureComponent {
           </div>
         </div>
         <div>
-          {Object.values(answers).map((answer) => (
+          {answers.map((answer) => (
             <Answers
-              key={answer.id}
-              id={answer.id}
+              key={answer.answer_id}
+              id={answer.answer_id}
               answer={answer}
-              AnswerHelpfulness={this.AddAnswerHelpfulness}
+              AnswerHelpfulness={this.handleAnswerHelpfulness}
             />
           ))}
         </div>
@@ -84,11 +125,9 @@ const Question = class extends React.PureComponent {
 Question.propTypes = {
   id: PropTypes.number.isRequired,
   handleQuestionHelpfulness: PropTypes.func.isRequired,
-  handleAnswerHelpfulness: PropTypes.func.isRequired,
   question: PropTypes.shape({
     question_body: PropTypes.string.isRequired,
     question_helpfulness: PropTypes.number.isRequired,
-    answers: PropTypes.shape.isRequired,
   }).isRequired,
 };
 
