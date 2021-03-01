@@ -9,7 +9,7 @@ const App = () => (
   <div>
     {/* <Overview /> */}
     <RandR />
-    <QuestionsAnswers />
+    {/* <QuestionsAnswers /> */}
   </div>
 );
 

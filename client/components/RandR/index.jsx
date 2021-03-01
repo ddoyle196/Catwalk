@@ -5,7 +5,7 @@ import $ from 'jquery';
 import Reviews from './Reviews';
 import Histograms from './Histograms';
 
-//import dummy from './dummy';
+import dummy from './dummy';
 
 class RandR extends React.PureComponent {
   constructor(props) {
