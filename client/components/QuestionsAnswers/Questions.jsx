@@ -13,6 +13,7 @@ const Question = class extends React.PureComponent {
     super(props);
     this.state = {
       answers: [],
+      helpfulness: false,
     };
 
     this.getAnswersFromQuestionId = this.getAnswersFromQuestionId.bind(this);
@@ -59,7 +60,13 @@ const Question = class extends React.PureComponent {
 
   AddQuestionHelpfulness() {
     const { id, handleQuestionHelpfulness } = this.props;
-    handleQuestionHelpfulness(id);
+    const { helpfulness } = this.state;
+    if (!helpfulness) {
+      handleQuestionHelpfulness(id);
+      this.setState({
+        helpfulness: true,
+      });
+    }
   }
 
   render() {
