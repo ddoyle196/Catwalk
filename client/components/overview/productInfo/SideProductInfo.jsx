@@ -13,10 +13,18 @@ const SideProductInfo = ({ product, ratings }) => (
 );
 
 SideProductInfo.propTypes = {
-  // eslint-disable-next-line react/forbid-prop-types
-  product: PropTypes.object.isRequired,
-  // eslint-disable-next-line react/forbid-prop-types
-  ratings: PropTypes.object.isRequired,
+  product: PropTypes.shape({
+    category: PropTypes.string,
+    name: PropTypes.string,
+    default_price: PropTypes.string,
+  }).isRequired,
+  ratings: PropTypes.shape({
+    1: PropTypes.string,
+    2: PropTypes.string,
+    3: PropTypes.string,
+    4: PropTypes.string,
+    5: PropTypes.string,
+  }).isRequired,
 };
 
 export default SideProductInfo;

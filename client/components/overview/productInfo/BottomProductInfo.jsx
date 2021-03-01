@@ -16,8 +16,11 @@ const BottomProductInfo = ({ product }) => (
 );
 
 BottomProductInfo.propTypes = {
-  // eslint-disable-next-line react/forbid-prop-types
-  product: PropTypes.object.isRequired,
+  product: PropTypes.shape({
+    slogan: PropTypes.string,
+    description: PropTypes.string,
+    features: PropTypes.arrayOf(PropTypes.object),
+  }).isRequired,
 };
 
 export default BottomProductInfo;

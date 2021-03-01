@@ -1,5 +1,10 @@
 /* eslint-disable no-restricted-syntax */
 import React from 'react';
+import { InlineIcon } from '@iconify/react';
+import blackStar from '@iconify-icons/mdi/star';
+import whiteStar from '@iconify-icons/mdi/star-outline';
+import halfStar from '@iconify-icons/mdi/star-half-full';
+
 import PropTypes from 'prop-types';
 
 const StarRating = ({ ratings }) => {
@@ -12,33 +17,37 @@ const StarRating = ({ ratings }) => {
   }
   let blackStars = Math.round((ratingTotal / voteCount) * 2) / 2;
   let whiteStars = Math.floor(5 - blackStars);
-  let stars = '';
+  const stars = [];
   while (blackStars > 0.5) {
-    stars += String.fromCharCode(9733); // char code for black rating star
+    stars.push(<InlineIcon key={blackStars} icon={blackStar} />);
     blackStars -= 1;
   }
 
   if (blackStars > 0) {
-    stars += 'HALF STAR'; // TO DO: FIND HALF STAR SYMBOL TO INSERT HERE
-    // Unicode: U+2BE8 // HTML (decimal) &#11240; // HTML (hex) &#x2be8;
+    stars.push(<InlineIcon key={blackStars} icon={halfStar} />);
   }
 
   while (whiteStars > 0) {
-    stars += String.fromCharCode(9734); // char code for white rating star
+    stars.push(<InlineIcon key={whiteStars - 1} icon={whiteStar} />);
     whiteStars -= 1;
   }
 
   return (
     <div>
       {stars}
-      <span>TO DO: A LINK THAT SAYS &quot;Read all reviews&quot;</span>
+      <span>  LINK: Read all reviews</span>
     </div>
   );
 };
 
 StarRating.propTypes = {
-  // eslint-disable-next-line react/forbid-prop-types
-  ratings: PropTypes.object.isRequired,
+  ratings: PropTypes.shape({
+    1: PropTypes.string,
+    2: PropTypes.string,
+    3: PropTypes.string,
+    4: PropTypes.string,
+    5: PropTypes.string,
+  }).isRequired,
 };
 
 export default StarRating;
