@@ -1,9 +1,9 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
 import axios from 'axios';
-import moment from 'moment';
 
 import { GITHUB_API_KEY } from '../../../config';
+import Question from './Questions';
 
 const urlQuestions = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe/qa/questions/'; // productId comes from Props
 
@@ -42,61 +42,10 @@ const QuestionsAnswers = class extends React.PureComponent {
     return (
       <div>
         {questions.map((singleQuestion) => (
-          <div key={singleQuestion.question_id}>
-            <div>
-              <div className="question-blocks">
-                <span>
-                  { `Q: ${singleQuestion.question_body}`}
-                </span>
-              </div>
-              <div className="question-options">
-                <div>
-                  <div className="question-format">
-                    <span>
-                      {'Helpful? '}
-                      <u>
-                        Yes
-                      </u>
-                      {` (${singleQuestion.question_helpfulness})`}
-                    </span>
-                  </div>
-                  <div className="question-format reset">
-                    <span>
-                      <u>
-                        Add Answer
-                      </u>
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div>
-              <div className="question-format">
-                <span>
-                  { `by ${singleQuestion.asker_name}, `}
-                </span>
-                <span>
-                  { moment(singleQuestion.question_date).format('LL')}
-                </span>
-              </div>
-              <div className="question-format">
-                <span>
-                  {'Helpful? '}
-                  <u>
-                    Yes
-                  </u>
-                  {` (${singleQuestion.question_helpfulness})`}
-                </span>
-              </div>
-              <div className="question-format reset">
-                <span>
-                  <u>
-                    Report
-                  </u>
-                </span>
-              </div>
-            </div>
-          </div>
+          <Question
+            key={singleQuestion.question_id}
+            question={singleQuestion}
+          />
         ))}
       </div>
     );
