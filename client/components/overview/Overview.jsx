@@ -14,6 +14,7 @@ class Overview extends React.Component {
       product: null,
       styles: null,
       ratings: null,
+      selectedStyle: null,
     };
     this.addToCartHandler.bind(this);
   }
@@ -25,17 +26,20 @@ class Overview extends React.Component {
   getProductAndStyles(productId) {
     let product = {};
     let styles = [];
+    let selectedStyle = '';
     axios.get(`/products/${productId}`)
       .then((response) => {
         product = response.data;
         axios.get(`products/${productId}/styles`)
           .then((res) => {
             styles = res.data.results;
+            selectedStyle = styles[0].name;
             axios.get(`metadata/${productId}`)
               .then((r) => {
                 this.setState({
                   product,
                   styles,
+                  selectedStyle,
                   ratings: r.data.ratings,
                 });
               });
@@ -54,8 +58,8 @@ class Overview extends React.Component {
   }
 
   render() {
-    const { product, styles, ratings } = this.state;
-    if (product === null || styles === null || ratings === null) {
+    const { product, styles, ratings, selectedStyle } = this.state;
+    if (product === null || styles === null || ratings === null || selectedStyle === null) {
       return null;
     }
     return (
@@ -66,7 +70,7 @@ class Overview extends React.Component {
           </div>
           <div className="overview-top-right-container">
             <SideProductInfo product={product} ratings={ratings} />
-            <StyleSelector styles={styles} />
+            <StyleSelector styles={styles} selectedStyle={selectedStyle} />
             <AddToCart addToCartHandler={this.addToCartHandler} />
           </div>
         </div>
