@@ -1,54 +1,26 @@
 /* eslint-disable camelcase */
 import React from 'react';
 import PropTypes from 'prop-types';
-import axios from 'axios';
-
-import { GITHUB_API_KEY } from '../../../config';
 import Answers from './Answers';
-
-const questionURL = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe/qa/questions/';
 
 const Question = class extends React.PureComponent {
   constructor(props) {
     super(props);
 
-    const { question } = this.props;
-    const { question_helpfulness } = question;
-    this.state = {
-      wasHelpful: question_helpfulness,
-    };
-
-    this.handleQuestionHelpfulness = this.handleQuestionHelpfulness.bind(this);
+    this.AddQuestionHelpfulness = this.AddQuestionHelpfulness.bind(this);
   }
 
-  handleQuestionHelpfulness() {
-    const { id } = this.props;
-    const { question } = this.props;
-    const { question_helpfulness } = question;
-    axios.put(`${questionURL + id}/helpful`, '', {
-      headers: {
-        Authorization: GITHUB_API_KEY,
-      },
-    })
-      .then((result) => {
-        if (result.status === 204) {
-          const wasHelpful = question_helpfulness + 1;
-          this.setState({
-            wasHelpful,
-          });
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  AddQuestionHelpfulness() {
+    const { id, handleQuestionHelpfulness } = this.props;
+    handleQuestionHelpfulness(id);
   }
 
   render() {
     const { question } = this.props;
-    const { wasHelpful } = this.state;
     const {
       question_body,
       answers,
+      question_helpfulness,
     } = question;
     return (
       <div>
@@ -65,14 +37,14 @@ const Question = class extends React.PureComponent {
                   {'Helpful? '}
                   <u
                     className="pointer"
-                    onClick={() => this.handleQuestionHelpfulness()}
+                    onClick={() => this.AddQuestionHelpfulness()}
                     onKeyDown={this.handleButtonClick}
                     role="button"
                     tabIndex={0}
                   >
                     Yes
                   </u>
-                  {` (${wasHelpful})`}
+                  {` (${question_helpfulness})`}
                 </span>
               </div>
               <div className="question-format reset">
@@ -100,6 +72,7 @@ const Question = class extends React.PureComponent {
 
 Question.propTypes = {
   id: PropTypes.number.isRequired,
+  handleQuestionHelpfulness: PropTypes.func.isRequired,
   question: PropTypes.shape({
     question_body: PropTypes.string.isRequired,
     question_helpfulness: PropTypes.number.isRequired,

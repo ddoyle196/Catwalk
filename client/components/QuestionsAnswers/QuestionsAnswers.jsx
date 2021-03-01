@@ -14,10 +14,27 @@ const QuestionsAnswers = class extends React.PureComponent {
     };
 
     this.getQuestionListById = this.getQuestionListById.bind(this);
+    this.handleQuestionHelpfulness = this.handleQuestionHelpfulness.bind(this);
   }
 
   componentDidMount() {
-    this.getQuestionListById(19378, 1, 1);
+    this.getQuestionListById(19378, 1, 2); // Check
+  }
+
+  handleQuestionHelpfulness(id) {
+    axios.put(`${urlQuestions + id}/helpful`, '', {
+      headers: {
+        Authorization: GITHUB_API_KEY,
+      },
+    })
+      .then((result) => {
+        if (result.status === 204) {
+          this.getQuestionListById(19378, 1, 2); // Check
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   getQuestionListById(productId, page, count) {
@@ -45,6 +62,7 @@ const QuestionsAnswers = class extends React.PureComponent {
             key={singleQuestion.question_id}
             question={singleQuestion}
             id={singleQuestion.question_id}
+            handleQuestionHelpfulness={this.handleQuestionHelpfulness}
           />
         ))}
       </div>
