@@ -121,12 +121,12 @@ const QuestionsAnswers = class extends React.PureComponent {
     let fixedCall;
     const { questionsDisplayed, page, count } = this.state;
     if (type === 'get') {
-      fixedCall = `${urlQuestions}?product_id=${productId}&page=${page}&count=${count}`;
+      fixedCall = `/questions?product_id=${productId}&page=${page}&count=${count}`;
     }
     if (type === 'refresh') {
-      fixedCall = `${urlQuestions}?product_id=${productId}&page=${1}&count=${count * page}`;
+      fixedCall = `/questions?product_id=${productId}&page=${1}&count=${count * page}`;
     }
-    axios.get('/questions?product_id=19378&page=1&count=4', {
+    axios.get(fixedCall, {
       headers: {
         Authorization: GITHUB_API_KEY,
       },

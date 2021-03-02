@@ -30,6 +30,17 @@ app.get('/questions', (req, res) => {
     });
 });
 
+app.get('/questions/:productId/answers', (req, res) => {
+  axios.get(`${urlQuestions + req.params.productId}/answers?page=${req.query.page || 1}&count=${req.query.count || 2}`, {
+    headers: {
+      Authorization: GITHUB_API_KEY,
+    },
+  })
+    .then((response) => {
+      res.status(200).json(response.data);
+    });
+});
+
 app.listen(port, () => {
   // eslint-disable-next-line no-console
   console.log('Listening on port ', port);

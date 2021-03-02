@@ -104,10 +104,10 @@ const Question = class extends React.PureComponent {
     let fixedCall;
 
     if (type === 'get') {
-      fixedCall = `${urlQuestions + id}/answers?page=${page}&count=${count}`;
+      fixedCall = `/questions/${id}/answers?page=${page}&count=${count}`;
     }
     if (type === 'refresh') {
-      fixedCall = `${urlQuestions + id}/answers?page=${1}&count=${count * page}`;
+      fixedCall = `/questions/${id}/answers?page=${1}&count=${count * page}`;
     }
 
     axios.get(fixedCall, {
