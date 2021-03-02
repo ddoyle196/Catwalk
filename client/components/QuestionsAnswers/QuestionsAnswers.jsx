@@ -12,11 +12,13 @@ const QuestionsAnswers = class extends React.PureComponent {
       questions: [],
       page: 1,
       count: 4,
+      haveMoreQuestions: true,
     };
 
     this.getQuestionListById = this.getQuestionListById.bind(this);
     this.handleQuestionHelpfulness = this.handleQuestionHelpfulness.bind(this);
     this.handleMoreQuestions = this.handleMoreQuestions.bind(this);
+    this.AddQuestionButton = this.AddQuestionButton.bind(this);
   }
 
   componentDidMount() {
@@ -64,6 +66,11 @@ const QuestionsAnswers = class extends React.PureComponent {
       },
     })
       .then((response) => {
+        if (response.data.results.length === 0) {
+          this.setState({
+            haveMoreQuestions: false,
+          });
+        }
         if (type === 'get') {
           const newQuestions = [...questions, ...response.data.results];
           this.setState({
@@ -81,6 +88,23 @@ const QuestionsAnswers = class extends React.PureComponent {
       });
   }
 
+  AddQuestionButton() {
+    const { haveMoreQuestions } = this.state;
+    if (haveMoreQuestions) {
+      return (
+        <div>
+          <button
+            type="button"
+            onClick={this.handleMoreQuestions}
+          >
+            More Questions
+          </button>
+        </div>
+      );
+    }
+    return null;
+  }
+
   render() {
     const { questions } = this.state;
     return (
@@ -93,14 +117,7 @@ const QuestionsAnswers = class extends React.PureComponent {
             handleQuestionHelpfulness={this.handleQuestionHelpfulness}
           />
         ))}
-        <div>
-          <button
-            type="button"
-            onClick={this.handleMoreQuestions}
-          >
-            More Questions
-          </button>
-        </div>
+        {this.AddQuestionButton()}
       </div>
     );
   }
