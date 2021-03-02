@@ -52,7 +52,6 @@ const QuestionsAnswers = class extends React.PureComponent {
   getQuestionListById(productId, type) {
     let fixedCall;
     const { questions, page, count } = this.state;
-    console.log(page, count);
     if (type === 'get') {
       fixedCall = `${urlQuestions}?product_id=${productId}&page=${page}&count=${count}`;
     }
