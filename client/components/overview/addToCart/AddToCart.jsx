@@ -1,9 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import QuantitySelector from './QuantitySelector';
+import SizeSelector from './SizeSelector';
 
 const AddToCart = ({ addToCartHandler }) => (
   <div>
-    <h2>ADD TO CART HANDLER COMPONENT</h2>
+    <div className="cart-top-container">
+      <SizeSelector />
+      <QuantitySelector />
+    </div>
     <button type="submit" onClick={addToCartHandler}>Add to cart</button>
   </div>
 );
