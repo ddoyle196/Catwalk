@@ -18,11 +18,18 @@ class IndReview extends React.Component {
       <Fragment>
         <div>{review.rating}</div>
 
-        <div>{review.reviewer_name} ' ' {moment(review.date).format('LL')}</div>
+        <div>
+          {review.reviewer_name}
+          ' '
+          {moment(review.date).format('LL')}
+        </div>
 
-        <div className="summary">{review.summary}</div>
+        <div className="summary">{review.summary.slice(0, 60)}{review.summary.length > 60 ? '...' : null}</div>
 
-        <div>{review.body}</div>
+        <div>
+          {review.summary.length > 60 ? review.summary.slice(60) : null}
+          {review.body}
+        </div>
         <div>Helpful? {review.helpfulness}</div>
         <div>{review.recommend}</div>
 
