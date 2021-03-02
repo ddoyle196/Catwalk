@@ -6,8 +6,6 @@ import axios from 'axios';
 import Reviews from './Reviews';
 import Histograms from './Histograms';
 
-import dummy from './dummy';
-
 class RandR extends React.PureComponent {
   constructor(props) {
     super(props);
