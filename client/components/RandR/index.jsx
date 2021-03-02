@@ -1,53 +1,71 @@
 import React from 'react';
 import $ from 'jquery';
+import axios from 'axios';
 // import PropTypes from 'prop-types';
 
 import Reviews from './Reviews';
 import Histograms from './Histograms';
 
-//import dummy from './dummy';
-
 class RandR extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      ratings: dummy.metaData,
-      itemID: dummy.productReviews.product,
-      page: dummy.productReviews.page,
-      pageCount: dummy.productReviews.count,
-      reviews: dummy.productReviews.results,
+      ratings: null,
+      productId: props.productId,
+      page: 1,
+      count: 5,
+      reviews: null,
+      sort: 'newest',
     };
   }
 
   componentDidMount() {
+    this.updateMetaData();
     this.updateReviews();
+  }
+
+  updateMetaData() {
+    const { productId } = this.state;
+    let { ratings } = this.state;
+    axios.get(`metadata/${productId}`)
+      .then((r) => {
+        this.setState({
+          ratings: r.data,
+        });
+      });
   }
 
   updateReviews() {
     // get reviews
-    const { itemID, page, pageCount } = this.state;
-    $.ajax({
-      url: 'http://localhost:3000/test',
-      type: 'GET',
-      data: { itemID, page, pageCount },
-      success: (result) => {
-        // this.setState({ reviews: result });
-        console.log(result);
-      },
-    });
-    // update state of reviews
+    const {
+      productId, page, count, sort,
+    } = this.state;
+    let { reviews } = this.state;
+
+    const params = {
+      page: page,
+      count: count,
+      sort: sort,
+      productId: productId,
+    };
+
+    axios.get('http://localhost:3000/reviews', { params })
+      .then((r) => {
+        this.setState({
+          reviews: r.data,
+        });
+      });
   }
 
   render() {
-    const { reviews, ratings } = this.state;
+    const { reviews, ratings, sort } = this.state;
     return (
       <div>
-        <div className="headerBlock">RATINGS & REVIEWS</div>
         <div className="histogramBlock">
-          <Histograms ratings={ratings} />
+          {ratings ? <Histograms ratings={ratings} /> : null}
         </div>
         <div className="reviewBlock">
-          <Reviews reviews={reviews} />
+          {reviews ? <Reviews reviews={reviews} sort={sort} /> : null}
         </div>
       </div>
     );
@@ -55,7 +73,7 @@ class RandR extends React.PureComponent {
 }
 
 // RandR.propTypes = {
-//   itemID: PropTypes.number.isRequired,
+//   productId: PropTypes.number.isRequired,
 // };
 
 export default RandR;
