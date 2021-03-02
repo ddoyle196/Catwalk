@@ -19,6 +19,11 @@ const Question = class extends React.PureComponent {
       count: 2,
       haveMoreAnswers: true,
       showAnswerModal: false,
+      newAnswer: {
+        body: '',
+        name: '',
+        email: '',
+      },
     };
 
     this.getAnswersFromQuestionId = this.getAnswersFromQuestionId.bind(this);
@@ -27,6 +32,8 @@ const Question = class extends React.PureComponent {
     this.handleMoreAnswers = this.handleMoreAnswers.bind(this);
     this.AddAnswerButton = this.AddAnswerButton.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
+    this.handleSubmitAnswerToQuestion = this.handleSubmitAnswerToQuestion.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
   }
 
   componentDidMount() {
@@ -63,6 +70,32 @@ const Question = class extends React.PureComponent {
     this.setState({
       showAnswerModal: false,
     });
+  }
+
+  handleInputChange(e) {
+    const { target } = e;
+    const { name } = target;
+    const { newAnswer } = this.state;
+    const inputNewAnswer = { ...newAnswer };
+    inputNewAnswer[name] = e.target.value;
+    this.setState({
+      newAnswer: inputNewAnswer,
+    });
+  }
+
+  handleSubmitAnswerToQuestion() {
+    const { newAnswer } = this.state;
+    const { id } = this.props;
+    axios.post(`${urlQuestions + id}/answers`, newAnswer, {
+      headers: {
+        Authorization: GITHUB_API_KEY,
+      },
+    })
+      .then((result) => {
+        if (result.status === 201) {
+          alert('Answer Submited Successfully');
+        }
+      });
   }
 
   getAnswersFromQuestionId(type) {
@@ -202,8 +235,36 @@ const Question = class extends React.PureComponent {
           ))}
         </div>
         {this.AddAnswerButton()}
-        <QAModal showModal={showAnswerModal} handleCloseModal={this.handleCloseModal}>
-          <span>HI</span>
+        <QAModal
+          showModal={showAnswerModal}
+          handleCloseModal={this.handleCloseModal}
+          handleSubmitAnswerToQuestion={this.handleSubmitAnswerToQuestion}
+        >
+          <span>Answer this question: </span>
+          <span>{question_body}</span>
+          <div>
+            <input
+              type="text"
+              name="name"
+              placeholder="Name here..."
+              className="modal-input"
+              onChange={this.handleInputChange}
+            />
+            <input
+              type="text"
+              name="email"
+              placeholder="Email here..."
+              className="modal-input"
+              onChange={this.handleInputChange}
+            />
+            <input
+              type="text"
+              name="body"
+              placeholder="Add Your Answer here..."
+              className="modal-input"
+              onChange={this.handleInputChange}
+            />
+          </div>
         </QAModal>
       </div>
     );
