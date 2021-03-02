@@ -58,41 +58,44 @@ const Answers = class extends React.PureComponent {
             { ` ${body}`}
           </span>
         </div>
-        <div className="question-format">
-          <span>
-            { `by ${answerer_name}, `}
-          </span>
-          <span>
-            { moment(date).format('LL')}
-          </span>
-        </div>
-        <div className="question-format">
-          <span>
-            {'Helpful? '}
-            <u
-              className="pointer"
-              onClick={() => this.AddAnswerHelpfulness()}
-              onKeyDown={this.handleButtonClick}
-              role="button"
-              tabIndex={0}
-            >
-              Yes
-            </u>
-            {` (${helpfulness})`}
-          </span>
-        </div>
-        <div className="question-format reset">
-          <span>
-            <u
-              className="pointer"
-              onClick={() => this.handleAnswerReport(id)}
-              onKeyDown={this.handleButtonClick}
-              role="button"
-              tabIndex={0}
-            >
-              { reported ? 'Reported' : 'Report'}
-            </u>
-          </span>
+        <div className="qa-answer-options">
+
+          <div className="qa-answer-format">
+            <span>
+              { `by ${answerer_name}, `}
+            </span>
+            <span>
+              { moment(date).format('LL')}
+            </span>
+          </div>
+          <div className="qa-answer-format">
+            <span>
+              {'Helpful? '}
+              <u
+                className="pointer"
+                onClick={() => this.AddAnswerHelpfulness()}
+                onKeyDown={this.handleButtonClick}
+                role="button"
+                tabIndex={0}
+              >
+                Yes
+              </u>
+              {` (${helpfulness})`}
+            </span>
+          </div>
+          <div className="qa-answer-format qa-reset-format">
+            <span>
+              <u
+                className="pointer"
+                onClick={() => this.handleAnswerReport(id)}
+                onKeyDown={this.handleButtonClick}
+                role="button"
+                tabIndex={0}
+              >
+                { reported ? 'Reported' : 'Report'}
+              </u>
+            </span>
+          </div>
         </div>
       </div>
     );

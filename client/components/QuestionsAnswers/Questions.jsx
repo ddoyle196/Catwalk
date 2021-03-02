@@ -128,7 +128,7 @@ const Question = class extends React.PureComponent {
       return (
         <div>
           <b
-            className="pointer"
+            className="qa-more-answers pointer"
             onClick={this.handleMoreAnswers}
             onKeyDown={this.handleButtonClick}
             role="button"

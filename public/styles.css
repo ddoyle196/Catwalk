@@ -208,30 +208,27 @@ body{
 
 .qa-box .qa-question-box {
   width: 100%;
-}
-
-.qa-box .qa-question-box .qa-question-single {
-  margin-bottom: 1%;
+  margin-bottom: 3%;
 }
 
 .qa-box .qa-question-box .qa-question-single .qa-question-letter {
   display: inline;
   float: left;
   width: 2%;
-  margin-bottom: 1%;
+  margin-bottom: 2%;
 }
 
 .qa-box .qa-question-box .qa-question-single .qa-question-body {
   display: inline;
   float: left;
   width: 73%;
-  margin-bottom: 1%;
+  margin-bottom: 2%;
 }
 
 .qa-box .qa-question-box .qa-question-single .qa-questions-options {
   float: right;
   width: 25%;
-  margin-bottom: 1%;
+  margin-bottom: 2%;
 }
 
 .qa-box .qa-question-box .qa-question-single .qa-questions-options .qa-options-format {
@@ -247,8 +244,8 @@ body{
 }
 
 .qa-box .qa-question-box .qa-answer-box {
-  margin-top: 2%;
-  margin-bottom: 2%;
+  margin-top: 1%;
+  margin-bottom: 1%;
 }
 
 .qa-box .qa-question-box .qa-answer-box .qa-answer-letter {
@@ -256,6 +253,7 @@ body{
   float: left;
   width: 2%;
   margin-bottom: 1%;
+  font-size: 18px;
 }
 
 .qa-box .qa-question-box .qa-answer-box .qa-answer-body {
@@ -263,6 +261,40 @@ body{
   float: left;
   width: 98%;
   margin-bottom: 1%;
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+}
+
+.qa-box .qa-question-box .qa-answer-box .qa-answer-options {
+  width: 100%;
+  font-size: 12px;
+}
+
+.qa-box .qa-question-box .qa-answer-box .qa-answer-options .qa-answer-format {
+  display: inline;
+  border-right: 2px solid rgb(187, 180, 180);
+  margin-right: 5px;
+  padding-right: 10px;
+}
+
+.qa-box .qa-question-box .qa-answer-box .qa-answer-options .qa-reset-format {
+  border: none;
+}
+
+.qa-box .qa-question-box .qa-more-answers {
+  font-size: 12px;
+  margin-left: 2%;
+}
+
+.qa-box .qa-options {
+  margin-top: 3%;
+}
+
+.qa-box .qa-options .qa-buttons {
+  display: inline;
+  margin-right: 15px;
+  font-size: 18px;
+  font-weight: bold;
 }
 
 .modal {
@@ -310,20 +342,6 @@ body{
   cursor: pointer;
 }
 
-.question-inputbox{
-  width: 75%;
-  margin: auto;
-}
-
-.questions-container{
-  width: 100%;
-}
-
-.question-blocks{
-  display: inline;
-  float: left;
-  width: 75%;
-}
 
 .pointer{
   cursor: pointer;

@@ -162,14 +162,13 @@ const QuestionsAnswers = class extends React.PureComponent {
     const { haveMoreQuestions } = this.state;
     if (haveMoreQuestions) {
       return (
-        <div>
-          <button
-            type="button"
-            onClick={this.handleMoreQuestions}
-          >
-            MORE ANSWERED QUESTIONS
-          </button>
-        </div>
+        <button
+          className="qa-buttons"
+          type="button"
+          onClick={this.handleMoreQuestions}
+        >
+          MORE ANSWERED QUESTIONS
+        </button>
       );
     }
     return null;
@@ -200,43 +199,46 @@ const QuestionsAnswers = class extends React.PureComponent {
             handleQuestionHelpfulness={this.handleQuestionHelpfulness}
           />
         ))}
-        {this.AddMoreQuestionButton()}
-        <button
-          type="button"
-          onClick={this.showQuestionModal}
-        >
-          ADD A QUESTION+
-        </button>
-        <QAModal
-          showModal={showQuestionModal}
-          handleCloseModal={this.handleCloseModal}
-          handleSubmit={this.handleSubmitQuestion}
-        >
-          <span>Add a Question here!</span>
-          <div>
-            <input
-              type="text"
-              name="name"
-              placeholder="Name here..."
-              className="modal-input"
-              onChange={(e) => { this.inputChange(e, 'QModal'); }}
-            />
-            <input
-              type="text"
-              name="email"
-              placeholder="Email here..."
-              className="modal-input"
-              onChange={(e) => { this.inputChange(e, 'QModal'); }}
-            />
-            <input
-              type="text"
-              name="body"
-              placeholder="Add Your Question here..."
-              className="modal-input"
-              onChange={(e) => { this.inputChange(e, 'QModal'); }}
-            />
-          </div>
-        </QAModal>
+        <div className="qa-options">
+          {this.AddMoreQuestionButton()}
+          <button
+            className="qa-buttons"
+            type="button"
+            onClick={this.showQuestionModal}
+          >
+            ADD A QUESTION +
+          </button>
+          <QAModal
+            showModal={showQuestionModal}
+            handleCloseModal={this.handleCloseModal}
+            handleSubmit={this.handleSubmitQuestion}
+          >
+            <span>Add a Question here!</span>
+            <div>
+              <input
+                type="text"
+                name="name"
+                placeholder="Name here..."
+                className="modal-input"
+                onChange={(e) => { this.inputChange(e, 'QModal'); }}
+              />
+              <input
+                type="text"
+                name="email"
+                placeholder="Email here..."
+                className="modal-input"
+                onChange={(e) => { this.inputChange(e, 'QModal'); }}
+              />
+              <input
+                type="text"
+                name="body"
+                placeholder="Add Your Question here..."
+                className="modal-input"
+                onChange={(e) => { this.inputChange(e, 'QModal'); }}
+              />
+            </div>
+          </QAModal>
+        </div>
       </div>
     );
   }
