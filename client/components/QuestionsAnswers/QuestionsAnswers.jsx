@@ -10,14 +10,27 @@ const QuestionsAnswers = class extends React.PureComponent {
     super();
     this.state = {
       questions: [],
+      page: 1,
+      count: 4,
     };
 
     this.getQuestionListById = this.getQuestionListById.bind(this);
     this.handleQuestionHelpfulness = this.handleQuestionHelpfulness.bind(this);
+    this.handleMoreQuestions = this.handleMoreQuestions.bind(this);
   }
 
   componentDidMount() {
-    this.getQuestionListById(19378, 1, 4); // Check
+    this.getQuestionListById(19378, 'get'); // Check
+  }
+
+  handleMoreQuestions() {
+    const { page } = this.state;
+    const newPage = page + 1;
+    this.setState({
+      page: newPage,
+    }, () => {
+      this.getQuestionListById(19378, 'get'); // Check
+    });
   }
 
   handleQuestionHelpfulness(id) {
@@ -28,7 +41,7 @@ const QuestionsAnswers = class extends React.PureComponent {
     })
       .then((result) => {
         if (result.status === 204) {
-          this.getQuestionListById(19378, 1, 4); // Check
+          this.getQuestionListById(19378, 'refresh'); // Check
         }
       })
       .catch((err) => {
@@ -36,16 +49,33 @@ const QuestionsAnswers = class extends React.PureComponent {
       });
   }
 
-  getQuestionListById(productId, page, count) {
-    axios.get(`${urlQuestions}?product_id=${productId}&page=${page}&count=${count}`, {
+  getQuestionListById(productId, type) {
+    let fixedCall;
+    const { questions, page, count } = this.state;
+    console.log(page, count);
+    if (type === 'get') {
+      fixedCall = `${urlQuestions}?product_id=${productId}&page=${page}&count=${count}`;
+    }
+    if (type === 'refresh') {
+      fixedCall = `${urlQuestions}?product_id=${productId}&page=${1}&count=${count * page}`;
+    }
+    axios.get(fixedCall, {
       headers: {
         Authorization: GITHUB_API_KEY,
       },
     })
       .then((response) => {
-        this.setState({
-          questions: response.data.results,
-        });
+        if (type === 'get') {
+          const newQuestions = [...questions, ...response.data.results];
+          this.setState({
+            questions: newQuestions,
+          });
+        }
+        if (type === 'refresh') {
+          this.setState({
+            questions: response.data.results,
+          });
+        }
       })
       .catch((err) => {
         console.log(err); // Create error boundary
@@ -64,6 +94,14 @@ const QuestionsAnswers = class extends React.PureComponent {
             handleQuestionHelpfulness={this.handleQuestionHelpfulness}
           />
         ))}
+        <div>
+          <button
+            type="button"
+            onClick={this.handleMoreQuestions}
+          >
+            More Questions
+          </button>
+        </div>
       </div>
     );
   }
