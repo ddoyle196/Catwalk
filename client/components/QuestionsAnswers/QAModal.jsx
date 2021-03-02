@@ -7,7 +7,7 @@ const QAModal = class extends React.PureComponent {
 
     this.showModal = this.showModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
-    this.submitAnswerToQuestion = this.submitAnswerToQuestion.bind(this);
+    this.submit = this.submit.bind(this);
   }
 
   closeModal() {
@@ -15,9 +15,9 @@ const QAModal = class extends React.PureComponent {
     handleCloseModal();
   }
 
-  submitAnswerToQuestion() {
-    const { handleSubmitAnswerToQuestion } = this.props;
-    handleSubmitAnswerToQuestion();
+  submit() {
+    const { handleSubmit } = this.props;
+    handleSubmit();
     this.closeModal();
   }
 
@@ -39,7 +39,7 @@ const QAModal = class extends React.PureComponent {
           </button>
           <button
             type="button"
-            onClick={this.submitAnswerToQuestion}
+            onClick={this.submit}
             className="modal-buttons"
           >
             Submit
@@ -62,7 +62,7 @@ QAModal.propTypes = {
   showModal: PropTypes.bool.isRequired,
   children: PropTypes.node.isRequired,
   handleCloseModal: PropTypes.func.isRequired,
-  handleSubmitAnswerToQuestion: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
 };
 
 export default QAModal;

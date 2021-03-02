@@ -3,8 +3,11 @@ import axios from 'axios';
 
 import { GITHUB_API_KEY } from '../../../config';
 import Question from './Questions';
+import QAModal from './QAModal';
 
 const urlQuestions = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe/qa/questions/'; // productId comes from Props
+const pId = 19378;
+
 const QuestionsAnswers = class extends React.PureComponent {
   constructor() {
     super();
@@ -13,16 +16,27 @@ const QuestionsAnswers = class extends React.PureComponent {
       page: 1,
       count: 4,
       haveMoreQuestions: true,
+      showQuestionModal: false,
+      newQuestion: {
+        name: '',
+        email: '',
+        body: '',
+        product_id: pId,
+      },
     };
 
     this.getQuestionListById = this.getQuestionListById.bind(this);
     this.handleQuestionHelpfulness = this.handleQuestionHelpfulness.bind(this);
     this.handleMoreQuestions = this.handleMoreQuestions.bind(this);
-    this.AddQuestionButton = this.AddQuestionButton.bind(this);
+    this.AddMoreQuestionButton = this.AddMoreQuestionButton.bind(this);
+    this.showQuestionModal = this.showQuestionModal.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleSubmitQuestion = this.handleSubmitQuestion.bind(this);
+    this.handleCloseModal = this.handleCloseModal.bind(this);
   }
 
   componentDidMount() {
-    this.getQuestionListById(19378, 'get'); // Check
+    this.getQuestionListById(pId, 'get'); // Check
   }
 
   handleMoreQuestions() {
@@ -31,7 +45,18 @@ const QuestionsAnswers = class extends React.PureComponent {
     this.setState({
       page: newPage,
     }, () => {
-      this.getQuestionListById(19378, 'get'); // Check
+      this.getQuestionListById(pId, 'get'); // Check
+    });
+  }
+
+  handleInputChange(e) {
+    const { target } = e;
+    const { name } = target;
+    const { newQuestion } = this.state;
+    const inputNewQuestion = { ...newQuestion };
+    inputNewQuestion[name] = e.target.value;
+    this.setState({
+      newQuestion: inputNewQuestion,
     });
   }
 
@@ -43,12 +68,32 @@ const QuestionsAnswers = class extends React.PureComponent {
     })
       .then((result) => {
         if (result.status === 204) {
-          this.getQuestionListById(19378, 'refresh'); // Check
+          this.getQuestionListById(pId, 'refresh'); // Check
         }
       })
       .catch((err) => {
         console.log(err);
       });
+  }
+
+  handleSubmitQuestion() {
+    const { newQuestion } = this.state;
+    axios.post(`${urlQuestions}`, newQuestion, {
+      headers: {
+        Authorization: GITHUB_API_KEY,
+      },
+    })
+      .then((result) => {
+        if (result.status === 201) {
+          alert('Question Submited Successfully'); // Change later to a success modal
+        }
+      });
+  }
+
+  handleCloseModal() {
+    this.setState({
+      showQuestionModal: false,
+    });
   }
 
   getQuestionListById(productId, type) {
@@ -88,7 +133,13 @@ const QuestionsAnswers = class extends React.PureComponent {
       });
   }
 
-  AddQuestionButton() {
+  showQuestionModal() {
+    this.setState({
+      showQuestionModal: true,
+    });
+  }
+
+  AddMoreQuestionButton() {
     const { haveMoreQuestions } = this.state;
     if (haveMoreQuestions) {
       return (
@@ -97,7 +148,7 @@ const QuestionsAnswers = class extends React.PureComponent {
             type="button"
             onClick={this.handleMoreQuestions}
           >
-            More Questions
+            More Answered Questions
           </button>
         </div>
       );
@@ -106,9 +157,12 @@ const QuestionsAnswers = class extends React.PureComponent {
   }
 
   render() {
-    const { questions } = this.state;
+    const { questions, showQuestionModal } = this.state;
     return (
       <div>
+        <div>
+          <span>Questions & Answers</span>
+        </div>
         {questions.map((singleQuestion) => (
           <Question
             key={singleQuestion.question_id}
@@ -117,7 +171,43 @@ const QuestionsAnswers = class extends React.PureComponent {
             handleQuestionHelpfulness={this.handleQuestionHelpfulness}
           />
         ))}
-        {this.AddQuestionButton()}
+        {this.AddMoreQuestionButton()}
+        <button
+          type="button"
+          onClick={this.showQuestionModal}
+        >
+          Add a Question+
+        </button>
+        <QAModal
+          showModal={showQuestionModal}
+          handleCloseModal={this.handleCloseModal}
+          handleSubmit={this.handleSubmitQuestion}
+        >
+          <span>Add a Question here!</span>
+          <div>
+            <input
+              type="text"
+              name="name"
+              placeholder="Name here..."
+              className="modal-input"
+              onChange={this.handleInputChange}
+            />
+            <input
+              type="text"
+              name="email"
+              placeholder="Email here..."
+              className="modal-input"
+              onChange={this.handleInputChange}
+            />
+            <input
+              type="text"
+              name="body"
+              placeholder="Add Your Question here..."
+              className="modal-input"
+              onChange={this.handleInputChange}
+            />
+          </div>
+        </QAModal>
       </div>
     );
   }

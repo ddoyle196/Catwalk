@@ -93,7 +93,7 @@ const Question = class extends React.PureComponent {
     })
       .then((result) => {
         if (result.status === 201) {
-          alert('Answer Submited Successfully');
+          alert('Answer Submited Successfully'); // Change later to a success modal
         }
       });
   }
@@ -147,7 +147,7 @@ const Question = class extends React.PureComponent {
             type="button"
             onClick={this.handleMoreAnswers}
           >
-            More Answers
+            Load More Answers
           </button>
         </div>
       );
@@ -238,7 +238,7 @@ const Question = class extends React.PureComponent {
         <QAModal
           showModal={showAnswerModal}
           handleCloseModal={this.handleCloseModal}
-          handleSubmitAnswerToQuestion={this.handleSubmitAnswerToQuestion}
+          handleSubmit={this.handleSubmitAnswerToQuestion}
         >
           <span>Answer this question: </span>
           <span>{question_body}</span>
