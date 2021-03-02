@@ -2,21 +2,45 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import StarRating from './StarRating';
 
-const SideProductInfo = ({ product, ratings }) => (
-  <div>
-    <StarRating ratings={ratings} />
-    <h2>SIDE PRODUCT INFO COMPONENT</h2>
-    {product.category && <p>{product.category}</p>}
-    {product.name && <p>{product.name}</p>}
-    {product.default_price && <p>{product.default_price}</p>}
-  </div>
-);
+const SideProductInfo = ({ product, ratings }) => {
+  let formattedPrice = '';
+  const removeZerosFromPrice = (price) => {
+    const slicedEnd = price.slice(-2);
+    if (slicedEnd === '00') {
+      formattedPrice = product.default_price.slice(0, -3);
+    } else {
+      formattedPrice = product.default_price;
+    }
+  };
+  removeZerosFromPrice(product.default_price);
+  return (
+    <div>
+      <StarRating ratings={ratings} />
+      {product.category && <p className="product-category">{product.category.toUpperCase()}</p>}
+      {product.name && <p className="expanded-product-name">{product.name}</p>}
+      {product.default_price && (
+        <p>
+          $
+          {formattedPrice}
+        </p>
+      )}
+    </div>
+  );
+};
 
 SideProductInfo.propTypes = {
-  // eslint-disable-next-line react/forbid-prop-types
-  product: PropTypes.object.isRequired,
-  // eslint-disable-next-line react/forbid-prop-types
-  ratings: PropTypes.object.isRequired,
+  product: PropTypes.shape({
+    category: PropTypes.string,
+    name: PropTypes.string,
+    default_price: PropTypes.string,
+  }).isRequired,
+  ratings: PropTypes.shape({
+    1: PropTypes.string,
+    2: PropTypes.string,
+    3: PropTypes.string,
+    4: PropTypes.string,
+    5: PropTypes.string,
+  }).isRequired,
 };
 
 export default SideProductInfo;
