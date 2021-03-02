@@ -47,6 +47,22 @@ app.get('/questions/:productId/answers', (req, res) => {
     });
 });
 
+// GET PRODUCT BY ID
+app.get('/products/:id', (req, res) => {
+  const productId = req.params.id;
+  axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe/products/${productId}`, {
+    headers: {
+      Authorization: GITHUB_API_KEY,
+    },
+  })
+    .then((response) => {
+      res.status(200).json(response.data);
+    })
+    .catch(() => {
+      res.status(404).send('Invalid');
+    });
+});
+
 app.post('/questions', (req, res) => {
   axios.post(`${urlQuestions}`, req.body, {
     headers: {
@@ -140,6 +156,22 @@ app.get('/reviews', (req, res) => {
     },
   })
     .then((response) => {
+      res.json(response.data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+// GET STYLES FOR A GIVEN PRODUCT
+app.get('/products/:id/styles', (req, res) => {
+  const productId = req.params.id;
+  axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe/products/${productId}/styles`, {
+    headers: {
+      Authorization: GITHUB_API_KEY,
+    },
+  })
+    .then((response) => {
       // console.log(response.data);
       res.json(response.data);
     })
@@ -148,6 +180,7 @@ app.get('/reviews', (req, res) => {
     });
 });
 
+// GET REVIEW METADATA FOR A GIVEN PRODUCT
 app.get('/metadata/:id', (req, res) => {
   const productId = req.params.id;
   axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe/reviews/meta?product_id=${productId}`, {
