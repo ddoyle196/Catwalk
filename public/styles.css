@@ -47,6 +47,11 @@
   cursor: pointer;
 }
 
+.question-inputbox{
+  width: 75%;
+  margin: auto;
+}
+
 .questions-container{
   width: 100%;
 }

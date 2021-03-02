@@ -12,7 +12,8 @@ const QuestionsAnswers = class extends React.PureComponent {
   constructor() {
     super();
     this.state = {
-      questions: [],
+      questionsDisplayed: [],
+      questionsList: [],
       page: 1,
       count: 4,
       haveMoreQuestions: true,
@@ -33,6 +34,8 @@ const QuestionsAnswers = class extends React.PureComponent {
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmitQuestion = this.handleSubmitQuestion.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
+    this.inputChange = this.inputChange.bind(this);
+    this.handleInputChangeSort = this.handleInputChangeSort.bind(this);
   }
 
   componentDidMount() {
@@ -51,13 +54,31 @@ const QuestionsAnswers = class extends React.PureComponent {
 
   handleInputChange(e) {
     const { target } = e;
-    const { name } = target;
+    const { name, value } = target;
     const { newQuestion } = this.state;
     const inputNewQuestion = { ...newQuestion };
-    inputNewQuestion[name] = e.target.value;
+    inputNewQuestion[name] = value;
     this.setState({
       newQuestion: inputNewQuestion,
     });
+  }
+
+  handleInputChangeSort(e) {
+    const { target } = e;
+    const { value } = target;
+    const { questionsList } = this.state;
+    let newQuestionList;
+    if (value.length >= 3) {
+      newQuestionList = questionsList
+        .filter((question) => question.question_body.includes(value));
+      this.setState({
+        questionsDisplayed: newQuestionList,
+      });
+    } else {
+      this.setState({
+        questionsDisplayed: questionsList,
+      });
+    }
   }
 
   handleQuestionHelpfulness(id) {
@@ -98,7 +119,7 @@ const QuestionsAnswers = class extends React.PureComponent {
 
   getQuestionListById(productId, type) {
     let fixedCall;
-    const { questions, page, count } = this.state;
+    const { questionsDisplayed, page, count } = this.state;
     if (type === 'get') {
       fixedCall = `${urlQuestions}?product_id=${productId}&page=${page}&count=${count}`;
     }
@@ -117,20 +138,31 @@ const QuestionsAnswers = class extends React.PureComponent {
           });
         }
         if (type === 'get') {
-          const newQuestions = [...questions, ...response.data.results];
+          const newQuestions = [...questionsDisplayed, ...response.data.results];
           this.setState({
-            questions: newQuestions,
+            questionsDisplayed: newQuestions,
+            questionsList: newQuestions,
           });
         }
         if (type === 'refresh') {
           this.setState({
-            questions: response.data.results,
+            questionsDisplayed: response.data.results,
+            questionsList: response.data.results,
           });
         }
       })
       .catch((err) => {
         console.log(err); // Create error boundary
       });
+  }
+
+  inputChange(e, action) {
+    if (action === 'QModal') {
+      this.handleInputChange(e);
+    }
+    if (action === 'SortQuestions') {
+      this.handleInputChangeSort(e);
+    }
   }
 
   showQuestionModal() {
@@ -157,13 +189,22 @@ const QuestionsAnswers = class extends React.PureComponent {
   }
 
   render() {
-    const { questions, showQuestionModal } = this.state;
+    const { questionsDisplayed, showQuestionModal } = this.state;
     return (
       <div>
         <div>
           <span>Questions & Answers</span>
         </div>
-        {questions.map((singleQuestion) => (
+        <div>
+          <input
+            type="text"
+            name="name"
+            placeholder="Have a question? Search for answers..."
+            className="question-inputbox"
+            onChange={(e) => { this.inputChange(e, 'SortQuestions'); }}
+          />
+        </div>
+        {questionsDisplayed.map((singleQuestion) => (
           <Question
             key={singleQuestion.question_id}
             question={singleQuestion}
@@ -190,21 +231,21 @@ const QuestionsAnswers = class extends React.PureComponent {
               name="name"
               placeholder="Name here..."
               className="modal-input"
-              onChange={this.handleInputChange}
+              onChange={(e) => { this.inputChange(e, 'QModal'); }}
             />
             <input
               type="text"
               name="email"
               placeholder="Email here..."
               className="modal-input"
-              onChange={this.handleInputChange}
+              onChange={(e) => { this.inputChange(e, 'QModal'); }}
             />
             <input
               type="text"
               name="body"
               placeholder="Add Your Question here..."
               className="modal-input"
-              onChange={this.handleInputChange}
+              onChange={(e) => { this.inputChange(e, 'QModal'); }}
             />
           </div>
         </QAModal>
