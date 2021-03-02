@@ -127,12 +127,15 @@ const Question = class extends React.PureComponent {
     if (haveMoreAnswers) {
       return (
         <div>
-          <button
-            type="button"
+          <b
+            className="pointer"
             onClick={this.handleMoreAnswers}
+            onKeyDown={this.handleButtonClick}
+            role="button"
+            tabIndex={0}
           >
-            Load More Answers
-          </button>
+            LOAD MORE ANSWERS
+          </b>
         </div>
       );
     }
@@ -164,60 +167,56 @@ const Question = class extends React.PureComponent {
       question_helpfulness,
     } = question;
     return (
-      <div>
-        <div>
-          <div className="question-blocks">
+      <div className="qa-question-box">
+        <div className="qa-question-single">
+          <div className="qa-question-letter">
+            <span><b>Q:</b></span>
+          </div>
+          <div className="qa-question-body">
             <span>
-              <b>
-                Q:
-              </b>
               { ` ${question_body}`}
             </span>
           </div>
-          <div className="question-options">
-            <div>
-              <div className="question-format">
-                <span>
-                  {'Helpful? '}
-                  <u
-                    className="pointer"
-                    onClick={() => this.AddQuestionHelpfulness()}
-                    onKeyDown={this.handleButtonClick}
-                    role="button"
-                    tabIndex={0}
-                  >
-                    Yes
-                  </u>
-                  {` (${question_helpfulness})`}
-                </span>
-              </div>
-              <div className="question-format reset">
-                <span>
-                  <u
-                    className="pointer"
-                    onClick={() => this.showAnswerModal()}
-                    onKeyDown={this.handleButtonClick}
-                    role="button"
-                    tabIndex={0}
-                  >
-                    Add Answer
-                  </u>
-                </span>
-              </div>
+          <div className="qa-questions-options ">
+            <div className="qa-options-format">
+              <span>
+                {'Helpful? '}
+                <u
+                  className="pointer"
+                  onClick={() => this.AddQuestionHelpfulness()}
+                  onKeyDown={this.handleButtonClick}
+                  role="button"
+                  tabIndex={0}
+                >
+                  Yes
+                </u>
+                {` (${question_helpfulness})`}
+              </span>
+            </div>
+            <div className="qa-options-format qa-reset-format">
+              <span>
+                <u
+                  className="pointer"
+                  onClick={() => this.showAnswerModal()}
+                  onKeyDown={this.handleButtonClick}
+                  role="button"
+                  tabIndex={0}
+                >
+                  Add Answer
+                </u>
+              </span>
             </div>
           </div>
         </div>
-        <div>
-          {answers.map((answer) => (
-            <Answers
-              key={answer.answer_id}
-              id={answer.answer_id}
-              answer={answer}
-              AnswerHelpfulness={this.handleAnswerHelpfulness}
-              AnswerReport={this.handleAnswerReport}
-            />
-          ))}
-        </div>
+        {answers.map((answer) => (
+          <Answers
+            key={answer.answer_id}
+            id={answer.answer_id}
+            answer={answer}
+            AnswerHelpfulness={this.handleAnswerHelpfulness}
+            AnswerReport={this.handleAnswerReport}
+          />
+        ))}
         {this.AddAnswerButton()}
         <QAModal
           showModal={showAnswerModal}

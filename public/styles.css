@@ -2,6 +2,20 @@
   box-sizing: border-box;
 }
 
+/******* OVERALL FONTS ********/
+/*
+
+font-family: 'Raleway', sans-serif;
+font-family: 'Roboto', sans-serif;
+font-family: 'Open Sans', sans-serif;
+*/
+
+body{
+  font-family: 'Arial', sans-serif;
+  width: 70%;
+  margin: auto;
+}
+
 /******* OVERVIEW WIDGET *******/
 .overview-container {
   padding-top: 2em;
@@ -157,6 +171,88 @@
 
 
 /******* QUESTIONS AND ANSWERS *******/
+.qa-box {
+  width: 80%;
+  margin: auto;
+}
+
+.qa-box .qa-title {
+  margin-top: 3%;
+  margin-bottom: 2%;
+}
+
+.qa-box .qa-question-input {
+  margin-top: 1%;
+  margin-bottom: 2%;
+  border: 1px solid black;
+}
+
+.qa-box .qa-question-input .qa-input {
+  width: 93%;
+  padding: 14px; 
+  margin: 10px auto;
+  font-size: 16px;
+  position: relative;
+  font-weight: bold;
+  border: none;
+  display: inline;
+}
+
+.qa-box .qa-question-input .qa-search-icon {
+  display: inline;
+}
+
+.qa-box .qa-question-box {
+  width: 100%;
+}
+
+.qa-box .qa-question-box .qa-question-single {
+  margin-bottom: 1%;
+}
+
+.qa-box .qa-question-box .qa-question-single .qa-question-letter {
+  display: inline;
+  float: left;
+  width: 2%;
+  margin-bottom: 1%;
+}
+
+.qa-box .qa-question-box .qa-question-single .qa-question-body {
+  display: inline;
+  float: left;
+  width: 73%;
+  margin-bottom: 1%;
+}
+
+.qa-box .qa-question-box .qa-question-single .qa-questions-options {
+  float: right;
+  width: 25%;
+  margin-bottom: 1%;
+}
+
+.qa-box .qa-question-box .qa-question-single .qa-questions-options .qa-options-format {
+  display: inline;
+  border-right: 2px solid rgb(187, 180, 180);
+  margin: 5px;
+  padding-inline: 10px;
+  font-size: 12px;
+}
+
+.qa-box .qa-question-box .qa-question-single .qa-questions-options .qa-reset-format {
+  border: none;
+}
+
+.qa-box .qa-question-box .qa-answer-box {
+  margin-top: 2%;
+  margin-bottom: 2%;
+}
+
+.qa-box .qa-question-box .qa-answer-box .qa-answer-letter {
+  display: inline;
+  float: left;
+  width: 2%;
+  margin-bottom: 1%;
+}
 
 .modal {
   position: fixed; /* Stay in place */

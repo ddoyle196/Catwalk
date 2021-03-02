@@ -49,12 +49,12 @@ const Answers = class extends React.PureComponent {
       helpfulness,
     } = answer;
     return (
-      <div>
-        <div>
+      <div className="qa-answer-box">
+        <div className="qa-answer-letter">
+          <span><b>A:</b></span>
+        </div>
+        <div className="qa-answer-body">
           <span>
-            <b>
-              A:
-            </b>
             { ` ${body}`}
           </span>
         </div>

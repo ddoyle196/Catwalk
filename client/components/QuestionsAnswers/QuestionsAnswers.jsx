@@ -5,6 +5,7 @@ import Question from './Questions';
 import QAModal from './QAModal';
 
 const pId = 19378;
+const pName = 'Alberto Romper';
 
 const QuestionsAnswers = class extends React.PureComponent {
   constructor() {
@@ -166,7 +167,7 @@ const QuestionsAnswers = class extends React.PureComponent {
             type="button"
             onClick={this.handleMoreQuestions}
           >
-            More Answered Questions
+            MORE ANSWERED QUESTIONS
           </button>
         </div>
       );
@@ -177,18 +178,19 @@ const QuestionsAnswers = class extends React.PureComponent {
   render() {
     const { questionsDisplayed, showQuestionModal } = this.state;
     return (
-      <div>
-        <div>
-          <span>Questions & Answers</span>
+      <div className="qa-box">
+        <div className="qa-title">
+          <span>QUESTIONS & ANSWERS</span>
         </div>
-        <div>
+        <div className="qa-question-input">
           <input
             type="text"
             name="name"
-            placeholder="Have a question? Search for answers..."
-            className="question-inputbox"
+            placeholder="HAVE A QUESTION? SEARCH FOR ANSWERS..."
+            className="qa-input"
             onChange={(e) => { this.inputChange(e, 'SortQuestions'); }}
           />
+          <p className="qa-search-icon"> &#128269; </p>
         </div>
         {questionsDisplayed.map((singleQuestion) => (
           <Question
@@ -203,7 +205,7 @@ const QuestionsAnswers = class extends React.PureComponent {
           type="button"
           onClick={this.showQuestionModal}
         >
-          Add a Question+
+          ADD A QUESTION+
         </button>
         <QAModal
           showModal={showQuestionModal}
