@@ -31,7 +31,6 @@ class RandR extends React.PureComponent {
     let { ratings } = this.state;
     axios.get(`metadata/${productId}`)
       .then((r) => {
-        console.log(r);
         this.setState({
           ratings: r.data,
         });
@@ -54,7 +53,6 @@ class RandR extends React.PureComponent {
 
     axios.get('http://localhost:3000/reviews', { params })
       .then((r) => {
-        console.log(r);
         this.setState({
           reviews: r.data,
         });
@@ -62,15 +60,14 @@ class RandR extends React.PureComponent {
   }
 
   render() {
-    const { reviews, ratings } = this.state;
+    const { reviews, ratings, sort } = this.state;
     return (
       <div>
-        <div className="headerBlock">RATINGS & REVIEWS</div>
         <div className="histogramBlock">
-         {ratings ?  <Histograms ratings={ratings} /> : null}
+          {ratings ? <Histograms ratings={ratings} /> : null}
         </div>
         <div className="reviewBlock">
-          {reviews ? <Reviews reviews={reviews} /> : null}
+          {reviews ? <Reviews reviews={reviews} sort={sort} /> : null}
         </div>
       </div>
     );

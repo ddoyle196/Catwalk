@@ -28,7 +28,7 @@ app.get('/reviews', (req, res) => {
     },
   })
     .then((response) => {
-      console.log(response.data);
+      // console.log(response.data);
       res.json(response.data);
     })
     .catch((err) => {

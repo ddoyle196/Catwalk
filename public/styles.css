@@ -3,14 +3,47 @@
 /* QUESTIONS AND ANSWERS */
 
 /* RATINGS AND REVIEWS */
+.headerBlock {
+  width: 100%;
+  text-align: left;
+  color: grey;
+}
 .histogramBlock {
   display: inline-block;
-  width: 30%;
-  margin: 2.5%;
+  width: 25%;
+  vertical-align:top;
+  padding: 2%;
+  margin: 2%;
 }
 
-.histogramBlock {
-  margin: 2.5%;
+.reviewBlock {
   display: inline-block;
-  width: 60%;
+  width: 50%;
+  vertical-align:top;
+  padding: 2%;
+  margin: 2%;
+}
+
+button {
+  border: grey;
+  border-style: solid;
+  border-width: 1px;
+  background-color: white;
+  color: grey;
+  padding: 15px 20px;
+  text-align: center;
+  display: inline-block;
+  font-size: 12px;
+  margin: 2px;
+  outline: none;
+}
+
+button:hover {
+  outline: none;
+}
+
+button:active {
+  background-color: grey;
+  color: white;
+  outline: none;
 }
