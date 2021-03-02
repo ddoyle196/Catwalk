@@ -1,14 +1,286 @@
-/* OVERVIEW WIDGET */
-
-/* QUESTIONS AND ANSWERS */
-
-/* RATINGS AND REVIEWS */
-.histogramBlock {
-  width: 30%;
-  margin: 2.5%;
+* {
+  box-sizing: border-box;
 }
 
+/******* OVERVIEW WIDGET *******/
+.overview-container {
+  padding-top: 2em;
+  padding-bottom: 2em;
+  width: 80%;
+  margin: auto;
+}
+
+.overview-top-container {
+  width: 100%;
+  margin-bottom: 2em;
+}
+
+.overview-top-left-container {
+  display: inline-block;
+  width: 70%;
+}
+
+.overview-top-right-container {
+  display: inline-block;
+  vertical-align: top;
+  padding-top: 2em;
+  width: 30%;
+}
+
+.overview-bottom-container {
+  width: 100%;
+  height: auto;
+}
+
+/* OVERVIEW WIDGET -- IMAGE GALLERY */
+.image-gallery-container {
+  width: 100%;
+  height: fit-content;
+}
+
+.image-gallery-large-image {
+  width: 95%;
+  height: auto;
+}
+
+/* OVERVIEW WIDGET -- SIDE PRODUCT INFO */
+.product-category {
+  margin-block-end: 0;
+}
+.expanded-product-name {
+  font-size: 2.5em;
+  margin-block-start: 0;
+  margin-block-end: 0;
+}
+
+/* OVERVIEW WIDGET -- BOTTOM PRODUCT INFO */
+.bottom-product-info-container {
+  width: 90%;
+  margin: auto;
+}
+
+.bottom-product-info-left-container {
+  display: inline-block;
+  vertical-align: text-top;
+  padding-top: 0.3em;
+  width: 70%;
+}
+
+.bottom-product-info-right-container {
+  border-left: 2px solid black;
+  padding-left: 1.5em;
+  display: inline-block;
+  vertical-align: text-top;
+  width: 30%;
+}
+
+.feature-text-container {
+  margin-block-start: 0;
+}
+
+.feature-check-icon {
+  position: relative;
+  top: 3px;
+  left: 0;
+}
+
+.feature-text {
+  margin-left: 0.5em;
+}
+
+.slogan {
+  margin-block-start: 0;
+  font-size: 1.2em;
+}
+
+.social-media-icon-container {
+  float: right;
+}
+
+.social-media-icon {
+  margin-left: 0.25em;
+  font-size: 1.25em;
+  cursor: pointer;
+}
+
+.social-media-icon:hover {
+  color: lightgray;
+}
+
+/* OVERVIEW WIDGET -- STYLE SELECTOR */
+
+.style-label {
+  margin-right: 0.5em;
+}
+
+.selected-style-text {
+  margin-left: 0.5em;
+}
+
+.style-circles-container {
+  width: 90%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.style-circle {
+  cursor: pointer;
+  position: relative;
+  height: 3em;
+  width: 3em;
+  border: 1px solid black;
+  border-radius: 50%;
+  margin-right: 1em;
+  margin-bottom: 1em;
+}
+
+.style-circle:focus {
+  outline: none;
+}
+
+.selected-check-background {
+  float: right;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background-color: white;
+}
+
+.selected-check-container {
+  width: 16px;
+  height: 16px;
+  position: absolute;
+  top: -1px;
+  right: -1px;
+  border-radius: 50%;
+}
+
+
+/******* QUESTIONS AND ANSWERS *******/
+
+.modal {
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; 
+  height: 100%; 
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 30px;
+  border: 1px solid #888;
+  width: 50%; /* Could be more or less, depending on screen size */
+}
+
+.modal-input{
+  margin: 5px;
+  width: 100%;
+}
+
+/* The Close Button */
+.modal-buttons {
+  margin: 5px;
+  color: rgb(77, 67, 67);
+  float: right;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.close {
+  background-color: rgb(218, 112, 112);
+}
+
+.modal-buttons:hover,
+.modal-buttons:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.question-inputbox{
+  width: 75%;
+  margin: auto;
+}
+
+.questions-container{
+  width: 100%;
+}
+
+.question-blocks{
+  display: inline;
+  float: left;
+  width: 75%;
+}
+
+.pointer{
+  cursor: pointer;
+}
+
+.question-options{
+  display: inline;
+  float: left;
+  width: 25%;
+}
+
+.question-format{
+  display: inline;
+  border-right: 2px solid rgb(187, 180, 180);
+  margin: 5px;
+  padding-inline: 10px;
+}
+
+.reset{
+  border: none;
+}
+
+/* RATINGS AND REVIEWS */
+.headerBlock {
+  width: 100%;
+  text-align: left;
+  color: grey;
+}
 .histogramBlock {
-  width: 60%;
-  margin: 2.5%;
+  display: inline-block;
+  width: 25%;
+  vertical-align:top;
+  padding: 2%;
+  margin: 2%;
+}
+
+.reviewBlock {
+  display: inline-block;
+  width: 50%;
+  vertical-align:top;
+  padding: 2%;
+  margin: 2%;
+}
+
+button {
+  border: grey;
+  border-style: solid;
+  border-width: 1px;
+  background-color: white;
+  color: grey;
+  padding: 15px 20px;
+  text-align: center;
+  display: inline-block;
+  font-size: 12px;
+  margin: 2px;
+  outline: none;
+}
+
+button:hover {
+  outline: none;
+}
+
+button:active {
+  background-color: grey;
+  color: white;
+  outline: none;
 }
