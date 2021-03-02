@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 
+import IndReview from './IndReview';
+
 class Reviews extends React.Component {
   constructor(props) {
     super(props);
@@ -27,9 +29,7 @@ class Reviews extends React.Component {
     let { display, sort } = this.state;
     const renderTwo = this.renderTwo.bind(this);
     display = display ? display.map((review) => (
-      <h3>
-        {review.summary}
-      </h3>
+      <IndReview review={review} />
     )) : null;
     return (
       <div>
