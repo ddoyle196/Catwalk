@@ -110,11 +110,7 @@ const Question = class extends React.PureComponent {
       fixedCall = `/questions/${id}/answers?page=${1}&count=${count * page}`;
     }
 
-    axios.get(fixedCall, {
-      headers: {
-        Authorization: GITHUB_API_KEY,
-      },
-    })
+    axios.get(fixedCall)
       .then((response) => {
         if (response.data.results.length === 0) {
           this.setState({

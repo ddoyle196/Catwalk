@@ -99,11 +99,7 @@ const QuestionsAnswers = class extends React.PureComponent {
 
   handleSubmitQuestion() {
     const { newQuestion } = this.state;
-    axios.post(`${urlQuestions}`, newQuestion, {
-      headers: {
-        Authorization: GITHUB_API_KEY,
-      },
-    })
+    axios.post('/questions', newQuestion)
       .then((result) => {
         if (result.status === 201) {
           alert('Question Submited Successfully'); // Change later to a success modal
@@ -126,11 +122,7 @@ const QuestionsAnswers = class extends React.PureComponent {
     if (type === 'refresh') {
       fixedCall = `/questions?product_id=${productId}&page=${1}&count=${count * page}`;
     }
-    axios.get(fixedCall, {
-      headers: {
-        Authorization: GITHUB_API_KEY,
-      },
-    })
+    axios.get(fixedCall)
       .then((response) => {
         if (response.data.results.length === 0) {
           this.setState({

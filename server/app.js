@@ -27,6 +27,9 @@ app.get('/questions', (req, res) => {
   })
     .then((response) => {
       res.status(200).json(response.data);
+    })
+    .catch(() => {
+      res.status(404).send('Invalid');
     });
 });
 
@@ -38,6 +41,23 @@ app.get('/questions/:productId/answers', (req, res) => {
   })
     .then((response) => {
       res.status(200).json(response.data);
+    })
+    .catch(() => {
+      res.status(404).send('Invalid');
+    });
+});
+
+app.post('/questions', (req, res) => {
+  axios.post(`${urlQuestions}`, req.body, {
+    headers: {
+      Authorization: GITHUB_API_KEY,
+    },
+  })
+    .then(() => {
+      res.status(201).send('Created');
+    })
+    .catch(() => {
+      res.status(404).send('Invalid');
     });
 });
 
