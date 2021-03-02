@@ -125,6 +125,7 @@
 
 .style-circle {
   cursor: pointer;
+  position: relative;
   height: 3em;
   width: 3em;
   border: 1px solid black;
@@ -132,6 +133,28 @@
   margin-right: 1em;
   margin-bottom: 1em;
 }
+
+.style-circle:focus {
+  outline: none;
+}
+
+.selected-check-background {
+  float: right;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background-color: white;
+}
+
+.selected-check-container {
+  width: 16px;
+  height: 16px;
+  position: absolute;
+  top: -1px;
+  right: -1px;
+  border-radius: 50%;
+}
+
 
 /******* QUESTIONS AND ANSWERS *******/
 

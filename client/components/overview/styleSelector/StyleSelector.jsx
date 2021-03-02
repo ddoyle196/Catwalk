@@ -1,7 +1,10 @@
 import React from 'react';
+import { Icon } from '@iconify/react';
+import checkCircleOutline from '@iconify-icons/mdi/check-circle-outline';
+
 import PropTypes from 'prop-types';
 
-const StyleSelector = ({ styles, selectedStyle }) => {
+const StyleSelector = ({ styles, selectedStyle, updateSelectedStyle }) => {
   let keyCount = 0;
   const colors = [];
   const styleCircles = [];
@@ -10,7 +13,25 @@ const StyleSelector = ({ styles, selectedStyle }) => {
       colors.push(s.name);
       keyCount += 1;
       styleCircles.push(
-        <div key={keyCount} className="style-circle" style={{ backgroundColor: s.name }} />,
+        <div
+          onClick={() => updateSelectedStyle(s.name)}
+          onKeyDown={() => updateSelectedStyle(s.name)}
+          role="button"
+          tabIndex="0"
+          aria-label={`Select ${s.name} style`}
+          key={keyCount}
+          className="style-circle"
+          style={{ backgroundColor: s.name }}
+        >
+          {s.name === selectedStyle && (
+            <span>
+              <span className="selected-check-background" />
+              <span className="selected-check-container">
+                <Icon icon={checkCircleOutline} />
+              </span>
+            </span>
+          )}
+        </div>,
       );
     }
   });
@@ -35,6 +56,7 @@ const StyleSelector = ({ styles, selectedStyle }) => {
 StyleSelector.propTypes = {
   styles: PropTypes.arrayOf(PropTypes.object).isRequired,
   selectedStyle: PropTypes.string.isRequired,
+  updateSelectedStyle: PropTypes.func.isRequired,
 };
 
 export default StyleSelector;

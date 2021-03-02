@@ -16,7 +16,8 @@ class Overview extends React.Component {
       ratings: null,
       selectedStyle: null,
     };
-    this.addToCartHandler.bind(this);
+    this.addToCartHandler = this.addToCartHandler.bind(this);
+    this.updateSelectedStyle = this.updateSelectedStyle.bind(this);
   }
 
   componentDidMount() {
@@ -57,11 +58,25 @@ class Overview extends React.Component {
     console.log('Add to cart handler was clicked!');
   }
 
+  // eslint-disable-next-line class-methods-use-this
+  updateSelectedStyle(name) {
+    this.setState({
+      selectedStyle: name,
+    });
+  }
+
   render() {
-    const { product, styles, ratings, selectedStyle } = this.state;
+    const {
+      product,
+      styles,
+      ratings,
+      selectedStyle,
+    } = this.state;
+
     if (product === null || styles === null || ratings === null || selectedStyle === null) {
       return null;
     }
+
     return (
       <div className="overview-container">
         <div className="overview-top-container">
@@ -70,7 +85,11 @@ class Overview extends React.Component {
           </div>
           <div className="overview-top-right-container">
             <SideProductInfo product={product} ratings={ratings} />
-            <StyleSelector styles={styles} selectedStyle={selectedStyle} />
+            <StyleSelector
+              styles={styles}
+              selectedStyle={selectedStyle}
+              updateSelectedStyle={this.updateSelectedStyle}
+            />
             <AddToCart addToCartHandler={this.addToCartHandler} />
           </div>
         </div>
