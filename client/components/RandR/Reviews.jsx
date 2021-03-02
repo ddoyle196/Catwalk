@@ -44,5 +44,5 @@ class Reviews extends React.Component {
 // Reviews.propTypes = {
 //   reviews: PropTypes.array.isRequired,
 // };
-
+//
 export default Reviews;
