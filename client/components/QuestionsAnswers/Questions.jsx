@@ -16,12 +16,14 @@ const Question = class extends React.PureComponent {
       helpfulness: false,
       page: 1,
       count: 2,
+      haveMoreAnswers: true,
     };
 
     this.getAnswersFromQuestionId = this.getAnswersFromQuestionId.bind(this);
     this.AddQuestionHelpfulness = this.AddQuestionHelpfulness.bind(this);
     this.handleAnswerHelpfulness = this.handleAnswerHelpfulness.bind(this);
     this.handleMoreAnswers = this.handleMoreAnswers.bind(this);
+    this.AddAnswerButton = this.AddAnswerButton.bind(this);
   }
 
   componentDidMount() {
@@ -72,6 +74,11 @@ const Question = class extends React.PureComponent {
       },
     })
       .then((response) => {
+        if (response.data.results.length === 0) {
+          this.setState({
+            haveMoreAnswers: false,
+          });
+        }
         if (type === 'get') {
           const newAnswers = [...answers, ...response.data.results];
           this.setState({
@@ -87,6 +94,23 @@ const Question = class extends React.PureComponent {
       .catch((err) => {
         console.log(err); // Create error boundary
       });
+  }
+
+  AddAnswerButton() {
+    const { haveMoreAnswers } = this.state;
+    if (haveMoreAnswers) {
+      return (
+        <div>
+          <button
+            type="button"
+            onClick={this.handleMoreAnswers}
+          >
+            More Answers
+          </button>
+        </div>
+      );
+    }
+    return null;
   }
 
   AddQuestionHelpfulness() {
@@ -156,14 +180,7 @@ const Question = class extends React.PureComponent {
             />
           ))}
         </div>
-        <div>
-          <button
-            type="button"
-            onClick={this.handleMoreAnswers}
-          >
-            More Answers
-          </button>
-        </div>
+        {this.AddAnswerButton()}
       </div>
     );
   }
