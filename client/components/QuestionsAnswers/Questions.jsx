@@ -3,10 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import Answers from './Answers';
-import { GITHUB_API_KEY } from '../../../config';
 import QAModal from './QAModal';
-
-const urlAnswers = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe/qa/answers/';
 
 const Question = class extends React.PureComponent {
   constructor(props) {
@@ -50,11 +47,7 @@ const Question = class extends React.PureComponent {
   }
 
   handleAnswerHelpfulness(id) {
-    axios.put(`${urlAnswers + id}/helpful`, '', {
-      headers: {
-        Authorization: GITHUB_API_KEY,
-      },
-    })
+    axios.put(`/answers/${id}/helpful`)
       .then((result) => {
         if (result.status === 204) {
           this.getAnswersFromQuestionId('refresh'); // Check
@@ -85,11 +78,7 @@ const Question = class extends React.PureComponent {
   handleSubmitAnswerToQuestion() {
     const { newAnswer } = this.state;
     const { id } = this.props;
-    axios.post(`/questions/${id}/answers`, newAnswer, {
-      headers: {
-        Authorization: GITHUB_API_KEY,
-      },
-    })
+    axios.post(`/questions/${id}/answers`, newAnswer)
       .then((result) => {
         if (result.status === 201) {
           alert('Answer Submited Successfully'); // Change later to a success modal

@@ -1,11 +1,9 @@
 import React from 'react';
 import axios from 'axios';
 
-import { GITHUB_API_KEY } from '../../../config';
 import Question from './Questions';
 import QAModal from './QAModal';
 
-const urlQuestions = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe/qa/questions/'; // productId comes from Props
 const pId = 19378;
 
 const QuestionsAnswers = class extends React.PureComponent {
@@ -82,11 +80,7 @@ const QuestionsAnswers = class extends React.PureComponent {
   }
 
   handleQuestionHelpfulness(id) {
-    axios.put(`${urlQuestions + id}/helpful`, '', {
-      headers: {
-        Authorization: GITHUB_API_KEY,
-      },
-    })
+    axios.put(`/questions/${id}/helpful`, '')
       .then((result) => {
         if (result.status === 204) {
           this.getQuestionListById(pId, 'refresh'); // Check

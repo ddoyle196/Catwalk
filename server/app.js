@@ -75,6 +75,62 @@ app.post('/questions/:productId/answers', (req, res) => {
     });
 });
 
+app.put('/questions/:productId/helpful', (req, res) => {
+  axios.put(`${urlQuestions + req.params.productId}/helpful`, '', {
+    headers: {
+      Authorization: GITHUB_API_KEY,
+    },
+  })
+    .then(() => {
+      res.status(204).send('No Content');
+    })
+    .catch(() => {
+      res.status(404).send('Invalid');
+    });
+});
+
+app.put('/questions/:productId/report', (req, res) => {
+  axios.put(`${urlQuestions + req.params.productId}/report`, '', {
+    headers: {
+      Authorization: GITHUB_API_KEY,
+    },
+  })
+    .then(() => {
+      res.status(204).send('No Content');
+    })
+    .catch(() => {
+      res.status(404).send('Invalid');
+    });
+});
+
+app.put('/answers/:answerId/helpful', (req, res) => {
+  axios.put(`${urlAnswers + req.params.answerId}/helpful`, '', {
+    headers: {
+      Authorization: GITHUB_API_KEY,
+    },
+  })
+    .then(() => {
+      res.status(204).send('No Content');
+    })
+    .catch(() => {
+      res.status(404).send('Invalid');
+    });
+});
+
+app.put('/answers/:answerId/report', (req, res) => {
+  axios.put(`${urlAnswers + req.params.answerId}/report`, '', {
+    headers: {
+      Authorization: GITHUB_API_KEY,
+    },
+  })
+    .then(() => {
+      res.status(204).send('No Content');
+    })
+    .catch(() => {
+      res.status(404).send('Invalid');
+    });
+});
+
 app.listen(port, () => {
   // eslint-disable-next-line no-console
   console.log('Listening on port ', port);
