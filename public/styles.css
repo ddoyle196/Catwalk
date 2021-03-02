@@ -2,7 +2,7 @@
   box-sizing: border-box;
 }
 
-/******* OVERALL FONTS ********/
+/******* PROJECT CSS ********/
 /*
 
 font-family: 'Raleway', sans-serif;
@@ -14,6 +14,10 @@ body{
   font-family: 'Arial', sans-serif;
   width: 70%;
   margin: auto;
+}
+
+::placeholder{
+  color: rgb(71, 71, 71);
 }
 
 /******* OVERVIEW WIDGET *******/
@@ -251,6 +255,13 @@ body{
   display: inline;
   float: left;
   width: 2%;
+  margin-bottom: 1%;
+}
+
+.qa-box .qa-question-box .qa-answer-box .qa-answer-body {
+  display: inline;
+  float: left;
+  width: 98%;
   margin-bottom: 1%;
 }
 

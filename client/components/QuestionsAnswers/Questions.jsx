@@ -174,7 +174,9 @@ const Question = class extends React.PureComponent {
           </div>
           <div className="qa-question-body">
             <span>
-              { ` ${question_body}`}
+              <b>
+                { ` ${question_body}`}
+              </b>
             </span>
           </div>
           <div className="qa-questions-options ">
