@@ -126,7 +126,7 @@ const QuestionsAnswers = class extends React.PureComponent {
     if (type === 'refresh') {
       fixedCall = `${urlQuestions}?product_id=${productId}&page=${1}&count=${count * page}`;
     }
-    axios.get(fixedCall, {
+    axios.get('/questions?product_id=19378&page=1&count=4', {
       headers: {
         Authorization: GITHUB_API_KEY,
       },
