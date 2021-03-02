@@ -2,41 +2,39 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 
-class Reviews extends React.PureComponent {
+class Reviews extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      reviews: props.reviews,
-      displayCount: 0,
-      remaining: props.reviews.length,
+      reviews: props.reviews.results,
+      displayCount: 2,
+      display: props.reviews.results.slice(0, 2),
     };
-  }
-
-  componentDidMount() {
-    this.renderTwo();
   }
 
   renderTwo() {
     const { reviews } = this.state;
-    let { displayCount, remaining } = this.state;
-    this.setState({ displayCount: displayCount += 2, remaining: remaining -= 2 });
-    const section = reviews.slice(0, displayCount);
-    const RL = section.map((review) => (
-      <h3>
-        {review.summary}
-      </h3>
-    ));
-    ReactDOM.render(RL, document.getElementById('reviewList'));
+    let { displayCount } = this.state;
+    this.setState({
+      displayCount: displayCount += 2,
+      display: reviews.slice(0, displayCount),
+    });
   }
 
   render() {
-    const { remaining } = this.state;
+    const { reviews, displayCount } = this.state;
+    let { display } = this.state;
     const renderTwo = this.renderTwo.bind(this);
+    display = display ? display.map((review) => (
+      <h3>
+        {review.summary}
+      </h3>
+    )) : null;
     return (
       <div>
         <div> Reviews </div>
-        <div id="reviewList" />
-        {remaining > 0 ? <button type="button" onClick={renderTwo}>More Reviews</button> : null}
+        <div id="reviewList">{display}</div>
+        {reviews.length - displayCount > 0 ? <button type="button" onClick={renderTwo}>More Reviews</button> : null}
       </div>
     );
   }

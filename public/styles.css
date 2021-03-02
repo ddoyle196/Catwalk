@@ -4,11 +4,13 @@
 
 /* RATINGS AND REVIEWS */
 .histogramBlock {
+  display: inline-block;
   width: 30%;
   margin: 2.5%;
 }
 
 .histogramBlock {
-  width: 60%;
   margin: 2.5%;
+  display: inline-block;
+  width: 60%;
 }
