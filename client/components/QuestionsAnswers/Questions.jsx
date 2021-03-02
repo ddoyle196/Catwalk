@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import Answers from './Answers';
 import { GITHUB_API_KEY } from '../../../config';
+import QAModal from './QAModal';
 
 const urlQuestions = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe/qa/questions/'; // productId comes from Props
 const urlAnswers = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe/qa/answers/';
@@ -17,6 +18,7 @@ const Question = class extends React.PureComponent {
       page: 1,
       count: 2,
       haveMoreAnswers: true,
+      showAnswerModal: false,
     };
 
     this.getAnswersFromQuestionId = this.getAnswersFromQuestionId.bind(this);
@@ -24,6 +26,7 @@ const Question = class extends React.PureComponent {
     this.handleAnswerHelpfulness = this.handleAnswerHelpfulness.bind(this);
     this.handleMoreAnswers = this.handleMoreAnswers.bind(this);
     this.AddAnswerButton = this.AddAnswerButton.bind(this);
+    this.handleCloseModal = this.handleCloseModal.bind(this);
   }
 
   componentDidMount() {
@@ -54,6 +57,12 @@ const Question = class extends React.PureComponent {
       .catch((err) => {
         console.log(err);
       });
+  }
+
+  handleCloseModal() {
+    this.setState({
+      showAnswerModal: false,
+    });
   }
 
   getAnswersFromQuestionId(type) {
@@ -124,9 +133,15 @@ const Question = class extends React.PureComponent {
     }
   }
 
+  showAnswerModal() {
+    this.setState({
+      showAnswerModal: true,
+    });
+  }
+
   render() {
     const { question } = this.props;
-    const { answers } = this.state;
+    const { answers, showAnswerModal } = this.state;
     const {
       question_body,
       question_helpfulness,
@@ -161,7 +176,13 @@ const Question = class extends React.PureComponent {
               </div>
               <div className="question-format reset">
                 <span>
-                  <u>
+                  <u
+                    className="pointer"
+                    onClick={() => this.showAnswerModal()}
+                    onKeyDown={this.handleButtonClick}
+                    role="button"
+                    tabIndex={0}
+                  >
                     Add Answer
                   </u>
                 </span>
@@ -181,6 +202,9 @@ const Question = class extends React.PureComponent {
           ))}
         </div>
         {this.AddAnswerButton()}
+        <QAModal showModal={showAnswerModal} handleCloseModal={this.handleCloseModal}>
+          <span>HI</span>
+        </QAModal>
       </div>
     );
   }
