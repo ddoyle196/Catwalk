@@ -6,7 +6,6 @@ import Answers from './Answers';
 import { GITHUB_API_KEY } from '../../../config';
 import QAModal from './QAModal';
 
-const urlQuestions = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe/qa/questions/'; // productId comes from Props
 const urlAnswers = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe/qa/answers/';
 
 const Question = class extends React.PureComponent {
@@ -86,7 +85,7 @@ const Question = class extends React.PureComponent {
   handleSubmitAnswerToQuestion() {
     const { newAnswer } = this.state;
     const { id } = this.props;
-    axios.post(`${urlQuestions + id}/answers`, newAnswer, {
+    axios.post(`/questions/${id}/answers`, newAnswer, {
       headers: {
         Authorization: GITHUB_API_KEY,
       },

@@ -6,7 +6,7 @@ const { GITHUB_API_KEY } = require('../config');
 const app = express();
 const port = 3000;
 
-const urlQuestions = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe/qa/questions/'; // productId comes from Props
+const urlQuestions = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe/qa/questions/';
 const urlAnswers = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe/qa/answers/';
 const pId = 19378;
 
@@ -49,6 +49,20 @@ app.get('/questions/:productId/answers', (req, res) => {
 
 app.post('/questions', (req, res) => {
   axios.post(`${urlQuestions}`, req.body, {
+    headers: {
+      Authorization: GITHUB_API_KEY,
+    },
+  })
+    .then(() => {
+      res.status(201).send('Created');
+    })
+    .catch(() => {
+      res.status(404).send('Invalid');
+    });
+});
+
+app.post('/questions/:productId/answers', (req, res) => {
+  axios.post(`${urlQuestions + req.params.productId}/answers`, req.body, {
     headers: {
       Authorization: GITHUB_API_KEY,
     },
