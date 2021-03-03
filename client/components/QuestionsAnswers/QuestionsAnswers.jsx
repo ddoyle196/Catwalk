@@ -133,6 +133,11 @@ const QuestionsAnswers = class extends React.PureComponent {
   handleCloseModal() {
     this.setState({
       showQuestionModal: false,
+      validateQuestionInput: {
+        name: true,
+        email: true,
+        body: true,
+      },
     });
   }
 
