@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import StarRating from '../overview/productInfo/StarRating';
+import { Charts, TotalRating } from './BarCharts';
 
 class Histograms extends React.Component {
   constructor(props) {
@@ -17,9 +18,9 @@ class Histograms extends React.Component {
     if (ratings) {
       return (
         <div className="ratingSummary">
-          <h2 className="ratingLarge">3.5</h2>
+          <h2 className="ratingLarge">{TotalRating(ratings)}</h2>
           <div className="histoStars"><StarRating ratings={ratings} /></div>
-          <div className="barCharts"><BarCharts ratings={ratings} /></div>
+          {/* <div className="barCharts"><BarCharts ratings={ratings} /></div> */}
         </div>
       );
     }

@@ -12,7 +12,7 @@ class RandR extends React.PureComponent {
       ratings: null,
       productId: props.productId,
       page: 1,
-      count: 1000,
+      count: 10,
       reviews: null,
       sort: 'relevant',
     };

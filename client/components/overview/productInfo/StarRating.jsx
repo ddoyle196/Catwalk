@@ -26,15 +26,14 @@ const StarRating = ({ ratings }) => {
   let whiteStars = (5 - blackStars);
   const stars = [];
 
-  while (blackStars > 0) {
-    console.log(blackStars);
-    if (blackStars > 1) {
+  while (blackStars > 0.00) {
+    if (blackStars >= 1.00) {
       stars.push(<InlineIcon key={blackStars} icon={Q4Star} />);
       blackStars -= 1.00;
     } else if (blackStars >= 0.75) {
       stars.push(<InlineIcon key={blackStars} icon={Q3Star} />);
       blackStars -= 0.75;
-    } else if (blackStars >= 0.5) {
+    } else if (blackStars >= 0.50) {
       stars.push(<InlineIcon key={blackStars} icon={Q2Star} />);
       blackStars -= 0.50;
     } else if (blackStars >= 0.25) {
@@ -42,9 +41,9 @@ const StarRating = ({ ratings }) => {
       blackStars -= 0.25;
     }
   }
-  while (whiteStars > 1) {
+  while (whiteStars >= 1) {
     stars.push(<InlineIcon key={whiteStars - 1} icon={Q0Star} />);
-    whiteStars -= 1;
+    whiteStars -= 1.00;
   }
 
   return (

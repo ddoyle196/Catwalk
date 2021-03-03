@@ -9,7 +9,7 @@ const App = () => (
   <div>
     <Overview />
     <QuestionsAnswers />
-    <RandR productId={19379} />
+    <RandR productId={19378} />
   </div>
 );
 
