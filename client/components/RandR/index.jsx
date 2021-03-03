@@ -12,9 +12,9 @@ class RandR extends React.PureComponent {
       ratings: null,
       productId: props.productId,
       page: 1,
-      count: 5,
+      count: 1000,
       reviews: null,
-      sort: 'newest',
+      sort: 'relevant',
     };
   }
 
@@ -25,7 +25,7 @@ class RandR extends React.PureComponent {
 
   updateMetaData() {
     const { productId } = this.state;
-    let { ratings } = this.state;
+    const { ratings } = this.state;
     axios.get(`metadata/${productId}`)
       .then((r) => {
         this.setState({
@@ -39,13 +39,13 @@ class RandR extends React.PureComponent {
     const {
       productId, page, count, sort,
     } = this.state;
-    let { reviews } = this.state;
+    const { reviews } = this.state;
 
     const params = {
-      page: page,
-      count: count,
-      sort: sort,
-      productId: productId,
+      page,
+      count,
+      sort,
+      productId,
     };
 
     axios.get('http://localhost:3000/reviews', { params })
@@ -58,6 +58,12 @@ class RandR extends React.PureComponent {
 
   render() {
     const { reviews, ratings, sort } = this.state;
+    let voteCount = 0;
+    if (ratings) {
+      for (const key in ratings.ratings) {
+      voteCount += Number(ratings.ratings[key]);
+      }
+    }
     return (
       <div className="r-box">
         <div className="headerBlock">RATINGS & REVIEWS</div>
@@ -65,7 +71,13 @@ class RandR extends React.PureComponent {
           {ratings ? <Histograms ratings={ratings} /> : null}
         </div>
         <div className="reviewBlock">
-          {reviews ? <Reviews reviews={reviews} sort={sort} /> : null}
+          {reviews && ratings ? (
+            <Reviews
+              reviews={reviews}
+              sort={sort}
+              ratings={voteCount}
+            />
+          ) : null}
         </div>
       </div>
     );

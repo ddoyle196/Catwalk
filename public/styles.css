@@ -486,8 +486,7 @@ textarea {
 
 /* RATINGS AND REVIEWS */
 .r-box {
-  margin-top: 50px;
-  margin-bottom: 20px;
+  margin: 50px auto 20px auto;
   width: 80%;
 }
 
@@ -499,32 +498,54 @@ textarea {
 
 .histogramBlock {
   display: inline-block;
-  width: 25%;
+  width: 35%;
   vertical-align:top;
-  margin: 2%;
+  margin: 1% 0%;
 }
 
 .reviewBlock {
   display: inline-block;
-  width: 65%;
+  width: 55%;
   vertical-align:top;
   margin: 2%;
 }
 
 .reviewList {
   overflow-y: auto;
-  margin: 5%;
   max-height: 75vh;
+  margin: 10px 0px;
 }
 
 .revContainer {
   height: max-content;
+  margin: 20px 0px;
 }
 
 .Rheader {
   display: flex;
   margin: 2px;
 }
+
+.ratingSummary {
+    display: inline-block;
+    vertical-align:top;
+    margin: 2% 0%;
+}
+
+.ratingLarge {
+display: inline-block;
+margin-block: 0%;
+width: max-content;
+font-size: 300%;
+}
+
+.histoStars {
+  display: inline-block;
+  margin-block: 0%;
+  width: max-content;
+  vertical-align: top;
+  margin-left: 15px;
+  }
 
 .revRating {
   vertical-align: top;
@@ -556,6 +577,7 @@ textarea {
 
 .rBody {
   padding: 5px;
+  margin: 10px 0px;
 }
 
 .response {
