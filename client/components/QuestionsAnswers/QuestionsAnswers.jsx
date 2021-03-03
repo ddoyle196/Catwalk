@@ -234,12 +234,14 @@ const QuestionsAnswers = class extends React.PureComponent {
                 className="modal-input"
                 onChange={(e) => { this.inputChange(e, 'QModal'); }}
               />
-              <input
+              <textarea
                 type="text"
                 name="body"
                 placeholder="Add Your Question here..."
-                className="modal-input-long"
+                className="modal-input"
                 onChange={(e) => { this.inputChange(e, 'QModal'); }}
+                cols="40"
+                rows="5"
               />
             </div>
           </QAModal>
