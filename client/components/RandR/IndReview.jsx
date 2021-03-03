@@ -82,6 +82,7 @@ class IndReview extends React.Component {
     // const imageArray = review.photos ? review.photos.map((photo) => (
     //   <IndReview review={review} />
     // )) : null;
+    console.log(review.recommend);
 
     const indRating = { [review.rating]: '1' };
     return (
@@ -103,7 +104,7 @@ class IndReview extends React.Component {
           {cleanSummary}
           {' '}
         </div>
-        <div>{ }</div>
+
         <div className="rBody">
           {summarySpill}
           {bodyDisplay}
@@ -114,14 +115,24 @@ class IndReview extends React.Component {
           ) : null}
         </div>
 
-        <div>{review.recommend}</div>
+        <div>
+          {review.recommend ? (
+            <div className="recommendation">
+              <Icon icon={checkCircleOutline} />
+              {' '}
+              {'I recommend this product'}
+            </div>
+          ) : null}
+        </div>
 
-        {review.response ? (
-          <div className="response">
-            <div className="respHead">Response from Seller:</div>
-            <div>{review.response}</div>
-          </div>
-        ) : null}
+        <div>
+          {review.response ? (
+            <div className="response">
+              <div className="respHead">Response from Seller:</div>
+              <div>{review.response}</div>
+            </div>
+          ) : null}
+        </div>
 
         {/* <div className="question-format">
           <span>
