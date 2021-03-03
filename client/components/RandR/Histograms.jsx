@@ -19,6 +19,7 @@ class Histograms extends React.Component {
         <div className="ratingSummary">
           <h2 className="ratingLarge">3.5</h2>
           <div className="histoStars"><StarRating ratings={ratings} /></div>
+          <div className="barCharts"><BarCharts ratings={ratings} /></div>
         </div>
       );
     }

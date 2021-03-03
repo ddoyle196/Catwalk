@@ -2,19 +2,9 @@
 import React from 'react';
 import { InlineIcon } from '@iconify/react';
 
-import Q0Star from '@iconify-icons/fluent/star-20-regular';
-
-import Q1Star from '@iconify-icons/fluent/star-one-quarter-20-filled';
-
-import Q2Star from '@iconify-icons/fluent/star-half-20-filled';
-
-import Q3Star from '@iconify-icons/fluent/star-three-quarter-20-filled';
-
-import Q4Star from '@iconify-icons/fluent/star-20-filled';
-
 import PropTypes from 'prop-types';
 
-const StarRating = ({ ratings }) => {
+const BarCharts = ({ ratings }) => {
   let ratingTotal = 0;
   let voteCount = 0;
   // eslint-disable-next-line guard-for-in
@@ -55,7 +45,7 @@ const StarRating = ({ ratings }) => {
   );
 };
 
-StarRating.propTypes = {
+BarCharts.propTypes = {
   ratings: PropTypes.shape({
     1: PropTypes.string,
     2: PropTypes.string,
@@ -65,4 +55,4 @@ StarRating.propTypes = {
   }).isRequired,
 };
 
-export default StarRating;
+export default BarCharts;
