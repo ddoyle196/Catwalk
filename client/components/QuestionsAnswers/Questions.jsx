@@ -5,6 +5,11 @@ import axios from 'axios';
 import Answers from './Answers';
 import QAModal from './QAModal';
 
+const handleEmailValidation = (email) => {
+  const mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+  return !!email.match(mailformat);
+};
+
 const Question = class extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -20,6 +25,11 @@ const Question = class extends React.PureComponent {
         name: '',
         email: '',
       },
+      validateAnswerInput: {
+        name: true,
+        email: true,
+        body: true,
+      },
     };
 
     this.getAnswersFromQuestionId = this.getAnswersFromQuestionId.bind(this);
@@ -30,6 +40,7 @@ const Question = class extends React.PureComponent {
     this.handleCloseModal = this.handleCloseModal.bind(this);
     this.handleSubmitAnswerToQuestion = this.handleSubmitAnswerToQuestion.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.showValidationErrors = this.showValidationErrors.bind(this);
   }
 
   componentDidMount() {
@@ -78,12 +89,26 @@ const Question = class extends React.PureComponent {
   handleSubmitAnswerToQuestion() {
     const { newAnswer } = this.state;
     const { id } = this.props;
-    axios.post(`/questions/${id}/answers`, newAnswer)
-      .then((result) => {
-        if (result.status === 201) {
-          alert('Answer Submited Successfully'); // Change later to a success modal
-        }
+    const validateAnswer = {
+      name: newAnswer.name.length > 3,
+      body: newAnswer.body.length > 3,
+      email: newAnswer.email.length > 3 && handleEmailValidation(newAnswer.email),
+    };
+    if (validateAnswer.name && validateAnswer.body && validateAnswer.email) {
+      axios.post(`/questions/${id}/answers`, newAnswer)
+        .then((result) => {
+          if (result.status === 201) {
+            alert('Answer Submited Successfully'); // Change later to a success modal
+            this.setState({
+              showAnswerModal: false,
+            });
+          }
+        });
+    } else {
+      this.setState({
+        validateAnswerInput: validateAnswer,
       });
+    }
   }
 
   getAnswersFromQuestionId(type) {
@@ -159,13 +184,41 @@ const Question = class extends React.PureComponent {
     });
   }
 
+  showValidationErrors(input) {
+    const { validateAnswerInput } = this.state;
+    if (!validateAnswerInput[input]) {
+      if (input === 'email') {
+        return (
+          <div>
+            <span
+              className="modal-error-message"
+            >
+              {`Please enter an ${input} with the correct format`}
+            </span>
+          </div>
+        );
+      }
+      return (
+        <div>
+          <span
+            className="modal-error-message"
+          >
+            {`Please enter a ${input === 'body' ? 'question' : 'nickname'} with more than 3 letters`}
+          </span>
+        </div>
+      );
+    }
+    return null;
+  }
+
   render() {
     const { question, pName } = this.props;
-    const { answers, showAnswerModal } = this.state;
+    const { answers, showAnswerModal, validateAnswerInput } = this.state;
     const {
       question_body,
       question_helpfulness,
     } = question;
+    const { name, body, email } = validateAnswerInput;
     return (
       <div className="qa-question-box">
         <div className="qa-question-single">
@@ -242,10 +295,11 @@ const Question = class extends React.PureComponent {
                 type="text"
                 name="name"
                 placeholder="Example: jack543!"
-                className="modal-input"
+                className={`modal-input ${name ? '' : 'modal-input-error'}`}
                 onChange={this.handleInputChange}
                 maxLength="60"
               />
+              {this.showValidationErrors('name')}
               <span
                 className="modal-little-messages"
               >
@@ -262,10 +316,11 @@ const Question = class extends React.PureComponent {
                 type="text"
                 name="email"
                 placeholder="Example: jack@email.com"
-                className="modal-input"
+                className={`modal-input ${email ? '' : 'modal-input-error'}`}
                 onChange={this.handleInputChange}
                 maxLength="60"
               />
+              {this.showValidationErrors('email')}
               <span
                 className="modal-little-messages"
               >
@@ -282,12 +337,13 @@ const Question = class extends React.PureComponent {
                 type="text"
                 name="body"
                 placeholder="Add Your Answer here..."
-                className="modal-input"
+                className={`modal-input ${body ? '' : 'modal-input-error'}`}
                 onChange={this.handleInputChange}
                 cols="40"
                 rows="5"
                 maxLength="1000"
               />
+              {this.showValidationErrors('body')}
             </div>
           </div>
         </QAModal>
