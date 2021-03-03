@@ -3,6 +3,7 @@ import React from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import Modal from './Modal';
 
 const Answers = class extends React.PureComponent {
   constructor(props) {
@@ -10,6 +11,9 @@ const Answers = class extends React.PureComponent {
     this.state = {
       reported: false,
       helpfulness: false,
+      showNotificationModal: false,
+      notificationCode: '',
+      notificationMessage: '',
     };
     this.AddAnswerHelpfulness = this.AddAnswerHelpfulness.bind(this);
   }
@@ -23,9 +27,23 @@ const Answers = class extends React.PureComponent {
           });
         }
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
+        this.setState({
+          showNotificationModal: true,
+          notificationCode: 'error',
+          notificationMessage: 'There was an error in the server, please try later',
+        });
       });
+  }
+
+  handleCloseModal(modalType) {
+    if (modalType === 'notification') {
+      this.setState({
+        showNotificationModal: false,
+        notificationCode: '',
+        notificationMessage: '',
+      });
+    }
   }
 
   AddAnswerHelpfulness() {
@@ -41,7 +59,12 @@ const Answers = class extends React.PureComponent {
 
   render() {
     const { id, answer } = this.props;
-    const { reported } = this.state;
+    const {
+      reported,
+      showNotificationModal,
+      notificationCode,
+      notificationMessage,
+    } = this.state;
     const {
       body,
       answerer_name,
@@ -97,6 +120,15 @@ const Answers = class extends React.PureComponent {
             </span>
           </div>
         </div>
+        <Modal
+          showModal={showNotificationModal}
+          handleCloseModal={this.handleCloseModal}
+          handleSubmit={() => {}}
+          modalType="notification"
+          modalCode={notificationCode}
+        >
+          <span>{ notificationMessage }</span>
+        </Modal>
       </div>
     );
   }

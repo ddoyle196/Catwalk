@@ -5,7 +5,7 @@ import { Icon } from '@iconify/react';
 import magnifyIcon from '@iconify-icons/mdi/magnify';
 
 import Question from './Questions';
-import QAModal from './QAModal';
+import Modal from './Modal';
 
 const pId = 19378;
 const pName = 'Alberto Romper';
@@ -25,6 +25,9 @@ const QuestionsAnswers = class extends React.PureComponent {
       count: 4,
       haveMoreQuestions: true,
       showQuestionModal: false,
+      showNotificationModal: false,
+      notificationCode: '',
+      notificationMessage: '',
       newQuestion: {
         name: '',
         email: '',
@@ -101,8 +104,12 @@ const QuestionsAnswers = class extends React.PureComponent {
           this.getQuestionListById(pId, 'refresh'); // Check
         }
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
+        this.setState({
+          showNotificationModal: true,
+          notificationCode: 'error',
+          notificationMessage: 'There was an error in the server, please try later',
+        });
       });
   }
 
@@ -117,9 +124,11 @@ const QuestionsAnswers = class extends React.PureComponent {
       axios.post('/questions', newQuestion)
         .then((result) => {
           if (result.status === 201) {
-            alert('Question Submited Successfully'); // Change later to a success modal
             this.setState({
               showQuestionModal: false,
+              showNotificationModal: true,
+              notificationCode: 'success',
+              notificationMessage: 'Question Submited Successfully',
             });
           }
         });
@@ -130,15 +139,24 @@ const QuestionsAnswers = class extends React.PureComponent {
     }
   }
 
-  handleCloseModal() {
-    this.setState({
-      showQuestionModal: false,
-      validateQuestionInput: {
-        name: true,
-        email: true,
-        body: true,
-      },
-    });
+  handleCloseModal(modalType) {
+    if (modalType === 'submit') {
+      this.setState({
+        showQuestionModal: false,
+        validateQuestionInput: {
+          name: true,
+          email: true,
+          body: true,
+        },
+      });
+    }
+    if (modalType === 'notification') {
+      this.setState({
+        showNotificationModal: false,
+        notificationCode: '',
+        notificationMessage: '',
+      });
+    }
   }
 
   getQuestionListById(productId, type) {
@@ -171,8 +189,12 @@ const QuestionsAnswers = class extends React.PureComponent {
           });
         }
       })
-      .catch((err) => {
-        console.log(err); // Create error boundary
+      .catch(() => {
+        this.setState({
+          showNotificationModal: true,
+          notificationCode: 'error',
+          notificationMessage: 'There was an error in the server, please try later',
+        });
       });
   }
 
@@ -188,6 +210,12 @@ const QuestionsAnswers = class extends React.PureComponent {
   showQuestionModal() {
     this.setState({
       showQuestionModal: true,
+    });
+  }
+
+  showNotificationModal() {
+    this.setState({
+      showNotificationModal: true,
     });
   }
 
@@ -235,7 +263,14 @@ const QuestionsAnswers = class extends React.PureComponent {
   }
 
   render() {
-    const { questionsDisplayed, showQuestionModal, validateQuestionInput } = this.state;
+    const {
+      questionsDisplayed,
+      showQuestionModal,
+      validateQuestionInput,
+      showNotificationModal,
+      notificationCode,
+      notificationMessage,
+    } = this.state;
     const { name, body, email } = validateQuestionInput;
     return (
       <div className="qa-box">
@@ -272,10 +307,21 @@ const QuestionsAnswers = class extends React.PureComponent {
           >
             ADD A QUESTION +
           </button>
-          <QAModal
+          <Modal
+            showModal={showNotificationModal}
+            handleCloseModal={this.handleCloseModal}
+            handleSubmit={() => {}}
+            modalType="notification"
+            modalCode={notificationCode}
+          >
+            <span>{ notificationMessage }</span>
+          </Modal>
+          <Modal
             showModal={showQuestionModal}
             handleCloseModal={this.handleCloseModal}
             handleSubmit={this.handleSubmitQuestion}
+            modalType="submit"
+            modalCode=""
           >
             <div className="modal-title">
               <span>Ask Your Question!</span>
@@ -345,7 +391,7 @@ const QuestionsAnswers = class extends React.PureComponent {
                 {this.showValidationErrors('body')}
               </div>
             </div>
-          </QAModal>
+          </Modal>
         </div>
       </div>
     );
