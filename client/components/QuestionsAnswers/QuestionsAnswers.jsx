@@ -15,6 +15,8 @@ const handleEmailValidation = (email) => {
   return !!email.match(mailformat);
 };
 
+let apiCalls = 0;
+
 const QuestionsAnswers = class extends React.PureComponent {
   constructor() {
     super();
@@ -23,6 +25,7 @@ const QuestionsAnswers = class extends React.PureComponent {
       questionsList: [],
       page: 1,
       count: 4,
+      noQuestions: false,
       haveMoreQuestions: true,
       showQuestionModal: false,
       showNotificationModal: false,
@@ -161,7 +164,11 @@ const QuestionsAnswers = class extends React.PureComponent {
 
   getQuestionListById(productId, type) {
     let fixedCall;
-    const { questionsDisplayed, page, count } = this.state;
+    const {
+      questionsDisplayed,
+      page,
+      count,
+    } = this.state;
     if (type === 'get') {
       fixedCall = `/questions?product_id=${productId}&page=${page}&count=${count}`;
     }
@@ -170,7 +177,12 @@ const QuestionsAnswers = class extends React.PureComponent {
     }
     axios.get(fixedCall)
       .then((response) => {
-        if (response.data.results.length === 0) {
+        if (response.data.results.length === 0 && apiCalls === 0) {
+          this.setState({
+            haveMoreQuestions: false,
+            noQuestions: true,
+          });
+        } else if (response.data.results.length === 0) {
           this.setState({
             haveMoreQuestions: false,
           });
@@ -188,6 +200,7 @@ const QuestionsAnswers = class extends React.PureComponent {
             questionsList: response.data.results,
           });
         }
+        apiCalls += 1;
       })
       .catch(() => {
         this.setState({
@@ -270,6 +283,7 @@ const QuestionsAnswers = class extends React.PureComponent {
       showNotificationModal,
       notificationCode,
       notificationMessage,
+      noQuestions,
     } = this.state;
     const { name, body, email } = validateQuestionInput;
     return (
@@ -289,7 +303,7 @@ const QuestionsAnswers = class extends React.PureComponent {
             <Icon icon={magnifyIcon} width="20" height="20" />
           </div>
         </div>
-        <div className="qa-question-scroll">
+        <div className={`qa-question-scroll ${noQuestions ? 'no-display' : ''}`}>
           {questionsDisplayed.map((singleQuestion) => (
             <Question
               key={singleQuestion.question_id}
