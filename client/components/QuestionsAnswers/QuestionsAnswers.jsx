@@ -228,17 +228,29 @@ const QuestionsAnswers = class extends React.PureComponent {
               <input
                 type="text"
                 name="name"
-                placeholder="Name here..."
+                placeholder="Example: jackson11!"
                 className="modal-input"
                 onChange={(e) => { this.inputChange(e, 'QModal'); }}
+                maxLength="60"
               />
+              <span
+                className="modal-little-messages"
+              >
+                For privacy reasons, do not use your full name or email address
+              </span>
               <input
                 type="text"
                 name="email"
-                placeholder="Email here..."
+                placeholder="Why did you like the product or not?"
                 className="modal-input"
                 onChange={(e) => { this.inputChange(e, 'QModal'); }}
+                maxLength="60"
               />
+              <span
+                className="modal-little-messages"
+              >
+                For authentication reasons, you will not be emailed” will appear.
+              </span>
               <textarea
                 type="text"
                 name="body"

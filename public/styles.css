@@ -354,6 +354,10 @@ textarea {
   position: relative;
 }
 
+.modal .modal-content .modal-form .modal-little-messages {
+  font-size: 12px;
+}
+
 .modal .modal-content .modal-buttons{
   width: 50%;
   margin: 0 auto;
