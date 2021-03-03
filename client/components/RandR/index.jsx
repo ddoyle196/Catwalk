@@ -60,6 +60,7 @@ class RandR extends React.PureComponent {
     const { reviews, ratings, sort } = this.state;
     return (
       <div className="r-box">
+        <div className="headerBlock">RATINGS & REVIEWS</div>
         <div className="histogramBlock">
           {ratings ? <Histograms ratings={ratings} /> : null}
         </div>

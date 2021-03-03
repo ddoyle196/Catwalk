@@ -183,7 +183,7 @@ textarea {
 
 
 /******* QUESTIONS AND ANSWERS *******/
-.qa-box, .r-box{
+.qa-box {
   width: 80%;
   margin: auto;
 }
@@ -485,6 +485,11 @@ textarea {
 
 
 /* RATINGS AND REVIEWS */
+.r-box {
+  margin-top: 50px;
+  margin-bottom: 20px;
+  width: 80%;
+}
 
 .headerBlock {
   width: 100%;
