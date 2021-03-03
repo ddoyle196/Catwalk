@@ -3,24 +3,44 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { Icon } from '@iconify/react';
 import checkCircleOutline from '@iconify-icons/mdi/check-circle-outline';
-import StarRating from '../overview/productInfo/StarRating';
 import moment from 'moment';
+import StarRating from '../overview/productInfo/StarRating';
 
 class IndReview extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       bodyDisplay: props.review.body.slice(0, 249),
-      fullDisplay: false,
+      fullDisplay: !(props.review.body.length > 250),
     };
   }
 
   fullBody() {
+    const { review } = this.props;
     this.setState(
       {
-        bodyDisplay: props.review.body,
-        fullDisplay: true
-      });
+        bodyDisplay: review.body,
+        fullDisplay: true,
+      },
+    );
+  }
+
+  showPhotos() {
+    const { review } = this.props;
+
+    if (review.photos.length > 0) {
+      return (
+        review.photos.map((photo) => (
+          <ImageThumbnails
+            key={photo.id}
+            id={photo.id}
+            photo={photo}
+            showImageModal={this.showPhotosLarge}
+          />
+        ))
+      );
+    }
+    return null;
   }
 
   // handleAnswerReport(id) {
@@ -50,17 +70,18 @@ class IndReview extends React.Component {
 
   render() {
     const { Fragment } = React;
-    let { review } = this.props;
-    let { bodyDisplay } = this.state;
-    console.log(review);
+    const { review } = this.props;
+    const { bodyDisplay, fullDisplay } = this.state;
+    const fullBody = this.fullBody.bind(this);
+
     let cleanSummary = review.summary.slice(0, 60);
     cleanSummary = review.summary.length > 60 ? cleanSummary.concat('...') : cleanSummary;
 
-    let summarySpill = review.summary.length > 60 ? '...'.concat(review.summary.slice(60)) : null;
+    const summarySpill = review.summary.length > 60 ? '...'.concat(review.summary.slice(60)) : null;
 
-    let imageArray = review.photos ? review.photos.map((photo) => (
-      <IndReview review={review} />
-    )) : null;
+    // const imageArray = review.photos ? review.photos.map((photo) => (
+    //   <IndReview review={review} />
+    // )) : null;
 
     const indRating = { [review.rating]: '1' };
     return (
@@ -72,16 +93,25 @@ class IndReview extends React.Component {
           <div className="userDate">
             <Icon icon={checkCircleOutline} />
             {' '}
-            {review.reviewer_name}{', '}
+            {review.reviewer_name}
+            {', '}
             {moment(review.date).format('LL')}
           </div>
         </div>
 
-        <div className="summary">{cleanSummary} </div>
-
+        <div className="summary">
+          {cleanSummary}
+          {' '}
+        </div>
+        <div>{ }</div>
         <div className="rBody">
           {summarySpill}
           {bodyDisplay}
+          {!fullDisplay ? (
+            <div className="smallLink" onClick={() => { fullBody(); }}>
+              Show more
+            </div>
+          ) : null}
         </div>
 
         <div>{review.recommend}</div>
