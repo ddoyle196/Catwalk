@@ -365,6 +365,15 @@ textarea {
   position: relative;
 }
 
+.modal .modal-content .modal-form .modal-input-error {
+  border: 1px solid red;
+}
+
+.modal .modal-content .modal-form .modal-error-message {
+  font-size: 12px;
+  color: red;
+}
+
 .modal .modal-content .modal-form .modal-little-messages {
   font-size: 10px;
 }

@@ -276,7 +276,7 @@ const Question = class extends React.PureComponent {
               <span
                 className="modal-input-titles"
               >
-                Your Question: *
+                Your Answer: *
               </span>
               <textarea
                 type="text"

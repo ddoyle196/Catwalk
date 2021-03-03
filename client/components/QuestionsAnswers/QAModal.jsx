@@ -18,7 +18,6 @@ const QAModal = class extends React.PureComponent {
   submit() {
     const { handleSubmit } = this.props;
     handleSubmit();
-    this.closeModal();
   }
 
   showModal() {
