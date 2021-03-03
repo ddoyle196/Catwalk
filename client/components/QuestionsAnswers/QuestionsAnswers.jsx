@@ -1,10 +1,19 @@
 import React from 'react';
 import axios from 'axios';
+// npm install --save-dev @iconify/react @iconify-icons/mdi
+import { Icon } from '@iconify/react';
+import magnifyIcon from '@iconify-icons/mdi/magnify';
 
 import Question from './Questions';
-import QAModal from './QAModal';
+import Modal from '../shared/Modal';
 
 const pId = 19378;
+const pName = 'Alberto Romper';
+
+const handleEmailValidation = (email) => {
+  const mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+  return !!email.match(mailformat);
+};
 
 const QuestionsAnswers = class extends React.PureComponent {
   constructor() {
@@ -16,11 +25,19 @@ const QuestionsAnswers = class extends React.PureComponent {
       count: 4,
       haveMoreQuestions: true,
       showQuestionModal: false,
+      showNotificationModal: false,
+      notificationCode: '',
+      notificationMessage: '',
       newQuestion: {
         name: '',
         email: '',
         body: '',
         product_id: pId,
+      },
+      validateQuestionInput: {
+        name: true,
+        email: true,
+        body: true,
       },
     };
 
@@ -34,6 +51,7 @@ const QuestionsAnswers = class extends React.PureComponent {
     this.handleCloseModal = this.handleCloseModal.bind(this);
     this.inputChange = this.inputChange.bind(this);
     this.handleInputChangeSort = this.handleInputChangeSort.bind(this);
+    this.showValidationErrors = this.showValidationErrors.bind(this);
   }
 
   componentDidMount() {
@@ -86,25 +104,59 @@ const QuestionsAnswers = class extends React.PureComponent {
           this.getQuestionListById(pId, 'refresh'); // Check
         }
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
+        this.setState({
+          showNotificationModal: true,
+          notificationCode: 'error',
+          notificationMessage: 'There was an error in the server, please try later',
+        });
       });
   }
 
   handleSubmitQuestion() {
     const { newQuestion } = this.state;
-    axios.post('/questions', newQuestion)
-      .then((result) => {
-        if (result.status === 201) {
-          alert('Question Submited Successfully'); // Change later to a success modal
-        }
+    const validateQuestion = {
+      name: newQuestion.name.length > 3,
+      body: newQuestion.body.length > 3,
+      email: newQuestion.email.length > 3 && handleEmailValidation(newQuestion.email),
+    };
+    if (validateQuestion.name && validateQuestion.body && validateQuestion.email) {
+      axios.post('/questions', newQuestion)
+        .then((result) => {
+          if (result.status === 201) {
+            this.setState({
+              showQuestionModal: false,
+              showNotificationModal: true,
+              notificationCode: 'success',
+              notificationMessage: 'Question Submited Successfully',
+            });
+          }
+        });
+    } else {
+      this.setState({
+        validateQuestionInput: validateQuestion,
       });
+    }
   }
 
-  handleCloseModal() {
-    this.setState({
-      showQuestionModal: false,
-    });
+  handleCloseModal(modalType) {
+    if (modalType === 'submit-qa') {
+      this.setState({
+        showQuestionModal: false,
+        validateQuestionInput: {
+          name: true,
+          email: true,
+          body: true,
+        },
+      });
+    }
+    if (modalType === 'notification') {
+      this.setState({
+        showNotificationModal: false,
+        notificationCode: '',
+        notificationMessage: '',
+      });
+    }
   }
 
   getQuestionListById(productId, type) {
@@ -137,8 +189,12 @@ const QuestionsAnswers = class extends React.PureComponent {
           });
         }
       })
-      .catch((err) => {
-        console.log(err); // Create error boundary
+      .catch(() => {
+        this.setState({
+          showNotificationModal: true,
+          notificationCode: 'error',
+          notificationMessage: 'There was an error in the server, please try later',
+        });
       });
   }
 
@@ -157,84 +213,188 @@ const QuestionsAnswers = class extends React.PureComponent {
     });
   }
 
-  AddMoreQuestionButton() {
-    const { haveMoreQuestions } = this.state;
-    if (haveMoreQuestions) {
+  showNotificationModal() {
+    this.setState({
+      showNotificationModal: true,
+    });
+  }
+
+  showValidationErrors(input) {
+    const { validateQuestionInput } = this.state;
+    if (!validateQuestionInput[input]) {
+      if (input === 'email') {
+        return (
+          <div>
+            <span
+              className="modal-error-message"
+            >
+              {`Please enter an ${input} with the correct format`}
+            </span>
+          </div>
+        );
+      }
       return (
         <div>
-          <button
-            type="button"
-            onClick={this.handleMoreQuestions}
+          <span
+            className="modal-error-message"
           >
-            More Answered Questions
-          </button>
+            {`Please enter a ${input === 'body' ? 'question' : 'nickname'} with more than 3 letters`}
+          </span>
         </div>
       );
     }
     return null;
   }
 
+  AddMoreQuestionButton() {
+    const { haveMoreQuestions } = this.state;
+    if (haveMoreQuestions) {
+      return (
+        <button
+          className="qa-buttons"
+          type="button"
+          onClick={this.handleMoreQuestions}
+        >
+          MORE ANSWERED QUESTIONS
+        </button>
+      );
+    }
+    return null;
+  }
+
   render() {
-    const { questionsDisplayed, showQuestionModal } = this.state;
+    const {
+      questionsDisplayed,
+      showQuestionModal,
+      validateQuestionInput,
+      showNotificationModal,
+      notificationCode,
+      notificationMessage,
+    } = this.state;
+    const { name, body, email } = validateQuestionInput;
     return (
-      <div>
-        <div>
-          <span>Questions & Answers</span>
+      <div className="qa-box">
+        <div className="qa-title">
+          <span>QUESTIONS & ANSWERS</span>
         </div>
-        <div>
+        <div className="qa-question-input">
           <input
             type="text"
             name="name"
-            placeholder="Have a question? Search for answers..."
-            className="question-inputbox"
+            placeholder="HAVE A QUESTION? SEARCH FOR ANSWERS..."
+            className="qa-input"
             onChange={(e) => { this.inputChange(e, 'SortQuestions'); }}
           />
-        </div>
-        {questionsDisplayed.map((singleQuestion) => (
-          <Question
-            key={singleQuestion.question_id}
-            question={singleQuestion}
-            id={singleQuestion.question_id}
-            handleQuestionHelpfulness={this.handleQuestionHelpfulness}
-          />
-        ))}
-        {this.AddMoreQuestionButton()}
-        <button
-          type="button"
-          onClick={this.showQuestionModal}
-        >
-          Add a Question+
-        </button>
-        <QAModal
-          showModal={showQuestionModal}
-          handleCloseModal={this.handleCloseModal}
-          handleSubmit={this.handleSubmitQuestion}
-        >
-          <span>Add a Question here!</span>
-          <div>
-            <input
-              type="text"
-              name="name"
-              placeholder="Name here..."
-              className="modal-input"
-              onChange={(e) => { this.inputChange(e, 'QModal'); }}
-            />
-            <input
-              type="text"
-              name="email"
-              placeholder="Email here..."
-              className="modal-input"
-              onChange={(e) => { this.inputChange(e, 'QModal'); }}
-            />
-            <input
-              type="text"
-              name="body"
-              placeholder="Add Your Question here..."
-              className="modal-input"
-              onChange={(e) => { this.inputChange(e, 'QModal'); }}
-            />
+          <div className="qa-search-icon">
+            <Icon icon={magnifyIcon} width="20" height="20" />
           </div>
-        </QAModal>
+        </div>
+        <div className="qa-question-scroll">
+          {questionsDisplayed.map((singleQuestion) => (
+            <Question
+              key={singleQuestion.question_id}
+              question={singleQuestion}
+              id={singleQuestion.question_id}
+              pName={pName}
+              handleQuestionHelpfulness={this.handleQuestionHelpfulness}
+            />
+          ))}
+        </div>
+        <div className="qa-options">
+          {this.AddMoreQuestionButton()}
+          <button
+            className="qa-buttons"
+            type="button"
+            onClick={this.showQuestionModal}
+          >
+            ADD A QUESTION +
+          </button>
+          <Modal
+            showModal={showNotificationModal}
+            handleCloseModal={this.handleCloseModal}
+            handleSubmit={() => {}}
+            modalType="notification"
+            modalCode={notificationCode}
+          >
+            <span className="modal-text">{ notificationMessage }</span>
+          </Modal>
+          <Modal
+            showModal={showQuestionModal}
+            handleCloseModal={this.handleCloseModal}
+            handleSubmit={this.handleSubmitQuestion}
+            modalType="submit-qa"
+            modalCode=""
+          >
+            <div className="modal-title">
+              <span>Ask Your Question!</span>
+            </div>
+            <div className="modal-subtitle">
+              <span>{`About the ${pName}`}</span>
+            </div>
+            <div className="modal-form">
+              <div className="modal-name">
+                <span
+                  className="modal-input-titles"
+                >
+                  What is your nickname: *
+                </span>
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Example: jackson11!"
+                  className={`modal-input ${name ? '' : 'modal-input-error'}`}
+                  onChange={(e) => { this.inputChange(e, 'QModal'); }}
+                  maxLength="60"
+                />
+                {this.showValidationErrors('name')}
+                <span
+                  className="modal-little-messages"
+                >
+                  For privacy reasons, do not use your full name or email address
+                </span>
+              </div>
+              <div className="modal-email">
+                <span
+                  className="modal-input-titles"
+                >
+                  Your email: *
+                </span>
+                <input
+                  type="text"
+                  name="email"
+                  placeholder="Why did you like the product or not?"
+                  className={`modal-input ${email ? '' : 'modal-input-error'}`}
+                  onChange={(e) => { this.inputChange(e, 'QModal'); }}
+                  maxLength="60"
+                />
+                {this.showValidationErrors('email')}
+                <span
+                  className="modal-little-messages"
+                >
+                  For authentication reasons, you will not be emailed” will appear.
+                </span>
+              </div>
+              <div className="modal-body">
+                <span
+                  className="modal-input-titles"
+                >
+                  Your Question: *
+                </span>
+                <textarea
+                  type="text"
+                  name="body"
+                  placeholder="Add Your Question here..."
+                  className={`modal-input ${body ? '' : 'modal-input-error'}`}
+                  onChange={(e) => { this.inputChange(e, 'QModal'); }}
+                  cols="40"
+                  rows="5"
+                  maxLength="1000"
+                />
+                {this.showValidationErrors('body')}
+              </div>
+            </div>
+          </Modal>
+        </div>
       </div>
     );
   }
