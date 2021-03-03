@@ -16,10 +16,12 @@ const Answers = class extends React.PureComponent {
       notificationMessage: '',
     };
     this.AddAnswerHelpfulness = this.AddAnswerHelpfulness.bind(this);
+    this.handleAnswerReport = this.handleAnswerReport.bind(this);
+    this.handleCloseModal = this.handleCloseModal.bind(this);
   }
 
   handleAnswerReport(id) {
-    axios.put(`/answers/${id}/report`)
+    axios.put(`/answerss/${id}/report`)
       .then((result) => {
         if (result.status === 204) {
           this.setState({
