@@ -213,8 +213,13 @@ const QuestionsAnswers = class extends React.PureComponent {
             handleCloseModal={this.handleCloseModal}
             handleSubmit={this.handleSubmitQuestion}
           >
-            <span>Add a Question here!</span>
-            <div>
+            <div className="modal-title">
+              <span>Ask Your Question!</span>
+            </div>
+            <div className="modal-subtitle">
+              <span>{`About the ${pName}`}</span>
+            </div>
+            <div className="modal-form">
               <input
                 type="text"
                 name="name"
@@ -233,7 +238,7 @@ const QuestionsAnswers = class extends React.PureComponent {
                 type="text"
                 name="body"
                 placeholder="Add Your Question here..."
-                className="modal-input"
+                className="modal-input-long"
                 onChange={(e) => { this.inputChange(e, 'QModal'); }}
               />
             </div>

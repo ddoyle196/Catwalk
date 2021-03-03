@@ -175,7 +175,7 @@ const Question = class extends React.PureComponent {
           <div className="qa-question-body">
             <span>
               <b>
-                { ` ${question_body}`}
+                { ` ${question_body}?`}
               </b>
             </span>
           </div>
@@ -246,7 +246,7 @@ const Question = class extends React.PureComponent {
               type="text"
               name="body"
               placeholder="Add Your Answer here..."
-              className="modal-input"
+              className="modal-input-long"
               onChange={this.handleInputChange}
             />
           </div>

@@ -20,6 +20,10 @@ body{
   color: rgb(71, 71, 71);
 }
 
+.pointer{
+  cursor: pointer;
+}
+
 /******* OVERVIEW WIDGET *******/
 .overview-container {
   padding-top: 2em;
@@ -309,59 +313,79 @@ body{
   background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
 
-.modal-content {
+.modal .modal-content {
   background-color: #fefefe;
   margin: 15% auto; /* 15% from the top and centered */
   padding: 30px;
   border: 1px solid #888;
-  width: 50%; /* Could be more or less, depending on screen size */
+  width: 30%; /* Could be more or less, depending on screen size */
 }
 
-.modal-input{
-  margin: 5px;
+.modal .modal-content .modal-title{
+  width: auto;
+  margin: auto;
+  font-size: 25px;
+  text-align: center;
+}
+
+.modal .modal-content .modal-subtitle {
+  width: auto;
+  margin: auto;
+  font-size: 18px;
+  text-align: center;
+}
+
+.modal .modal-content .modal-form {
+  width: 75%;
+  margin: 0 auto;
+  padding: 10px;
+  position: relative;
+}
+
+.modal .modal-content .modal-form .modal-input {
   width: 100%;
+  padding: 14px; 
+  margin: 10px auto;
+  font-size: 16px;
+  position: relative;
 }
 
-/* The Close Button */
-.modal-buttons {
-  margin: 5px;
-  color: rgb(77, 67, 67);
-  float: right;
-  font-size: 12px;
-  font-weight: bold;
+.modal .modal-content .modal-form .modal-input-long {
+  width: 100%;
+  height: 300px;
+  padding: 14px; 
+  margin: 10px auto;
+  font-size: 16px;
+  position: relative;
 }
 
-.close {
-  background-color: rgb(218, 112, 112);
+.modal .modal-content .modal-buttons{
+  width: 50%;
+  margin: 0 auto;
+  padding: 10px;
+  position: relative;
 }
 
-.modal-buttons:hover,
-.modal-buttons:focus {
+.modal .modal-content .modal-submit {
+  background-color: rgb(125, 255, 143);
   color: black;
-  text-decoration: none;
-  cursor: pointer;
+  font-size: 18px;
 }
 
-
-.pointer{
-  cursor: pointer;
+.modal .modal-content .modal-submit:hover {
+  background-color: rgb(0, 250, 33);
+  color: black;
 }
 
-.question-options{
-  display: inline;
-  float: left;
-  width: 25%;
+.modal .modal-content .modal-close {
+  background-color: rgb(218, 112, 112);
+  color: black;
+  font-size: 18px;
 }
 
-.question-format{
-  display: inline;
-  border-right: 2px solid rgb(187, 180, 180);
-  margin: 5px;
-  padding-inline: 10px;
-}
-
-.reset{
-  border: none;
+.modal .modal-content .modal-close:hover {
+  background-color: rgb(251, 0, 0);
+  color: black;
 }
 
 /* RATINGS AND REVIEWS */
@@ -401,7 +425,9 @@ button {
 }
 
 button:hover {
-  outline: none;
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 button:active {

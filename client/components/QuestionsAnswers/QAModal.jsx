@@ -30,20 +30,22 @@ const QAModal = class extends React.PureComponent {
       <div className="modal">
         <div className="modal-content">
           { children }
-          <button
-            type="submit"
-            onClick={this.closeModal}
-            className="modal-buttons close"
-          >
-            Close
-          </button>
-          <button
-            type="button"
-            onClick={this.submit}
-            className="modal-buttons"
-          >
-            Submit
-          </button>
+          <div className="modal-buttons">
+            <button
+              type="button"
+              onClick={this.submit}
+              className="modal-submit"
+            >
+              Submit
+            </button>
+            <button
+              type="submit"
+              onClick={this.closeModal}
+              className="modal-close"
+            >
+              Close
+            </button>
+          </div>
         </div>
       </div>
     );
