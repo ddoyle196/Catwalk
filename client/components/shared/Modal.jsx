@@ -23,7 +23,7 @@ const Modal = class extends React.PureComponent {
 
   modalType() {
     const { modalType, children, modalCode } = this.props;
-    if (modalType === 'submit') {
+    if (modalType === 'submit-qa') {
       return (
         <div className="modal-submit">
           <div className="modal-content">
@@ -37,8 +37,8 @@ const Modal = class extends React.PureComponent {
                 Submit
               </button>
               <button
-                type="submit"
-                onClick={() => { this.closeModal('submit'); }}
+                type="button"
+                onClick={() => { this.closeModal('submit-qa'); }}
                 className="modal-close"
               >
                 Close
@@ -71,6 +71,31 @@ const Modal = class extends React.PureComponent {
         >
           <div className="modal-content">
             {children}
+          </div>
+        </div>
+      );
+    }
+    if (modalType === 'submit-review') { // CHANGE IT
+      return (
+        <div className="modal-submit">
+          <div className="modal-content">
+            { children }
+            <div className="modal-buttons">
+              <button
+                type="button"
+                onClick={this.submit}
+                className="modal-submit-button"
+              >
+                Submit
+              </button>
+              <button
+                type="submit"
+                onClick={() => { this.closeModal('submit-review'); }}
+                className="modal-close"
+              >
+                Close
+              </button>
+            </div>
           </div>
         </div>
       );

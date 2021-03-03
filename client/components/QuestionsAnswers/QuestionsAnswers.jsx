@@ -5,7 +5,7 @@ import { Icon } from '@iconify/react';
 import magnifyIcon from '@iconify-icons/mdi/magnify';
 
 import Question from './Questions';
-import Modal from './Modal';
+import Modal from '../shared/Modal';
 
 const pId = 19378;
 const pName = 'Alberto Romper';
@@ -140,7 +140,7 @@ const QuestionsAnswers = class extends React.PureComponent {
   }
 
   handleCloseModal(modalType) {
-    if (modalType === 'submit') {
+    if (modalType === 'submit-qa') {
       this.setState({
         showQuestionModal: false,
         validateQuestionInput: {
@@ -316,13 +316,13 @@ const QuestionsAnswers = class extends React.PureComponent {
             modalType="notification"
             modalCode={notificationCode}
           >
-            <span>{ notificationMessage }</span>
+            <span className="modal-text">{ notificationMessage }</span>
           </Modal>
           <Modal
             showModal={showQuestionModal}
             handleCloseModal={this.handleCloseModal}
             handleSubmit={this.handleSubmitQuestion}
-            modalType="submit"
+            modalType="submit-qa"
             modalCode=""
           >
             <div className="modal-title">

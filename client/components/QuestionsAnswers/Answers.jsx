@@ -3,7 +3,7 @@ import React from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import Modal from './Modal';
+import Modal from '../shared/Modal';
 import ImageThumbnails from './ImageThumbnails';
 
 const Answers = class extends React.PureComponent {
@@ -26,7 +26,7 @@ const Answers = class extends React.PureComponent {
   }
 
   handleAnswerReport(id) {
-    axios.put(`/answers/${id}/report`)
+    axios.put(`/answerss/${id}/report`)
       .then((result) => {
         if (result.status === 204) {
           this.setState({
@@ -167,7 +167,7 @@ const Answers = class extends React.PureComponent {
           modalType="notification"
           modalCode={notificationCode}
         >
-          <span>{ notificationMessage }</span>
+          <span className="modal-text">{ notificationMessage }</span>
         </Modal>
         <Modal
           showModal={showImageModal}

@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import Answers from './Answers';
-import Modal from './Modal';
+import Modal from '../shared/Modal';
 
 const handleEmailValidation = (email) => {
   const mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
@@ -77,7 +77,7 @@ const Question = class extends React.PureComponent {
   }
 
   handleCloseModal(modalType) {
-    if (modalType === 'submit') {
+    if (modalType === 'submit-qa') {
       this.setState({
         showAnswerModal: false,
         validateAnswerInput: {
@@ -324,7 +324,7 @@ const Question = class extends React.PureComponent {
           showModal={showAnswerModal}
           handleCloseModal={this.handleCloseModal}
           handleSubmit={this.handleSubmitAnswerToQuestion}
-          modalType="submit"
+          modalType="submit-qa"
           modalCode=""
         >
           <div className="modal-title">
