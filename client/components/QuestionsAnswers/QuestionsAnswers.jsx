@@ -10,6 +10,11 @@ import QAModal from './QAModal';
 const pId = 19378;
 const pName = 'Alberto Romper';
 
+const handleEmailValidation = (email) => {
+  const mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+  return !!email.match(mailformat);
+};
+
 const QuestionsAnswers = class extends React.PureComponent {
   constructor() {
     super();
@@ -106,7 +111,7 @@ const QuestionsAnswers = class extends React.PureComponent {
     const validateQuestion = {
       name: newQuestion.name.length > 3,
       body: newQuestion.body.length > 3,
-      email: newQuestion.email.length > 3,
+      email: newQuestion.email.length > 3 && handleEmailValidation(newQuestion.email),
     };
     if (validateQuestion.name && validateQuestion.body && validateQuestion.email) {
       axios.post('/questions', newQuestion)
