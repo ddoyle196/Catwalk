@@ -3,17 +3,28 @@ import PropTypes from 'prop-types';
 
 const ImageThumbnails = class extends React.PureComponent {
   render() {
-    const { photo } = this.props;
+    const { photo, showImageModal } = this.props;
     const { url } = photo;
     return (
-      <div className="qa-image-box">
-        <img className="qa-image-thumbnails" src={url} alt="thumbnails" />
+      <div
+        className="qa-image-box"
+        onClick={() => showImageModal(url)}
+        role="button"
+        onKeyDown={this.handleButtonClick}
+        tabIndex={0}
+      >
+        <img
+          className="qa-image-thumbnails pointer"
+          src={url}
+          alt="thumbnails"
+        />
       </div>
     );
   }
 };
 
 ImageThumbnails.propTypes = {
+  showImageModal: PropTypes.func.isRequired,
   photo: PropTypes.shape({
     url: PropTypes.string.isRequired,
   }).isRequired,

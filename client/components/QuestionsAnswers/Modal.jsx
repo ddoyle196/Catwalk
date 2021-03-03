@@ -60,6 +60,21 @@ const Modal = class extends React.PureComponent {
         </div>
       );
     }
+    if (modalType === 'image') {
+      return (
+        <div
+          className="modal-image"
+          onClick={() => this.closeModal('image')}
+          role="button"
+          onKeyDown={this.handleButtonClick}
+          tabIndex={0}
+        >
+          <div className="modal-content">
+            {children}
+          </div>
+        </div>
+      );
+    }
     return null;
   }
 

@@ -15,11 +15,14 @@ const Answers = class extends React.PureComponent {
       showNotificationModal: false,
       notificationCode: '',
       notificationMessage: '',
+      showImageModal: false,
+      imageUrl: '',
     };
     this.AddAnswerHelpfulness = this.AddAnswerHelpfulness.bind(this);
     this.handleAnswerReport = this.handleAnswerReport.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
     this.showPhotos = this.showPhotos.bind(this);
+    this.showPhotosLarge = this.showPhotosLarge.bind(this);
   }
 
   handleAnswerReport(id) {
@@ -48,6 +51,11 @@ const Answers = class extends React.PureComponent {
         notificationMessage: '',
       });
     }
+    if (modalType === 'image') {
+      this.setState({
+        showImageModal: false,
+      });
+    }
   }
 
   showPhotos() {
@@ -61,11 +69,19 @@ const Answers = class extends React.PureComponent {
             key={photo.id}
             id={photo.id}
             photo={photo}
+            showImageModal={this.showPhotosLarge}
           />
         ))
       );
     }
     return null;
+  }
+
+  showPhotosLarge(url) {
+    this.setState({
+      showImageModal: true,
+      imageUrl: url,
+    });
   }
 
   AddAnswerHelpfulness() {
@@ -86,6 +102,8 @@ const Answers = class extends React.PureComponent {
       showNotificationModal,
       notificationCode,
       notificationMessage,
+      showImageModal,
+      imageUrl,
     } = this.state;
     const {
       body,
@@ -150,6 +168,19 @@ const Answers = class extends React.PureComponent {
           modalCode={notificationCode}
         >
           <span>{ notificationMessage }</span>
+        </Modal>
+        <Modal
+          showModal={showImageModal}
+          handleCloseModal={this.handleCloseModal}
+          handleSubmit={() => {}}
+          modalType="image"
+          modalCode=""
+        >
+          <img
+            className="qa-image-large pointer"
+            src={imageUrl}
+            alt="thumbnails"
+          />
         </Modal>
       </div>
     );

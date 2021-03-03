@@ -265,10 +265,16 @@ textarea {
   display: inline;
 }
 
+.qa-box .qa-question-box .qa-answer-box .qa-image-large{
+  width: 1024px;
+  height: 768px;
+}
+
 .qa-box .qa-question-box .qa-answer-box .qa-image-box .qa-image-thumbnails {
   width: 120px;
   height: 80px;
   margin-inline: 1%;
+  border: 1px solid black;
 }
 
 .qa-box .qa-question-box .qa-answer-box .qa-answer-letter {
@@ -457,6 +463,26 @@ textarea {
 .modal-notification .modal-error {
   background-color: #aa0000;
 }
+
+.modal-image {
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; 
+  height: 100%; 
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.modal-image .modal-content {
+  background-color: #fefefe;
+  margin: 5% auto; /* 15% from the top and centered */
+  padding: 5px;
+  border: 1px solid #888;
+  width: 1035px; /* Could be more or less, depending on screen size */
+}
+
 
 /* RATINGS AND REVIEWS */
 .headerBlock {
