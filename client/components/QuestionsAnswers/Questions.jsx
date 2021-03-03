@@ -160,7 +160,7 @@ const Question = class extends React.PureComponent {
   }
 
   render() {
-    const { question } = this.props;
+    const { question, pName } = this.props;
     const { answers, showAnswerModal } = this.state;
     const {
       question_body,
@@ -225,30 +225,70 @@ const Question = class extends React.PureComponent {
           handleCloseModal={this.handleCloseModal}
           handleSubmit={this.handleSubmitAnswerToQuestion}
         >
-          <span>Answer this question: </span>
-          <span>{question_body}</span>
-          <div>
-            <input
-              type="text"
-              name="name"
-              placeholder="Name here..."
-              className="modal-input"
-              onChange={this.handleInputChange}
-            />
-            <input
-              type="text"
-              name="email"
-              placeholder="Email here..."
-              className="modal-input"
-              onChange={this.handleInputChange}
-            />
-            <input
-              type="text"
-              name="body"
-              placeholder="Add Your Answer here..."
-              className="modal-input-long"
-              onChange={this.handleInputChange}
-            />
+          <div className="modal-title">
+            <span>Submit your Answer</span>
+          </div>
+          <div className="modal-subtitle">
+            <span>{`${pName}: ${question_body}`}</span>
+          </div>
+          <div className="modal-form">
+            <div className="modal-name">
+              <span
+                className="modal-input-titles"
+              >
+                What is your nickname: *
+              </span>
+              <input
+                type="text"
+                name="name"
+                placeholder="Example: jack543!"
+                className="modal-input"
+                onChange={this.handleInputChange}
+                maxLength="60"
+              />
+              <span
+                className="modal-little-messages"
+              >
+                For privacy reasons, do not use your full name or email address
+              </span>
+            </div>
+            <div className="modal-email">
+              <span
+                className="modal-input-titles"
+              >
+                Your email: *
+              </span>
+              <input
+                type="text"
+                name="email"
+                placeholder="Example: jack@email.com"
+                className="modal-input"
+                onChange={this.handleInputChange}
+                maxLength="60"
+              />
+              <span
+                className="modal-little-messages"
+              >
+                For authentication reasons, you will not be emailed” will appear.
+              </span>
+            </div>
+            <div className="modal-body">
+              <span
+                className="modal-input-titles"
+              >
+                Your Question: *
+              </span>
+              <textarea
+                type="text"
+                name="body"
+                placeholder="Add Your Answer here..."
+                className="modal-input"
+                onChange={this.handleInputChange}
+                cols="40"
+                rows="5"
+                maxLength="1000"
+              />
+            </div>
           </div>
         </QAModal>
       </div>
@@ -259,6 +299,7 @@ const Question = class extends React.PureComponent {
 Question.propTypes = {
   id: PropTypes.number.isRequired,
   handleQuestionHelpfulness: PropTypes.func.isRequired,
+  pName: PropTypes.string.isRequired,
   question: PropTypes.shape({
     question_body: PropTypes.string.isRequired,
     question_helpfulness: PropTypes.number.isRequired,

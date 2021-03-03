@@ -328,14 +328,14 @@ textarea {
 .modal .modal-content .modal-title{
   width: auto;
   margin: auto;
-  font-size: 25px;
+  font-size: 30px;
   text-align: center;
 }
 
 .modal .modal-content .modal-subtitle {
   width: auto;
   margin: auto;
-  font-size: 18px;
+  font-size: 20px;
   text-align: center;
 }
 
@@ -346,16 +346,31 @@ textarea {
   position: relative;
 }
 
+.modal .modal-content .modal-form .modal-name {
+  margin: 10px auto;
+}
+
+.modal .modal-content .modal-form .modal-email {
+  margin: 10px auto;
+}
+
+.modal .modal-content .modal-form .modal-body {
+  margin: 10px auto;
+}
+
 .modal .modal-content .modal-form .modal-input {
   width: 100%;
   padding: 14px; 
-  margin: 10px auto;
   font-size: 16px;
   position: relative;
 }
 
 .modal .modal-content .modal-form .modal-little-messages {
-  font-size: 12px;
+  font-size: 10px;
+}
+
+.modal .modal-content .modal-form .modal-input-titles {
+  font-size: 14px;
 }
 
 .modal .modal-content .modal-buttons{

@@ -201,6 +201,7 @@ const QuestionsAnswers = class extends React.PureComponent {
             key={singleQuestion.question_id}
             question={singleQuestion}
             id={singleQuestion.question_id}
+            pName={pName}
             handleQuestionHelpfulness={this.handleQuestionHelpfulness}
           />
         ))}
@@ -225,42 +226,63 @@ const QuestionsAnswers = class extends React.PureComponent {
               <span>{`About the ${pName}`}</span>
             </div>
             <div className="modal-form">
-              <input
-                type="text"
-                name="name"
-                placeholder="Example: jackson11!"
-                className="modal-input"
-                onChange={(e) => { this.inputChange(e, 'QModal'); }}
-                maxLength="60"
-              />
-              <span
-                className="modal-little-messages"
-              >
-                For privacy reasons, do not use your full name or email address
-              </span>
-              <input
-                type="text"
-                name="email"
-                placeholder="Why did you like the product or not?"
-                className="modal-input"
-                onChange={(e) => { this.inputChange(e, 'QModal'); }}
-                maxLength="60"
-              />
-              <span
-                className="modal-little-messages"
-              >
-                For authentication reasons, you will not be emailed” will appear.
-              </span>
-              <textarea
-                type="text"
-                name="body"
-                placeholder="Add Your Question here..."
-                className="modal-input"
-                onChange={(e) => { this.inputChange(e, 'QModal'); }}
-                cols="40"
-                rows="5"
-                maxLength="1000"
-              />
+              <div className="modal-name">
+                <span
+                  className="modal-input-titles"
+                >
+                  What is your nickname: *
+                </span>
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Example: jackson11!"
+                  className="modal-input"
+                  onChange={(e) => { this.inputChange(e, 'QModal'); }}
+                  maxLength="60"
+                />
+                <span
+                  className="modal-little-messages"
+                >
+                  For privacy reasons, do not use your full name or email address
+                </span>
+              </div>
+              <div className="modal-email">
+                <span
+                  className="modal-input-titles"
+                >
+                  Your email: *
+                </span>
+                <input
+                  type="text"
+                  name="email"
+                  placeholder="Why did you like the product or not?"
+                  className="modal-input"
+                  onChange={(e) => { this.inputChange(e, 'QModal'); }}
+                  maxLength="60"
+                />
+                <span
+                  className="modal-little-messages"
+                >
+                  For authentication reasons, you will not be emailed” will appear.
+                </span>
+              </div>
+              <div className="modal-body">
+                <span
+                  className="modal-input-titles"
+                >
+                  Your Question: *
+                </span>
+                <textarea
+                  type="text"
+                  name="body"
+                  placeholder="Add Your Question here..."
+                  className="modal-input"
+                  onChange={(e) => { this.inputChange(e, 'QModal'); }}
+                  cols="40"
+                  rows="5"
+                  maxLength="1000"
+                />
+              </div>
             </div>
           </QAModal>
         </div>
