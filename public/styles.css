@@ -251,20 +251,50 @@
   display: inline-block;
   width: 25%;
   vertical-align:top;
-  padding: 2%;
   margin: 2%;
 }
 
 .reviewBlock {
   display: inline-block;
-  width: 50%;
+  width: 65%;
   vertical-align:top;
-  padding: 2%;
   margin: 2%;
 }
 
-.summary {
+.reviewList {
+  margin: 5%;
+}
+
+.Rheader {
+  display: flex;
+  margin: 2px;
+}
+
+.revRating {
+  vertical-align: top;
+  float: left;
+}
+
+.userDate {
+  font-size: 80%;
+  vertical-align: top;
+  float: right;
+  margin-left: auto;
+}
+
+.summary, .respHead{
   font-weight: bold;
+  padding: 5px;
+}
+
+.rBody {
+  padding: 5px;
+}
+
+.response {
+  color: #535353;
+  background-color: #ebebeb;
+  padding: 10px;
 }
 
 button {
