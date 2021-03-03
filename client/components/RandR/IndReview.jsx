@@ -1,10 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
+import moment from 'moment';
+
 import { Icon } from '@iconify/react';
 import checkCircleOutline from '@iconify-icons/mdi/check-circle-outline';
-import moment from 'moment';
 import StarRating from '../overview/productInfo/StarRating';
+
+import Modal from '../shared/Modal';
+import ImageThumbnails from '../QuestionsAnswers/ImageThumbnails';
 
 class IndReview extends React.Component {
   constructor(props) {
@@ -12,7 +16,32 @@ class IndReview extends React.Component {
     this.state = {
       bodyDisplay: props.review.body.slice(0, 249),
       fullDisplay: !(props.review.body.length > 250),
+      reported: false,
+      helpfulness: false,
+      showNotificationModal: false,
+      notificationCode: '',
+      notificationMessage: '',
+      showImageModal: false,
+      imageUrl: '',
     };
+    this.handleCloseModal = this.handleCloseModal.bind(this);
+    this.showPhotos = this.showPhotos.bind(this);
+    this.showPhotosLarge = this.showPhotosLarge.bind(this);
+  }
+
+  handleCloseModal(modalType) {
+    if (modalType === 'notification') {
+      this.setState({
+        showNotificationModal: false,
+        notificationCode: '',
+        notificationMessage: '',
+      });
+    }
+    if (modalType === 'image') {
+      this.setState({
+        showImageModal: false,
+      });
+    }
   }
 
   fullBody() {
@@ -43,6 +72,13 @@ class IndReview extends React.Component {
     return null;
   }
 
+  showPhotosLarge(url) {
+    this.setState({
+      showImageModal: true,
+      imageUrl: url,
+    });
+  }
+
   // handleAnswerReport(id) {
   //   axios.put(`/answers/${id}/report`)
   //     .then((result) => {
@@ -71,18 +107,26 @@ class IndReview extends React.Component {
   render() {
     const { Fragment } = React;
     const { review } = this.props;
-    const { bodyDisplay, fullDisplay } = this.state;
+
+    const {
+      bodyDisplay,
+      fullDisplay,
+      reported,
+      helpfulness,
+      showNotificationModal,
+      notificationCode,
+      notificationMessage,
+      showImageModal,
+      imageUrl,
+    } = this.state;
+
     const fullBody = this.fullBody.bind(this);
+    const showPhotos = this.showPhotos.bind(this);
 
     let cleanSummary = review.summary.slice(0, 60);
     cleanSummary = review.summary.length > 60 ? cleanSummary.concat('...') : cleanSummary;
 
     const summarySpill = review.summary.length > 60 ? '...'.concat(review.summary.slice(60)) : null;
-
-    // const imageArray = review.photos ? review.photos.map((photo) => (
-    //   <IndReview review={review} />
-    // )) : null;
-    console.log(review.recommend);
 
     const indRating = { [review.rating]: '1' };
     return (
@@ -115,12 +159,38 @@ class IndReview extends React.Component {
           ) : null}
         </div>
 
+        <div className="qa-answer-box">
+          {this.showPhotos()}
+          <Modal
+            showModal={showNotificationModal}
+            handleCloseModal={this.handleCloseModal}
+            handleSubmit={() => { }}
+            modalType="notification"
+            modalCode={notificationCode}
+          >
+            <span className="modal-text">{notificationMessage}</span>
+          </Modal>
+          <Modal
+            showModal={showImageModal}
+            handleCloseModal={this.handleCloseModal}
+            handleSubmit={() => { }}
+            modalType="image"
+            modalCode=""
+          >
+            <img
+              className="qa-image-large pointer"
+              src={imageUrl}
+              alt="thumbnails"
+            />
+          </Modal>
+        </div>
+
         <div>
           {review.recommend ? (
             <div className="recommendation">
               <Icon icon={checkCircleOutline} />
               {' '}
-              {'I recommend this product'}
+              I recommend this product
             </div>
           ) : null}
         </div>

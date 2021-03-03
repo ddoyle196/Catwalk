@@ -544,6 +544,11 @@ textarea {
   padding: 5px;
 }
 
+.recommendation {
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
 .rBody {
   padding: 5px;
 }
@@ -578,4 +583,27 @@ button:active {
   background-color: grey;
   color: white;
   outline: none;
+}
+
+.revContainer .qa-answer-box .qa-image-box .qa-image-thumbnails {
+  width: 120px;
+  height: 80px;
+  margin-inline: 1%;
+  border: 1px solid black;
+}
+.revContainer .qa-answer-box .qa-image-box {
+  display: inline;
+}
+
+.revContainer .qa-answer-box .modal-image .qa-image-large{
+  height: 80vh;
+  max-width: min-content;
+}
+
+.revContainer .qa-answer-box .modal-image .modal-content {
+  background-color: #fefefe;
+  margin: 5% auto; /* 15% from the top and centered */
+  padding: 5px;
+  border: 1px solid #888;
+  width: min-content;
 }
