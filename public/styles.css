@@ -20,12 +20,16 @@ textarea {
   font-family: 'Arial', sans-serif;
 }
 
-::placeholder{
+::placeholder {
   color: rgb(71, 71, 71);
 }
 
-.pointer{
+.pointer {
   cursor: pointer;
+}
+
+.no-display {
+  display:none;
 }
 
 /******* OVERVIEW WIDGET *******/
@@ -312,6 +316,11 @@ textarea {
 }
 
 .qa-box .qa-question-box .qa-more-answers {
+  font-size: 12px;
+  margin-left: 2%;
+}
+
+.qa-box .qa-question-box .qa-collapse-answers {
   font-size: 12px;
   margin-left: 2%;
 }

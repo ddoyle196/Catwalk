@@ -19,6 +19,7 @@ const Question = class extends React.PureComponent {
       page: 1,
       count: 2,
       haveMoreAnswers: true,
+      collapseAnswers: false,
       showAnswerModal: false,
       showNotificationModal: false,
       notificationCode: '',
@@ -44,6 +45,7 @@ const Question = class extends React.PureComponent {
     this.handleSubmitAnswerToQuestion = this.handleSubmitAnswerToQuestion.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.showValidationErrors = this.showValidationErrors.bind(this);
+    this.handleCollapseAnswers = this.handleCollapseAnswers.bind(this);
   }
 
   componentDidMount() {
@@ -134,6 +136,19 @@ const Question = class extends React.PureComponent {
     }
   }
 
+  handleCollapseAnswers() {
+    const { collapseAnswers } = this.state;
+    if (!collapseAnswers) {
+      this.setState({
+        collapseAnswers: true,
+      });
+    } else {
+      this.setState({
+        collapseAnswers: false,
+      });
+    }
+  }
+
   getAnswersFromQuestionId(type) {
     const { id } = this.props;
     const { answers, page, count } = this.state;
@@ -175,7 +190,7 @@ const Question = class extends React.PureComponent {
   }
 
   AddAnswerButton() {
-    const { haveMoreAnswers } = this.state;
+    const { haveMoreAnswers, collapseAnswers } = this.state;
     if (haveMoreAnswers) {
       return (
         <div>
@@ -191,7 +206,19 @@ const Question = class extends React.PureComponent {
         </div>
       );
     }
-    return null;
+    return (
+      <div>
+        <b
+          className="qa-collapse-answers pointer"
+          onClick={this.handleCollapseAnswers}
+          onKeyDown={this.handleButtonClick}
+          role="button"
+          tabIndex={0}
+        >
+          { collapseAnswers ? 'SHOW ANSWERS' : 'COLLAPSE ANSWERS'}
+        </b>
+      </div>
+    );
   }
 
   AddQuestionHelpfulness() {
@@ -247,6 +274,7 @@ const Question = class extends React.PureComponent {
       showNotificationModal,
       notificationCode,
       notificationMessage,
+      collapseAnswers,
     } = this.state;
     const {
       question_body,
@@ -304,6 +332,7 @@ const Question = class extends React.PureComponent {
             answer={answer}
             AnswerHelpfulness={this.handleAnswerHelpfulness}
             AnswerReport={this.handleAnswerReport}
+            collapseAnswers={collapseAnswers}
           />
         ))}
         {this.AddAnswerButton()}
