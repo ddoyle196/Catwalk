@@ -289,15 +289,17 @@ const QuestionsAnswers = class extends React.PureComponent {
             <Icon icon={magnifyIcon} width="20" height="20" />
           </div>
         </div>
-        {questionsDisplayed.map((singleQuestion) => (
-          <Question
-            key={singleQuestion.question_id}
-            question={singleQuestion}
-            id={singleQuestion.question_id}
-            pName={pName}
-            handleQuestionHelpfulness={this.handleQuestionHelpfulness}
-          />
-        ))}
+        <div className="qa-question-scroll">
+          {questionsDisplayed.map((singleQuestion) => (
+            <Question
+              key={singleQuestion.question_id}
+              question={singleQuestion}
+              id={singleQuestion.question_id}
+              pName={pName}
+              handleQuestionHelpfulness={this.handleQuestionHelpfulness}
+            />
+          ))}
+        </div>
         <div className="qa-options">
           {this.AddMoreQuestionButton()}
           <button

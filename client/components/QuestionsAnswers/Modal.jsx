@@ -51,7 +51,7 @@ const Modal = class extends React.PureComponent {
     if (modalType === 'notification') {
       setTimeout(() => {
         this.closeModal('notification');
-      }, 3000);
+      }, 2000);
       return (
         <div className="modal-notification">
           <div className={`modal-content ${modalCode === 'success' ? 'modal-success' : 'modal-error'}`}>
