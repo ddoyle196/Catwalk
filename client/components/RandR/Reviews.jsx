@@ -34,7 +34,7 @@ class Reviews extends React.Component {
     return (
       <div>
         <div>{reviews.length} reviews, sorted by {sort} </div>
-        <div className="reviewList">{display}</div>
+        <div className="reviewList">{display}{display}</div>
         {reviews.length - displayCount > 0 ? <button type="button" onClick={renderTwo}>MORE REVIEWS</button> : null}
         <button type="button">ADD A REVIEW   +</button>
       </div>

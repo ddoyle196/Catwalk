@@ -262,7 +262,13 @@
 }
 
 .reviewList {
+  overflow-y: auto;
   margin: 5%;
+  max-height: 75vh;
+}
+
+.revContainer {
+  height: max-content;
 }
 
 .Rheader {

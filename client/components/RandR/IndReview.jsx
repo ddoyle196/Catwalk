@@ -64,8 +64,7 @@ class IndReview extends React.Component {
 
     const indRating = { [review.rating]: '1' };
     return (
-      <Fragment>
-
+      <div className="revContainer">
         <div className="Rheader">
           <div className="revRating">
             <StarRating ratings={indRating} />
@@ -123,7 +122,7 @@ class IndReview extends React.Component {
           </span>
         </div> */}
         <hr />
-      </Fragment>
+      </div>
     );
   }
 }
