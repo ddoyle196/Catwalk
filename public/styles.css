@@ -421,18 +421,25 @@ textarea {
 }
 
 .modal-notification .modal-content {
-  margin: 3%; /* 3% from the top */
+  margin: 2% auto; /* 3% from the top */
   border: 1px solid rgb(0, 0, 0);
-  width: 70%; /* Could be more or less, depending on screen size */
-  height: 50px;
+  width: 50%; /* Could be more or less, depending on screen size */
+  height: 40px;
+  text-align: center;
+}
+
+.modal-notification .modal-text {
+  font-size: 30px;
+  color: white;
+  text-align: center;
 }
 
 .modal-notification .modal-success {
-  background-color: #09ff00;
+  background-color: #05a300;
 }
 
 .modal-notification .modal-error {
-  background-color: #ff0000;
+  background-color: #aa0000;
 }
 
 /* RATINGS AND REVIEWS */

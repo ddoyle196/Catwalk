@@ -314,7 +314,11 @@ const Question = class extends React.PureComponent {
           modalType="notification"
           modalCode={notificationCode}
         >
-          <span>{ notificationMessage }</span>
+          <span
+            className="modal-text"
+          >
+            { notificationMessage }
+          </span>
         </Modal>
         <Modal
           showModal={showAnswerModal}
