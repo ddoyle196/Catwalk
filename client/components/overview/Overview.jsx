@@ -15,9 +15,11 @@ class Overview extends React.Component {
       styles: null,
       ratings: null,
       selectedStyle: null,
+      isFavorite: false,
     };
     this.addToCartHandler = this.addToCartHandler.bind(this);
     this.updateSelectedStyle = this.updateSelectedStyle.bind(this);
+    this.isFavoriteHandler = this.isFavoriteHandler.bind(this);
   }
 
   componentDidMount() {
@@ -58,6 +60,13 @@ class Overview extends React.Component {
     console.log('Add to cart handler was clicked!');
   }
 
+  isFavoriteHandler() {
+    const { isFavorite } = this.state;
+    this.setState({
+      isFavorite: !isFavorite,
+    });
+  }
+
   // eslint-disable-next-line class-methods-use-this
   updateSelectedStyle(name) {
     this.setState({
@@ -71,6 +80,7 @@ class Overview extends React.Component {
       styles,
       ratings,
       selectedStyle,
+      isFavorite,
     } = this.state;
 
     if (product === null || styles === null || ratings === null || selectedStyle === null) {
@@ -90,7 +100,11 @@ class Overview extends React.Component {
               selectedStyle={selectedStyle}
               updateSelectedStyle={this.updateSelectedStyle}
             />
-            <AddToCart addToCartHandler={this.addToCartHandler} />
+            <AddToCart
+              addToCartHandler={this.addToCartHandler}
+              isFavorite={isFavorite}
+              isFavoriteHandler={this.isFavoriteHandler}
+            />
           </div>
         </div>
         <div className="overview-bottom-container">

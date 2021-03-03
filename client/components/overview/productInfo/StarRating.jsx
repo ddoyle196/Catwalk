@@ -33,9 +33,8 @@ const StarRating = ({ ratings }) => {
   }
 
   return (
-    <div>
+    <div className="star-rating-container">
       {stars}
-      <span>  LINK: Read all reviews</span>
     </div>
   );
 };

@@ -107,6 +107,12 @@
   color: lightgray;
 }
 
+/* OVERVIEW WIDGET -- STAR RATING */
+
+.star-rating-container {
+  display: inline-block;
+}
+
 /* OVERVIEW WIDGET -- STYLE SELECTOR */
 
 .style-label {
@@ -208,10 +214,50 @@
   outline: none;
 }
 
-/* .option-arrow-icon::after {
-  content: '88';
-  transform: rotate(45deg);
-} */
+.add-to-cart-container {
+  width: 75%;
+  margin-right: 0.5em;
+  position: relative;
+  display: inline-block;
+}
+
+.plus-icon {
+  z-index: -1;
+  position: absolute;
+  top: 0.70em;
+  right: 0.65em;
+  font-size: 1.2em;
+}
+
+.add-to-cart-button {
+  width: 100%;
+  cursor: pointer;
+  background-color: transparent;
+  display: inline-block;
+  padding: 15px 20px;
+  border: 1px solid black;
+}
+.add-to-cart-button:focus {
+  outline: none;
+}
+
+.mark-as-favorite {
+  width: 15%;
+  font-size: 1.3em;
+  margin-left: 0.5em;
+  text-align: center;
+  padding: 12px 20px 8px 15px;
+  border: 1px solid black;
+  cursor: pointer;
+}
+.mark-as-favorite:focus {
+  outline: none;
+}
+
+.cart-bottom-container {
+  display: flex;
+  width: 100%;
+}
 
 
 /******* QUESTIONS AND ANSWERS *******/
