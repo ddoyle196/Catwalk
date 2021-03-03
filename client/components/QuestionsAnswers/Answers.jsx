@@ -4,6 +4,7 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import Modal from './Modal';
+import ImageThumbnails from './ImageThumbnails';
 
 const Answers = class extends React.PureComponent {
   constructor(props) {
@@ -18,6 +19,7 @@ const Answers = class extends React.PureComponent {
     this.AddAnswerHelpfulness = this.AddAnswerHelpfulness.bind(this);
     this.handleAnswerReport = this.handleAnswerReport.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
+    this.showPhotos = this.showPhotos.bind(this);
   }
 
   handleAnswerReport(id) {
@@ -46,6 +48,24 @@ const Answers = class extends React.PureComponent {
         notificationMessage: '',
       });
     }
+  }
+
+  showPhotos() {
+    const { answer } = this.props;
+    const { photos } = answer;
+
+    if (photos.length > 0) {
+      return (
+        photos.map((photo) => (
+          <ImageThumbnails
+            key={photo.id}
+            id={photo.id}
+            photo={photo}
+          />
+        ))
+      );
+    }
+    return null;
   }
 
   AddAnswerHelpfulness() {
@@ -83,8 +103,8 @@ const Answers = class extends React.PureComponent {
             { ` ${body}`}
           </span>
         </div>
+        {this.showPhotos()}
         <div className="qa-answer-options">
-
           <div className="qa-answer-format">
             <span>
               { `by ${answerer_name}, `}
@@ -144,6 +164,7 @@ Answers.propTypes = {
     answerer_name: PropTypes.string.isRequired,
     date: PropTypes.string.isRequired,
     helpfulness: PropTypes.number.isRequired,
+    photos: PropTypes.arrayOf.isRequired,
   }).isRequired,
 };
 

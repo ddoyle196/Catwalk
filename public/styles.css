@@ -200,7 +200,7 @@ textarea {
 }
 
 .qa-box .qa-question-input .qa-input {
-  width: 93%;
+  width: 96%;
   padding: 14px; 
   margin: 10px auto;
   font-size: 16px;
@@ -261,6 +261,16 @@ textarea {
   margin-bottom: 1%;
 }
 
+.qa-box .qa-question-box .qa-answer-box .qa-image-box {
+  display: inline;
+}
+
+.qa-box .qa-question-box .qa-answer-box .qa-image-box .qa-image-thumbnails {
+  width: 120px;
+  height: 80px;
+  margin-inline: 1%;
+}
+
 .qa-box .qa-question-box .qa-answer-box .qa-answer-letter {
   display: inline;
   float: left;
@@ -279,7 +289,8 @@ textarea {
 }
 
 .qa-box .qa-question-box .qa-answer-box .qa-answer-options {
-  width: 100%;
+  width: 90%;
+  margin-left: 2%;
   font-size: 12px;
 }
 
