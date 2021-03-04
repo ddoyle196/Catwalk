@@ -264,7 +264,7 @@ const QuestionsAnswers = class extends React.PureComponent {
     if (haveMoreQuestions) {
       return (
         <button
-          className="qa-buttons"
+          className="qa-more-questions qa-buttons"
           type="button"
           onClick={this.handleMoreQuestions}
         >
@@ -317,7 +317,7 @@ const QuestionsAnswers = class extends React.PureComponent {
         <div className="qa-options">
           {this.AddMoreQuestionButton()}
           <button
-            className="qa-buttons"
+            className="qa-add-question qa-buttons"
             type="button"
             onClick={this.showQuestionModal}
           >

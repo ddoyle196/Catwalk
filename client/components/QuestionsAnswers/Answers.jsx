@@ -135,7 +135,7 @@ const Answers = class extends React.PureComponent {
             <span>
               {'Helpful? '}
               <u
-                className="pointer"
+                className="qa-answer-helpfulness pointer"
                 onClick={() => this.AddAnswerHelpfulness()}
                 onKeyDown={this.handleButtonClick}
                 role="button"
@@ -149,7 +149,7 @@ const Answers = class extends React.PureComponent {
           <div className="qa-answer-format qa-reset-format">
             <span>
               <u
-                className="pointer"
+                className="qa-answer-report pointer"
                 onClick={() => this.handleAnswerReport(id)}
                 onKeyDown={this.handleButtonClick}
                 role="button"

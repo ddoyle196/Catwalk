@@ -363,7 +363,7 @@ const Question = class extends React.PureComponent {
               <span>
                 {'Helpful? '}
                 <u
-                  className="pointer"
+                  className="qa-question-helpfulness pointer"
                   onClick={() => this.AddQuestionHelpfulness()}
                   onKeyDown={this.handleButtonClick}
                   role="button"
@@ -377,7 +377,7 @@ const Question = class extends React.PureComponent {
             <div className="qa-options-format qa-reset-format">
               <span>
                 <u
-                  className="pointer"
+                  className="qa-add-answer pointer"
                   onClick={() => this.showAnswerModal()}
                   onKeyDown={this.handleButtonClick}
                   role="button"
@@ -488,7 +488,7 @@ const Question = class extends React.PureComponent {
               {this.showValidationErrors('body')}
             </div>
             <u
-              className={`pointer ${!answerWithPhoto ? '' : 'no-display'}`}
+              className={`modal-add-photo ${!answerWithPhoto ? '' : 'no-display'} pointer`}
               onClick={this.handlePhotoSubmit}
               onKeyDown={this.handleButtonClick}
               role="button"

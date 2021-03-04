@@ -8,6 +8,7 @@ const port = 3000;
 
 const urlQuestions = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe/qa/questions/';
 const urlAnswers = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe/qa/answers/';
+const urlInteractions = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe/interactions';
 const pId = 19378;
 
 app.use(express.static(path.join(__dirname, '../public')));
@@ -141,6 +142,20 @@ app.put('/answers/:answerId/report', (req, res) => {
   })
     .then(() => {
       res.status(204).send('No Content');
+    })
+    .catch(() => {
+      res.status(404).send('Invalid');
+    });
+});
+
+app.post('/interactions', (req, res) => {
+  axios.post(urlInteractions, req.body, {
+    headers: {
+      Authorization: GITHUB_API_KEY,
+    },
+  })
+    .then(() => {
+      res.status(201).send('Created');
     })
     .catch(() => {
       res.status(404).send('Invalid');
