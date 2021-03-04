@@ -653,6 +653,7 @@ button:active {
 }
 
 .dataTable {
+  table-layout: fixed ;
 width: 100%;
 margin: 0%;
 }
@@ -669,7 +670,7 @@ margin: 0%;
 
 .starLev {
   display: inline-block;
-    width:max-content;
+   max-width: 100%;
     margin: 2.5%;
     text-decoration: underline;
     }

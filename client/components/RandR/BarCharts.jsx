@@ -3,7 +3,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 export const Charts = (headObj) => {
-  const { ratings } = headObj;
+  const { ratings, recommended, characteristics } = headObj;
+  console.log(headObj);
 
   const starLevels = ['1 stars', '2 stars', '3 stars', '4 stars', '5 stars'];
   const barStats = [];
@@ -37,13 +38,18 @@ export const Charts = (headObj) => {
     temp.count = Number(ratings[i]) || 0;
     barStats.push(temp);
   }
-
-
-
+  // console.log(Object.keys(recommend)[0]);
+  const recommendPercent = (Number(recommended[Object.keys(recommended)[0]]) / Number(voteCount)) * 100;
+  // const recommendPercent = 50;
   return (
     <div>
       <table className="dataTable">
         <tbody>
+          <tr className="dataRow">
+            <td>
+              <div className="starLev">{`${recommendPercent}% of reviews recommend this product`}</div>
+            </td>
+          </tr>
           {barStats.map((percentage) => (
             <tr className="dataRow">
               <td>
