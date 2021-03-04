@@ -1,24 +1,61 @@
 /* eslint-disable no-restricted-syntax */
 import React from 'react';
-import { InlineIcon } from '@iconify/react';
-
 import PropTypes from 'prop-types';
 
-export const Charts = ({ ratings }) => {
-  let ratingTotal = 0;
-  let voteCount = 0;
+export const Charts = (headObj) => {
+  const { ratings } = headObj;
+
+  const starLevels = ['1 stars', '2 stars', '3 stars', '4 stars', '5 stars'];
+  const barStats = [];
   // eslint-disable-next-line guard-for-in
-  for (const key in ratings) {
-    ratingTotal += Number(key) * Number(ratings[key]);
-    voteCount += Number(ratings[key]);
+
+  let benchmark;
+
+  for (let i = 1; i < starLevels.length; i += 1) {
+    if (Number(ratings[i])) {
+      if (benchmark === undefined) {
+        benchmark = i;
+      } else if (Number(ratings[i]) >= Number(ratings[benchmark])) {
+        benchmark = i;
+      }
+    }
   }
-  let blackStars = (Math.round((ratingTotal / voteCount) * 4) / 4).toFixed(2);
-  let whiteStars = (5 - blackStars);
-  const stars = [];
+
+  for (let i = starLevels.length; i > 0; i -= 1) {
+    let temp = {};
+    if (Number(ratings[i])) {
+      temp.percent = (Number(ratings[i]) / Number(ratings[benchmark])) * 100;
+    } else if (!Number(ratings[i])) {
+      temp.percent = 0;
+    }
+    temp.starLev = starLevels[i - 1];
+    temp.count = Number(ratings[i]) || 0;
+    barStats.push(temp);
+  }
+
+
 
   return (
     <div>
-      {stars}
+      <table className="dataTable">
+        <tbody>
+          {barStats.map((percentage) => (
+            <tr className="dataRow">
+              <td>
+                <div className="starLev">{percentage.starLev}</div>
+                <div className="ratingBar">
+                  <div className="dataBar voted" style={{ width: `${percentage.percent}%` }} />
+                  <div className="dataBar difference" style={{ width: `${100 - percentage.percent}%` }} />
+                </div>
+                <div className="ratingCount">{percentage.count}</div>
+              </td>
+            </tr>
+          ))}
+          {
+
+          }
+        </tbody>
+      </table>
     </div>
   );
 };

@@ -14,6 +14,7 @@ body {
   font-family: 'Arial', sans-serif;
   width: 90%;
   margin: auto;
+  color: #535353;
 }
 
 textarea {
@@ -530,6 +531,7 @@ textarea {
     display: inline-block;
     vertical-align:top;
     margin: 2% 0%;
+    width: 100%;
 }
 
 .ratingLarge {
@@ -634,3 +636,46 @@ button:active {
   border: 1px solid #888;
   width: min-content;
 }
+
+.dataBar {
+  display: inline-block;
+  margin: 0px;
+  height: 6px;
+  border-radius: 2px;
+  }
+
+.dataBar.voted {
+  background-color: lightgreen;
+}
+
+.dataBar.difference {
+  background-color: lightgrey;
+}
+
+.dataTable {
+width: 100%;
+margin: 0%;
+}
+
+.dataRow {
+  margin: 10% 5%;
+  }
+
+.ratingBar {
+  display: inline-block;
+    width: 55%;
+    margin: 2.5%;
+    }
+
+.starLev {
+  display: inline-block;
+    width:max-content;
+    margin: 2.5%;
+    text-decoration: underline;
+    }
+
+.ratingCount {
+  display: inline-block;
+  width: 5%;
+  margin: 2.5%;
+      }
