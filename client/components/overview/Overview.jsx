@@ -16,12 +16,14 @@ class Overview extends React.Component {
       ratings: null,
       selectedStyle: null,
       selectedSize: null,
+      selectedQuantity: null,
       isFavorite: false,
     };
     this.addToCartHandler = this.addToCartHandler.bind(this);
     this.updateSelectedStyle = this.updateSelectedStyle.bind(this);
     this.isFavoriteHandler = this.isFavoriteHandler.bind(this);
     this.updateSelectedSize = this.updateSelectedSize.bind(this);
+    this.updateSelectedQuantity = this.updateSelectedQuantity.bind(this);
   }
 
   componentDidMount() {
@@ -71,14 +73,22 @@ class Overview extends React.Component {
   updateSelectedStyle(style) {
     this.setState({
       selectedStyle: style,
+      selectedSize: null,
+      selectedQuantity: null,
     });
   }
 
-  // eslint-disable-next-line class-methods-use-this
   updateSelectedSize(size) {
     console.log('SELECTED SIZE: ', size);
     this.setState({
       selectedSize: size,
+    });
+  }
+
+  updateSelectedQuantity(quantity) {
+    console.log('SELECTED QUANTITY: ', quantity);
+    this.setState({
+      selectedQuantity: quantity,
     });
   }
 
@@ -89,6 +99,7 @@ class Overview extends React.Component {
       ratings,
       selectedStyle,
       selectedSize,
+      selectedQuantity,
       isFavorite,
     } = this.state;
 
@@ -116,7 +127,9 @@ class Overview extends React.Component {
               styles={styles}
               selectedStyle={selectedStyle}
               selectedSize={selectedSize}
+              selectedQuantity={selectedQuantity}
               updateSelectedSize={this.updateSelectedSize}
+              updateSelectedQuantity={this.updateSelectedQuantity}
             />
           </div>
         </div>

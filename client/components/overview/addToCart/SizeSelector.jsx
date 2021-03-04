@@ -23,7 +23,7 @@ const SizeSelector = ({ selectedStyle, selectedSize, updateSelectedSize }) => {
         value={selectedSize || 'select-size'}
         className="size-selector"
       >
-        <option value="select-size">SELECT SIZE</option>
+        {selectedSize === null && <option value="select-size">SELECT SIZE</option>}
         {options}
       </select>
       <span className="option-arrow-icon"><Icon icon={chevronDown} /></span>

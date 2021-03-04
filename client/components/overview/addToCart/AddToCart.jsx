@@ -14,7 +14,9 @@ const AddToCart = ({
   // styles
   selectedStyle,
   selectedSize,
+  selectedQuantity,
   updateSelectedSize,
+  updateSelectedQuantity,
 }) => (
   <div>
     <div className="cart-top-container">
@@ -23,7 +25,12 @@ const AddToCart = ({
         selectedSize={selectedSize}
         updateSelectedSize={updateSelectedSize}
       />
-      <QuantitySelector />
+      <QuantitySelector
+        selectedStyle={selectedStyle}
+        selectedSize={selectedSize}
+        selectedQuantity={selectedQuantity}
+        updateSelectedQuantity={updateSelectedQuantity}
+      />
     </div>
     <div className="cart-bottom-container">
       <div className="add-to-cart-container">
@@ -72,11 +79,14 @@ AddToCart.propTypes = {
     })),
   }).isRequired,
   selectedSize: PropTypes.string,
+  selectedQuantity: PropTypes.string,
   updateSelectedSize: PropTypes.func.isRequired,
+  updateSelectedQuantity: PropTypes.func.isRequired,
 };
 
 AddToCart.defaultProps = {
   selectedSize: null,
+  selectedQuantity: null,
 };
 
 export default AddToCart;
