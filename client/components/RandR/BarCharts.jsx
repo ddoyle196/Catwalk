@@ -21,10 +21,15 @@ export const Charts = (headObj) => {
     }
   }
 
+  let voteCount = 0;
+  for (const key in ratings) {
+    voteCount += Number(ratings[key]);
+  }
+
   for (let i = starLevels.length; i > 0; i -= 1) {
     let temp = {};
     if (Number(ratings[i])) {
-      temp.percent = (Number(ratings[i]) / Number(ratings[benchmark])) * 100;
+      temp.percent = (Number(ratings[i]) / voteCount) * 100;
     } else if (!Number(ratings[i])) {
       temp.percent = 0;
     }
