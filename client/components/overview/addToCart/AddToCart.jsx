@@ -11,7 +11,6 @@ const AddToCart = ({
   addToCartHandler,
   isFavorite,
   isFavoriteHandler,
-  // styles
   selectedStyle,
   selectedSize,
   selectedQuantity,
@@ -37,10 +36,10 @@ const AddToCart = ({
         <div
           type="submit"
           tabIndex="0"
+          onClick={addToCartHandler}
           onKeyDown={addToCartHandler}
           aria-label="Add to bag"
           role="button"
-          onClick={addToCartHandler}
           className="add-to-cart-button"
         >
           ADD TO BAG
@@ -65,7 +64,6 @@ AddToCart.propTypes = {
   addToCartHandler: PropTypes.func.isRequired,
   isFavorite: PropTypes.bool.isRequired,
   isFavoriteHandler: PropTypes.func.isRequired,
-  // styles: PropTypes.arrayOf(PropTypes.object).isRequired,
   selectedStyle: PropTypes.shape({
     style_id: PropTypes.number,
     name: PropTypes.string.isRequired,
@@ -73,10 +71,12 @@ AddToCart.propTypes = {
     sale_price: PropTypes.string,
     'default?': PropTypes.bool,
     photos: PropTypes.arrayOf(PropTypes.object),
-    skus: PropTypes.objectOf(PropTypes.shape({
-      quantity: PropTypes.number,
-      size: PropTypes.string,
-    })),
+    // eslint-disable-next-line react/forbid-prop-types
+    skus: PropTypes.object,
+    // skus: PropTypes.objectOf(PropTypes.shape({
+    //   quantity: PropTypes.number,
+    //   size: PropTypes.string,
+    // })),
   }).isRequired,
   selectedSize: PropTypes.string,
   selectedQuantity: PropTypes.string,

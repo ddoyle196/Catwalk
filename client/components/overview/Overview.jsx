@@ -18,6 +18,7 @@ class Overview extends React.Component {
       selectedSize: null,
       selectedQuantity: null,
       isFavorite: false,
+      cart: [],
     };
     this.addToCartHandler = this.addToCartHandler.bind(this);
     this.updateSelectedStyle = this.updateSelectedStyle.bind(this);
@@ -57,10 +58,39 @@ class Overview extends React.Component {
       });
   }
 
-  // eslint-disable-next-line class-methods-use-this
   addToCartHandler() {
-    // eslint-disable-next-line no-console
-    console.log('Add to cart handler was clicked!');
+    const {
+      cart,
+      product,
+      selectedStyle,
+      selectedSize,
+      selectedQuantity,
+    } = this.state;
+
+    const cartItem = {
+      product: product.id,
+      style: selectedStyle.style_id,
+      size: selectedSize,
+      quantity: selectedQuantity,
+    };
+
+    // update the quantity of the selected size of the currently selected style
+    const sizes = selectedStyle.skus;
+    const sizeKeys = Object.keys(selectedStyle.skus);
+    for (let i = 0; i < sizeKeys.length; i += 1) {
+      const sizeKey = sizeKeys[i];
+      if (sizes[sizeKey].size === selectedSize) {
+        sizes[sizeKey].quantity -= Number(selectedQuantity);
+        break;
+      }
+    }
+
+    this.setState({
+      cart: [...cart, cartItem],
+      selectedSize: null,
+      selectedQuantity: null,
+      selectedStyle,
+    });
   }
 
   isFavoriteHandler() {
@@ -79,14 +109,13 @@ class Overview extends React.Component {
   }
 
   updateSelectedSize(size) {
-    console.log('SELECTED SIZE: ', size);
     this.setState({
       selectedSize: size,
+      selectedQuantity: '1',
     });
   }
 
   updateSelectedQuantity(quantity) {
-    console.log('SELECTED QUANTITY: ', quantity);
     this.setState({
       selectedQuantity: quantity,
     });

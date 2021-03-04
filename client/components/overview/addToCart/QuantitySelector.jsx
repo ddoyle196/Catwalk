@@ -20,8 +20,6 @@ const QuantitySelector = ({
     }
   }
 
-  console.log(`TOTAL STOCK FOR SIZE ${selectedSize} IS ${totalStock}`);
-
   const options = [];
   let keyCount = 0;
   if (totalStock <= 15) {
@@ -63,10 +61,8 @@ QuantitySelector.propTypes = {
     sale_price: PropTypes.string,
     'default?': PropTypes.bool,
     photos: PropTypes.arrayOf(PropTypes.object),
-    skus: PropTypes.objectOf(PropTypes.shape({
-      quantity: PropTypes.number,
-      size: PropTypes.string,
-    })),
+    // eslint-disable-next-line react/forbid-prop-types
+    skus: PropTypes.object,
   }).isRequired,
   selectedSize: PropTypes.string,
   selectedQuantity: PropTypes.string,

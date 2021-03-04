@@ -5,25 +5,33 @@ import chevronDown from '@iconify-icons/mdi/chevron-down';
 
 const SizeSelector = ({ selectedStyle, selectedSize, updateSelectedSize }) => {
   const sizes = selectedStyle.skus;
-  console.log('SIZES OBJECT: ', sizes);
   const sizeKeys = Object.keys(selectedStyle.skus);
-  console.log('SIZE KEYS: ', sizeKeys);
   const options = [];
   let keyCount = 0;
   for (let i = 0; i < sizeKeys.length; i += 1) {
     const sizeKey = sizeKeys[i];
-    keyCount += 1;
-    options.push(<option key={keyCount} value={sizes[sizeKey].size}>{sizes[sizeKey].size}</option>);
+    if (sizes[sizeKey].quantity > 0) {
+      keyCount += 1;
+      options.push(
+        <option
+          key={keyCount}
+          value={sizes[sizeKey].size}
+        >
+          {sizes[sizeKey].size}
+        </option>,
+      );
+    }
   }
-  console.log('OPTIONS: ', options);
   return (
     <div className="size-selector-container">
       <select
         onChange={(e) => updateSelectedSize(e.target.value)}
-        value={selectedSize || 'select-size'}
+        value={selectedSize || (options.length === 0 ? 'out-of-stock' : 'select-size')}
         className="size-selector"
+        disabled={options.length === 0}
       >
         {selectedSize === null && <option value="select-size">SELECT SIZE</option>}
+        {options.length === 0 && <option value="out-of-stock">OUT OF STOCK</option>}
         {options}
       </select>
       <span className="option-arrow-icon"><Icon icon={chevronDown} /></span>
