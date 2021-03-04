@@ -185,6 +185,12 @@ textarea {
   border-radius: 50%;
 }
 
+/******* RELATED PRODUCTS ********/
+.rp-box {
+  width: 80%;
+  margin: auto;
+}
+
 
 /******* QUESTIONS AND ANSWERS *******/
 .qa-box {
