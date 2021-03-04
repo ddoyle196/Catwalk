@@ -662,17 +662,17 @@ margin: 0%;
   margin: 10% 5%;
   }
 
+.starLev {
+    display: inline-block;
+     max-width: 100%;
+      margin: 2.5%;
+      text-decoration: underline;
+     }
+
 .ratingBar {
   display: inline-block;
     width: 55%;
     margin: 2.5%;
-    }
-
-.starLev {
-  display: inline-block;
-   max-width: 100%;
-    margin: 2.5%;
-    text-decoration: underline;
     }
 
 .ratingCount {
@@ -680,3 +680,43 @@ margin: 0%;
   width: 5%;
   margin: 2.5%;
       }
+
+      .qualityHolder {
+        display: inline-block;
+          width: 95%;
+          margin: 2.5%;
+          position: relative;
+          }
+
+      .quality {
+        display: inline-block;
+        width: 25%;
+          margin: 2.5%;
+          text-decoration: underline;
+         }
+
+         .fullQBar {
+          position:absolute;
+          width: 100%
+         }
+
+         .qualityArrow {
+          position:absolute;
+          text-align: right;
+          padding-top: 5px;
+           }
+
+    .qualityBar {
+      display: inline-block;
+        width: 30%;
+        background-color: lightgrey;
+        margin: 0px;
+  height: 6px;
+  border-radius: 2px;
+        }
+
+        .qualityBar.spacer{
+          display: inline-block;
+            width: 3%;
+            background-color: white;
+            }

@@ -38,20 +38,21 @@ export const Charts = (headObj) => {
     temp.count = Number(ratings[i]) || 0;
     barStats.push(temp);
   }
-  // console.log(Object.keys(recommend)[0]);
-  const recommendPercent = (Number(recommended[Object.keys(recommended)[0]]) / Number(voteCount)) * 100;
-  // const recommendPercent = 50;
+  const rPercent = (Number(recommended[Object.keys(recommended)[0]]) / Number(voteCount)) * 100;
+
+  let charMap = Object.keys(headObj.characteristics);
+
   return (
     <div>
       <table className="dataTable">
         <tbody>
           <tr className="dataRow">
             <td>
-              <div className="starLev">{`${recommendPercent}% of reviews recommend this product`}</div>
+              <div className="starLev">{`${rPercent}% of reviews recommend this product`}</div>
             </td>
           </tr>
           {barStats.map((percentage) => (
-            <tr className="dataRow">
+            <tr className="dataRow" key={headObj.product_id.concat(percentage.starLev)}>
               <td>
                 <div className="starLev">{percentage.starLev}</div>
                 <div className="ratingBar">
@@ -62,9 +63,24 @@ export const Charts = (headObj) => {
               </td>
             </tr>
           ))}
-          {
-
-          }
+          {charMap.map((quality) => (
+            <tr className="dataRow" key={headObj.characteristics[quality].value}>
+              <td>
+                <div className="qualityHolder">
+                  <div className="quality">{quality}</div>
+                  {/* <div className="starLev">{headObj.characteristics[quality].value}</div> */}
+                  <div className="fullQBar">
+                    <div className="qualityBar" />
+                    <div className="qualityBar spacer" />
+                    <div className="qualityBar" />
+                    <div className="qualityBar spacer" />
+                    <div className="qualityBar" />
+                  </div>
+                  <div className="qualityArrow" style={{ width: `${headObj.characteristics[quality].value * 20}% ` }}>&#9660;</div>
+                </div>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>
