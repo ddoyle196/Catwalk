@@ -10,6 +10,11 @@ const handleEmailValidation = (email) => {
   return !!email.match(mailformat);
 };
 
+const handleUrlValidation = (str) => {
+  const regexp = /^(?:(?:https?|ftp):\/\/)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:\/\S*)?$/;
+  return !!regexp.test(str);
+};
+
 const Question = class extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -24,6 +29,14 @@ const Question = class extends React.PureComponent {
       showNotificationModal: false,
       notificationCode: '',
       notificationMessage: '',
+      answerWithPhoto: false,
+      photos: {
+        photo1: '',
+        photo2: '',
+        photo3: '',
+        photo4: '',
+        photo5: '',
+      },
       newAnswer: {
         body: '',
         name: '',
@@ -33,6 +46,7 @@ const Question = class extends React.PureComponent {
         name: true,
         email: true,
         body: true,
+        photo: true,
       },
     };
 
@@ -46,6 +60,7 @@ const Question = class extends React.PureComponent {
     this.handleInputChange = this.handleInputChange.bind(this);
     this.showValidationErrors = this.showValidationErrors.bind(this);
     this.handleCollapseAnswers = this.handleCollapseAnswers.bind(this);
+    this.handlePhotoSubmit = this.handlePhotoSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -86,7 +101,9 @@ const Question = class extends React.PureComponent {
           name: true,
           email: true,
           body: true,
+          photo: true,
         },
+        answerWithPhoto: false,
       });
     }
     if (modalType === 'notification') {
@@ -101,24 +118,40 @@ const Question = class extends React.PureComponent {
   handleInputChange(e) {
     const { target } = e;
     const { name } = target;
-    const { newAnswer } = this.state;
+    const { newAnswer, photos } = this.state;
     const inputNewAnswer = { ...newAnswer };
-    inputNewAnswer[name] = e.target.value;
+    const inputNewPhoto = { ...photos };
+    if (name.includes('photo')) {
+      inputNewPhoto[name] = e.target.value;
+    } else {
+      inputNewAnswer[name] = e.target.value;
+    }
     this.setState({
       newAnswer: inputNewAnswer,
+      photos: inputNewPhoto,
     });
   }
 
   handleSubmitAnswerToQuestion() {
-    const { newAnswer } = this.state;
+    const { newAnswer, photos, answerWithPhoto } = this.state;
     const { id } = this.props;
+    const photoArray = Object.values(photos).filter((photo) => photo !== '');
+    const validatePhotos = photoArray.map((photo) => handleUrlValidation(photo));
     const validateAnswer = {
       name: newAnswer.name.length > 3,
       body: newAnswer.body.length > 3,
       email: newAnswer.email.length > 3 && handleEmailValidation(newAnswer.email),
     };
-    if (validateAnswer.name && validateAnswer.body && validateAnswer.email) {
-      axios.post(`/questions/${id}/answers`, newAnswer)
+    if (validateAnswer.name
+      && validateAnswer.body
+      && validateAnswer.email
+      && (
+        (answerWithPhoto && !validatePhotos.includes(false))
+        || (!answerWithPhoto)
+      )
+    ) {
+      const newPhotoAnswer = { ...newAnswer, photos: photoArray };
+      axios.post(`/questions/${id}/answers`, newPhotoAnswer)
         .then((result) => {
           if (result.status === 201) {
             this.setState({
@@ -126,10 +159,18 @@ const Question = class extends React.PureComponent {
               showNotificationModal: true,
               notificationCode: 'success',
               notificationMessage: 'Question Submited Successfully',
+              validateAnswerInput: {
+                name: true,
+                email: true,
+                body: true,
+                photo: true,
+              },
+              answerWithPhoto: false,
             });
           }
         });
     } else {
+      validateAnswer.photo = !validatePhotos.includes(false);
       this.setState({
         validateAnswerInput: validateAnswer,
       });
@@ -147,6 +188,12 @@ const Question = class extends React.PureComponent {
         collapseAnswers: false,
       });
     }
+  }
+
+  handlePhotoSubmit() {
+    this.setState({
+      answerWithPhoto: true,
+    });
   }
 
   getAnswersFromQuestionId(type) {
@@ -252,6 +299,17 @@ const Question = class extends React.PureComponent {
           </div>
         );
       }
+      if (input === 'photo') {
+        return (
+          <div>
+            <span
+              className="modal-error-message"
+            >
+              {`One or many ${input}'s url are invalid, check again and submit`}
+            </span>
+          </div>
+        );
+      }
       return (
         <div>
           <span
@@ -275,12 +333,18 @@ const Question = class extends React.PureComponent {
       notificationCode,
       notificationMessage,
       collapseAnswers,
+      answerWithPhoto,
     } = this.state;
     const {
       question_body,
       question_helpfulness,
     } = question;
-    const { name, body, email } = validateAnswerInput;
+    const {
+      name,
+      body,
+      email,
+      photo,
+    } = validateAnswerInput;
     return (
       <div className="qa-question-box">
         <div className="qa-question-single">
@@ -422,6 +486,63 @@ const Question = class extends React.PureComponent {
                 maxLength="1000"
               />
               {this.showValidationErrors('body')}
+            </div>
+            <u
+              className={`pointer ${!answerWithPhoto ? '' : 'no-display'}`}
+              onClick={this.handlePhotoSubmit}
+              onKeyDown={this.handleButtonClick}
+              role="button"
+              tabIndex={0}
+            >
+              Add Photo
+            </u>
+            <div className={`modal-photo ${answerWithPhoto ? '' : 'no-display'}`}>
+              <span
+                className="modal-input-titles"
+              >
+                Upload your photos:
+              </span>
+              {this.showValidationErrors('photo')}
+              <input
+                type="url"
+                name="photo1"
+                placeholder="Photo URL Here... "
+                className={`modal-input ${photo ? '' : 'modal-input-error'}`}
+                onChange={this.handleInputChange}
+                maxLength="300"
+              />
+              <input
+                type="url"
+                name="photo2"
+                placeholder="Photo URL Here... "
+                className={`modal-input ${photo ? '' : 'modal-input-error'}`}
+                onChange={this.handleInputChange}
+                maxLength="300"
+              />
+              <input
+                type="url"
+                name="photo3"
+                placeholder="Photo URL Here... "
+                className={`modal-input ${photo ? '' : 'modal-input-error'}`}
+                onChange={this.handleInputChange}
+                maxLength="300"
+              />
+              <input
+                type="url"
+                name="photo4"
+                placeholder="Photo URL Here... "
+                className={`modal-input ${photo ? '' : 'modal-input-error'}`}
+                onChange={this.handleInputChange}
+                maxLength="300"
+              />
+              <input
+                type="url"
+                name="photo5"
+                placeholder="Photo URL Here... "
+                className={`modal-input ${photo ? '' : 'modal-input-error'}`}
+                onChange={this.handleInputChange}
+                maxLength="300"
+              />
             </div>
           </div>
         </Modal>

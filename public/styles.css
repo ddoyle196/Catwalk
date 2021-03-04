@@ -350,7 +350,7 @@ textarea {
 
 .modal-submit .modal-content {
   background-color: #fefefe;
-  margin: 15% auto; /* 15% from the top and centered */
+  margin: 3% auto; /* 15% from the top and centered */
   padding: 30px;
   border: 1px solid #888;
   width: 30%; /* Could be more or less, depending on screen size */
@@ -387,6 +387,14 @@ textarea {
 
 .modal-submit .modal-content .modal-form .modal-body {
   margin: 10px auto;
+}
+
+.modal-submit .modal-content .modal-form .modal-photo {
+  margin: 10px auto;
+}
+
+.modal-submit .modal-content .modal-form .modal-photo .modal-input {
+  margin: 5px auto;
 }
 
 .modal-submit .modal-content .modal-form .modal-input {
