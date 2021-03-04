@@ -15,11 +15,13 @@ class Overview extends React.Component {
       styles: null,
       ratings: null,
       selectedStyle: null,
+      selectedSize: null,
       isFavorite: false,
     };
     this.addToCartHandler = this.addToCartHandler.bind(this);
     this.updateSelectedStyle = this.updateSelectedStyle.bind(this);
     this.isFavoriteHandler = this.isFavoriteHandler.bind(this);
+    this.updateSelectedSize = this.updateSelectedSize.bind(this);
   }
 
   componentDidMount() {
@@ -29,14 +31,13 @@ class Overview extends React.Component {
   getProductAndStyles(productId) {
     let product = {};
     let styles = [];
-    let selectedStyle = '';
     axios.get(`/products/${productId}`)
       .then((response) => {
         product = response.data;
         axios.get(`products/${productId}/styles`)
           .then((res) => {
             styles = res.data.results;
-            selectedStyle = styles[0].name;
+            const [selectedStyle] = styles;
             axios.get(`metadata/${productId}`)
               .then((r) => {
                 this.setState({
@@ -67,10 +68,17 @@ class Overview extends React.Component {
     });
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  updateSelectedStyle(name) {
+  updateSelectedStyle(style) {
     this.setState({
-      selectedStyle: name,
+      selectedStyle: style,
+    });
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  updateSelectedSize(size) {
+    console.log('SELECTED SIZE: ', size);
+    this.setState({
+      selectedSize: size,
     });
   }
 
@@ -80,6 +88,7 @@ class Overview extends React.Component {
       styles,
       ratings,
       selectedStyle,
+      selectedSize,
       isFavorite,
     } = this.state;
 
@@ -104,6 +113,10 @@ class Overview extends React.Component {
               addToCartHandler={this.addToCartHandler}
               isFavorite={isFavorite}
               isFavoriteHandler={this.isFavoriteHandler}
+              styles={styles}
+              selectedStyle={selectedStyle}
+              selectedSize={selectedSize}
+              updateSelectedSize={this.updateSelectedSize}
             />
           </div>
         </div>

@@ -7,10 +7,22 @@ import star from '@iconify-icons/mdi/star';
 import QuantitySelector from './QuantitySelector';
 import SizeSelector from './SizeSelector';
 
-const AddToCart = ({ addToCartHandler, isFavorite, isFavoriteHandler }) => (
+const AddToCart = ({
+  addToCartHandler,
+  isFavorite,
+  isFavoriteHandler,
+  // styles
+  selectedStyle,
+  selectedSize,
+  updateSelectedSize,
+}) => (
   <div>
     <div className="cart-top-container">
-      <SizeSelector />
+      <SizeSelector
+        selectedStyle={selectedStyle}
+        selectedSize={selectedSize}
+        updateSelectedSize={updateSelectedSize}
+      />
       <QuantitySelector />
     </div>
     <div className="cart-bottom-container">
@@ -46,6 +58,25 @@ AddToCart.propTypes = {
   addToCartHandler: PropTypes.func.isRequired,
   isFavorite: PropTypes.bool.isRequired,
   isFavoriteHandler: PropTypes.func.isRequired,
+  // styles: PropTypes.arrayOf(PropTypes.object).isRequired,
+  selectedStyle: PropTypes.shape({
+    style_id: PropTypes.number,
+    name: PropTypes.string.isRequired,
+    original_price: PropTypes.string,
+    sale_price: PropTypes.string,
+    'default?': PropTypes.bool,
+    photos: PropTypes.arrayOf(PropTypes.object),
+    skus: PropTypes.objectOf(PropTypes.shape({
+      quantity: PropTypes.number,
+      size: PropTypes.string,
+    })),
+  }).isRequired,
+  selectedSize: PropTypes.string,
+  updateSelectedSize: PropTypes.func.isRequired,
+};
+
+AddToCart.defaultProps = {
+  selectedSize: null,
 };
 
 export default AddToCart;
