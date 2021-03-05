@@ -24,13 +24,13 @@ $(window).on('load', () => {
         element,
         time,
       };
-      console.log(body);
+      // console.log(body);
       $.ajax({
         type: 'POST',
         url: '/interactions',
         data: JSON.stringify(body),
         success: () => {
-          console.log('success');
+          // console.log('success');
         },
         contentType: 'application/json',
       });
