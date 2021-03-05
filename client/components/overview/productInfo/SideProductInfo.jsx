@@ -16,7 +16,8 @@ const SideProductInfo = ({ product, ratings }) => {
   console.log(ratings);
   return (
     <div>
-      <StarRating ratings={ratings} /><span>  LINK: Read all reviews</span>
+      <StarRating ratings={ratings} />
+      <span>  LINK: Read all reviews</span>
       {product.category && <p className="product-category">{product.category.toUpperCase()}</p>}
       {product.name && <p className="expanded-product-name">{product.name}</p>}
       {product.default_price && (
