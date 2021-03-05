@@ -53,14 +53,13 @@ class RandR extends React.PureComponent {
       sort,
       productId,
     };
+
+    console.log(params);
+
     axios.get('http://localhost:3000/reviews', { params })
       .then((r) => {
         this.setState({
-          reviews: null,
-        }, () => {
-          this.setState({
-            reviews: r.data,
-          });
+          reviews: r.data,
         });
       });
   }

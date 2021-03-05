@@ -14,9 +14,10 @@ import Q4Star from '@iconify-icons/fluent/star-20-filled';
 
 import PropTypes from 'prop-types';
 
-const StarRating = ({ ratings }) => {
+const StarRating = ({ ratings, key }) => {
   let ratingTotal = 0;
   let voteCount = 0;
+  let stars = [];
   // eslint-disable-next-line guard-for-in
   for (const key in ratings) {
     ratingTotal += Number(key) * Number(ratings[key]);
@@ -24,7 +25,6 @@ const StarRating = ({ ratings }) => {
   }
   let blackStars = (Math.round((ratingTotal / voteCount) * 4) / 4).toFixed(2);
   let whiteStars = (5 - blackStars);
-  const stars = [];
 
   while (blackStars > 0.00) {
     if (blackStars >= 1.00) {
@@ -47,7 +47,7 @@ const StarRating = ({ ratings }) => {
   }
 
   return (
-    <div>
+    <div key={key}>
       {stars}
       {/*<span>  LINK: Read all reviews</span>*/}
     </div>

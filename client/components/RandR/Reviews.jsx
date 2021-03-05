@@ -8,9 +8,7 @@ class Reviews extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      reviews: props.reviews.results,
       displayCount: 2,
-      display: props.reviews.results.slice(0, 2),
       sort: props.sort,
       ratingTotal: props.ratings,
       options: ['relevant', 'newest', 'helpful'],
@@ -47,22 +45,20 @@ class Reviews extends React.Component {
   }
 
   renderTwo() {
-    const { reviews } = this.state;
-    let { displayCount } = this.state;
     this.setState({
-      displayCount: displayCount += 2,
-      display: reviews.slice(0, displayCount),
+      displayCount: this.state.displayCount += 2,
     });
   }
 
   render() {
-    const { reviews, displayCount, ratingTotal } = this.state;
-    let { display, sort } = this.state;
+    const { displayCount, ratingTotal } = this.state;
+    let { results } = this.props.reviews;
+    let display = results.slice(0, displayCount);
     const renderTwo = this.renderTwo.bind(this);
     const displayOptions = this.displayOptions.bind(this);
-    display = display ? display.map((review) => (
+    display = display.map((review) => (
       <IndReview review={review} />
-    )) : null;
+    ));
 
     return (
       <div>
@@ -75,7 +71,7 @@ class Reviews extends React.Component {
           {' '}
         </div>
         <div className="reviewList">{display}</div>
-        {reviews.length - displayCount > 0 ? <button type="button" onClick={renderTwo}>MORE REVIEWS</button> : null}
+        {results.length - displayCount > 0 ? <button type="button" onClick={renderTwo}>MORE REVIEWS</button> : null}
         <button type="button">ADD A REVIEW   +</button>
       </div>
     );

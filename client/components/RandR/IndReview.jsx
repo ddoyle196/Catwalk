@@ -15,8 +15,6 @@ class IndReview extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      bodyDisplay: props.review.body.slice(0, 249),
-      fullDisplay: !(props.review.body.length > 250),
       reported: false,
       helpfulness: false,
       showNotificationModal: false,
@@ -24,7 +22,6 @@ class IndReview extends React.Component {
       notificationMessage: '',
       showImageModal: false,
       imageUrl: '',
-      id: props.review.review_id,
     };
     this.handleCloseModal = this.handleCloseModal.bind(this);
     this.showPhotos = this.showPhotos.bind(this);
@@ -128,132 +125,137 @@ class IndReview extends React.Component {
     const { Fragment } = React;
     const { review } = this.props;
 
-    const {
-      bodyDisplay,
-      fullDisplay,
-      reported,
-      helpfulness,
-      showNotificationModal,
-      notificationCode,
-      notificationMessage,
-      showImageModal,
-      imageUrl,
-      id,
-    } = this.state;
+    console.log(review);
 
-    const fullBody = this.fullBody.bind(this);
-    const showPhotos = this.showPhotos.bind(this);
+    if (review) {
+      const bodyDisplay = review.body.slice(0, 249);
+      const fullDisplay = !(review.body.length > 250);
+      const id = review.review_id;
+      const {
+        reported,
+        helpfulness,
+        showNotificationModal,
+        notificationCode,
+        notificationMessage,
+        showImageModal,
+        imageUrl,
+      } = this.state;
 
-    let cleanSummary = review.summary.slice(0, 60);
-    cleanSummary = review.summary.length > 60 ? cleanSummary.concat('...') : cleanSummary;
+      const fullBody = this.fullBody.bind(this);
+      const showPhotos = this.showPhotos.bind(this);
 
-    const summarySpill = review.summary.length > 60 ? '...'.concat(review.summary.slice(60)) : null;
+      let cleanSummary = review.summary.slice(0, 60);
+      cleanSummary = review.summary.length > 60 ? cleanSummary.concat('...') : cleanSummary;
 
-    const indRating = { [review.rating]: '1' };
-    return (
-      <div className="revContainer">
-        <div className="Rheader">
-          <div className="revRating">
-            <StarRating ratings={indRating} />
-          </div>
-          <div className="userDate">
-            <Icon icon={checkCircleOutline} />
-            {' '}
-            {review.reviewer_name}
-            {', '}
-            {moment(review.date).format('LL')}
-          </div>
-        </div>
+      const summarySpill = review.summary.length > 60 ? '...'.concat(review.summary.slice(60)) : null;
 
-        <div className="summary">
-          {cleanSummary}
-          {' '}
-        </div>
-
-        <div className="rBody">
-          {summarySpill}
-          {bodyDisplay}
-          {!fullDisplay ? (
-            <div className="smallLink" onClick={() => { fullBody(); }}>
-              Show more
+      return (
+        <div className="revContainer">
+          <div className="Rheader">
+            <div className="revRating">
+              <StarRating ratings={{ [review.rating]: '1' }} key={id, review.rating} />
             </div>
-          ) : null}
-        </div>
-
-        <div className="qa-answer-box">
-          {this.showPhotos()}
-          <Modal
-            showModal={showNotificationModal}
-            handleCloseModal={this.handleCloseModal}
-            handleSubmit={() => { }}
-            modalType="notification"
-            modalCode={notificationCode}
-          >
-            <span className="modal-text">{notificationMessage}</span>
-          </Modal>
-          <Modal
-            showModal={showImageModal}
-            handleCloseModal={this.handleCloseModal}
-            handleSubmit={() => { }}
-            modalType="image"
-            modalCode=""
-          >
-            <img
-              className="qa-image-large pointer"
-              src={imageUrl}
-              alt="thumbnails"
-            />
-          </Modal>
-        </div>
-
-        <div>
-          {review.recommend ? (
-            <div className="recommendation">
+            <div className="userDate">
               <Icon icon={checkCircleOutline} />
               {' '}
-              I recommend this product
+              {review.reviewer_name}
+              {', '}
+              {moment(review.date).format('LL')}
             </div>
-          ) : null}
-        </div>
+          </div>
 
-        <div>
-          {review.response ? (
-            <div className="response">
-              <div className="respHead">Response from Seller:</div>
-              <div>{review.response}</div>
-            </div>
-          ) : null}
-        </div>
-        <div className="rr-review-format">
-          <span>
-            {'Helpful? '}
-            <u
-              className="pointer"
-              onClick={() => this.AddAnswerHelpfulness()}
-              onKeyDown={this.handleButtonClick}
-              role="button"
-              tabIndex={0}
+          <div className="summary">
+            {cleanSummary}
+            {' '}
+          </div>
+
+          <div className="rBody">
+            {summarySpill}
+            {bodyDisplay}
+            {!fullDisplay ? (
+              <div className="smallLink" onClick={() => { fullBody(); }}>
+                Show more
+              </div>
+            ) : null}
+          </div>
+
+          <div className="qa-answer-box">
+            {this.showPhotos()}
+            <Modal
+              showModal={showNotificationModal}
+              handleCloseModal={this.handleCloseModal}
+              handleSubmit={() => { }}
+              modalType="notification"
+              modalCode={notificationCode}
             >
-              Yes
-            </u>
-            {` (${helpfulness})`}
-          </span>
-        </div>
-        <div className="rr-review-format rr-reset-format">
-          <span>
-            <u
-              className="pointer"
-              onClick={() => this.handleAnswerReport(id)}
-              onKeyDown={this.handleButtonClick}
-              role="button"
-              tabIndex={0}
+              <span className="modal-text">{notificationMessage}</span>
+            </Modal>
+            <Modal
+              showModal={showImageModal}
+              handleCloseModal={this.handleCloseModal}
+              handleSubmit={() => { }}
+              modalType="image"
+              modalCode=""
             >
-              {reported ? 'Reported' : 'Report'}
+              <img
+                className="qa-image-large pointer"
+                src={imageUrl}
+                alt="thumbnails"
+              />
+            </Modal>
+          </div>
+
+          <div>
+            {review.recommend ? (
+              <div className="recommendation">
+                <Icon icon={checkCircleOutline} />
+                {' '}
+              I recommend this product
+              </div>
+            ) : null}
+          </div>
+
+          <div>
+            {review.response ? (
+              <div className="response">
+                <div className="respHead">Response from Seller:</div>
+                <div>{review.response}</div>
+              </div>
+            ) : null}
+          </div>
+          <div className="rr-review-format">
+            <span>
+              {'Helpful? '}
+              <u
+                className="pointer"
+                onClick={() => this.AddAnswerHelpfulness()}
+                onKeyDown={this.handleButtonClick}
+                role="button"
+                tabIndex={0}
+              >
+                Yes
             </u>
-          </span>
+              {` (${helpfulness})`}
+            </span>
+          </div>
+          <div className="rr-review-format rr-reset-format">
+            <span>
+              <u
+                className="pointer"
+                onClick={() => this.handleAnswerReport(id)}
+                onKeyDown={this.handleButtonClick}
+                role="button"
+                tabIndex={0}
+              >
+                {reported ? 'Reported' : 'Report'}
+              </u>
+            </span>
+          </div>
         </div>
-      </div>
-    );
+      );
+    } else {
+      return null;
+    }
   }
 }
 
