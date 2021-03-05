@@ -8,17 +8,11 @@ import RelatedProduct from './RelatedProduct/RelatedProduct';
 
 const App = () => (
   <div>
-<<<<<<< HEAD
     {/* <Overview /> */}
     {/* <QuestionsAnswers /> */}
     <QuestionsAnswers />
     {/* <RelatedProduct /> */}
     {/* <RandR productId={19379} /> */}
-=======
-    <Overview />
-    <QuestionsAnswers />
-    <RandR productId={19379} />
->>>>>>> master
   </div>
 );
 
