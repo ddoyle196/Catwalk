@@ -21,12 +21,16 @@ textarea {
   font-family: 'Arial', sans-serif;
 }
 
-::placeholder{
+::placeholder {
   color: rgb(71, 71, 71);
 }
 
-.pointer{
+.pointer {
   cursor: pointer;
+}
+
+.no-display {
+  display:none;
 }
 
 /******* OVERVIEW WIDGET *******/
@@ -182,6 +186,12 @@ textarea {
   border-radius: 50%;
 }
 
+/******* RELATED PRODUCTS ********/
+.rp-box {
+  width: 80%;
+  margin: auto;
+}
+
 
 /******* QUESTIONS AND ANSWERS *******/
 .qa-box {
@@ -317,6 +327,11 @@ textarea {
   margin-left: 2%;
 }
 
+.qa-box .qa-question-box .qa-collapse-answers {
+  font-size: 12px;
+  margin-left: 2%;
+}
+
 .qa-box .qa-options {
   margin-top: 3%;
 }
@@ -342,7 +357,7 @@ textarea {
 
 .modal-submit .modal-content {
   background-color: #fefefe;
-  margin: 15% auto; /* 15% from the top and centered */
+  margin: 3% auto; /* 15% from the top and centered */
   padding: 30px;
   border: 1px solid #888;
   width: 30%; /* Could be more or less, depending on screen size */
@@ -379,6 +394,14 @@ textarea {
 
 .modal-submit .modal-content .modal-form .modal-body {
   margin: 10px auto;
+}
+
+.modal-submit .modal-content .modal-form .modal-photo {
+  margin: 10px auto;
+}
+
+.modal-submit .modal-content .modal-form .modal-photo .modal-input {
+  margin: 5px auto;
 }
 
 .modal-submit .modal-content .modal-form .modal-input {
