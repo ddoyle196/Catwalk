@@ -125,8 +125,6 @@ class IndReview extends React.Component {
     const { Fragment } = React;
     const { review } = this.props;
 
-    console.log(review);
-
     if (review) {
       const bodyDisplay = review.body.slice(0, 249);
       const fullDisplay = !(review.body.length > 250);

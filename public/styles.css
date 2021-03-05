@@ -658,9 +658,17 @@ width: 100%;
 margin: 0%;
 }
 
+.percentageRow {
+  margin: 10% 5%;
+  }
+
 .dataRow {
   margin: 10% 5%;
   }
+.dataRow:hover {
+    margin: 10% 5%;
+    background-color: whitesmoke;
+    }
 
 .starLev {
     display: inline-block;
@@ -734,5 +742,10 @@ margin: 0%;
 
             .rr-review-options.rr-reset-format {
               border: none;
+            }
+
+            .rr-drop {
+              border: none;
+              border-bottom: solid;
             }
 

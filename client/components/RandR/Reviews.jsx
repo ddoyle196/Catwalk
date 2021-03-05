@@ -20,6 +20,8 @@ class Reviews extends React.Component {
     this.setState({ optionSelect: selected });
   }
 
+
+
   displayOptions() {
     const { updateSort } = this.props;
     const { options, optionSelect } = this.state;
@@ -30,6 +32,7 @@ class Reviews extends React.Component {
           this.updateOptionSelect(e.target.value);
           updateSort(e.target.value);
         }}
+        className="rr-drop"
       >
         {
           options.map((option) => (
@@ -52,14 +55,27 @@ class Reviews extends React.Component {
 
   render() {
     const { displayCount, ratingTotal } = this.state;
+    let { ratingFilter } = this.props;
     let { results } = this.props.reviews;
     let display = results.slice(0, displayCount);
     const renderTwo = this.renderTwo.bind(this);
     const displayOptions = this.displayOptions.bind(this);
+    display = display.filter((review) => {
+      let check = false;
+      if (ratingFilter.indexOf(true) === -1) {
+        return true;
+      }
+      for (let i = 0; i < ratingFilter.length; i += 1) {
+        if (ratingFilter[i] === true && review.rating === i) {
+          check = true;
+        }
+      }
+      return check;
+    });
+
     display = display.map((review) => (
       <IndReview review={review} />
     ));
-
     return (
       <div>
         <div>
@@ -71,9 +87,9 @@ class Reviews extends React.Component {
           {' '}
         </div>
         <div className="reviewList">{display}</div>
-        {results.length - displayCount > 0 ? <button type="button" onClick={renderTwo}>MORE REVIEWS</button> : null}
+        { results.length - displayCount > 0 ? <button type="button" onClick={renderTwo}>MORE REVIEWS</button> : null}
         <button type="button">ADD A REVIEW   +</button>
-      </div>
+      </div >
     );
   }
 }

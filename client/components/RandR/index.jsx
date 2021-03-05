@@ -15,14 +15,23 @@ class RandR extends React.PureComponent {
       count: 10,
       reviews: null,
       sort: 'relevant',
+      ratingFilter: [false, false, false, false, false],
     };
     this.updateSort = this.updateSort.bind(this);
+    this.updateRatingFilter = this.updateRatingFilter.bind(this);
   }
 
   componentDidMount() {
     let { reviews } = this.state;
     this.updateMetaData();
     this.updateReviews();
+  }
+
+  updateRatingFilter(e) {
+    let { ratingFilter } = this.state;
+    let temp = [...ratingFilter];
+    temp[e] === true ? temp[e] = false : temp[e] = true;
+    this.setState({ ratingFilter: temp });
   }
 
   updateSort(selected) {
@@ -54,8 +63,6 @@ class RandR extends React.PureComponent {
       productId,
     };
 
-    console.log(params);
-
     axios.get('http://localhost:3000/reviews', { params })
       .then((r) => {
         this.setState({
@@ -65,7 +72,7 @@ class RandR extends React.PureComponent {
   }
 
   render() {
-    const { reviews, ratings, sort } = this.state;
+    const { reviews, ratings, sort, ratingFilter } = this.state;
     const { updateSort } = this;
     let voteCount = 0;
     if (ratings) {
@@ -77,7 +84,7 @@ class RandR extends React.PureComponent {
       <div className="r-box">
         <div className="headerBlock">RATINGS & REVIEWS</div>
         <div className="histogramBlock">
-          {ratings ? <Histograms ratings={ratings} /> : null}
+          {ratings ? <Histograms ratings={ratings} updateRF={this.updateRatingFilter} /> : null}
         </div>
         <div className="reviewBlock">
           {reviews && ratings ? (
@@ -86,6 +93,7 @@ class RandR extends React.PureComponent {
               sort={sort}
               ratings={voteCount}
               updateSort={this.updateSort}
+              ratingFilter={ratingFilter}
             />
           ) : null}
         </div>

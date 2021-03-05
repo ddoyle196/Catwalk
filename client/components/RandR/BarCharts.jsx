@@ -2,14 +2,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export const Charts = (headObj) => {
+export const Charts = (headObj, clickFunc) => {
   const { ratings, recommended, characteristics } = headObj;
 
   const starLevels = ['1 stars', '2 stars', '3 stars', '4 stars', '5 stars'];
-  const qualFit = ["Too tight", "Great Fit", "Too loose"];
-  const qualLen = ["Short", "Just Right", "Long"];
-  const qualCom = ["Poor", "Average", "Perfect"];
-  const qualQua = ["Low", "Medium", "High"];
+  const qualFit = ['Too tight', 'Great Fit', 'Too loose'];
+  const qualLen = ['Short', 'Just Right', 'Long'];
+  const qualCom = ['Poor', 'Average', 'Perfect'];
+  const qualQua = ['Low', 'Medium', 'High'];
   const barStats = [];
   // eslint-disable-next-line guard-for-in
 
@@ -31,7 +31,7 @@ export const Charts = (headObj) => {
   }
 
   for (let i = starLevels.length; i > 0; i -= 1) {
-    let temp = {};
+    const temp = {};
     if (Number(ratings[i])) {
       temp.percent = (Number(ratings[i]) / voteCount) * 100;
     } else if (!Number(ratings[i])) {
@@ -39,23 +39,31 @@ export const Charts = (headObj) => {
     }
     temp.starLev = starLevels[i - 1];
     temp.count = Number(ratings[i]) || 0;
+    temp.val = i - 1;
     barStats.push(temp);
   }
   const rPercent = Math.round((Number(recommended[Object.keys(recommended)[0]]) / Number(voteCount)) * 100);
 
-  let charMap = Object.keys(headObj.characteristics);
+  const charMap = Object.keys(headObj.characteristics);
 
   return (
     <div>
       <table className="dataTable">
         <tbody>
-          <tr className="dataRow">
+          <tr className="percentageRow">
             <td>
               <div className="starLev">{`${rPercent}% of reviews recommend this product`}</div>
             </td>
           </tr>
           {barStats.map((percentage) => (
-            <tr className="dataRow" key={headObj.product_id.concat(percentage.starLev)}>
+            <tr
+              className="dataRow"
+              key={headObj.product_id.concat(percentage.starLev)}
+              value={percentage.starLev}
+              onClick={(element) => {
+                clickFunc(percentage.val);
+              }}
+            >
               <td>
                 <div className="starLev">{percentage.starLev}</div>
                 <div className="ratingBar">
@@ -84,11 +92,20 @@ export const Charts = (headObj) => {
                     <div className="quality">{quality}</div>
                     {/* <div className="starLev">{headObj.characteristics[quality].value}</div> */}
                     <div className="fullQBar">
-                      <div className="qualityBar">{'\n'}{quaArray[0]}</div>
+                      <div className="qualityBar">
+                        {'\n'}
+                        {quaArray[0]}
+                      </div>
                       <div className="qualityBar spacer" />
-                      <div className="qualityBar">{'\n'}{quaArray[1]}</div>
+                      <div className="qualityBar">
+                        {'\n'}
+                        {quaArray[1]}
+                      </div>
                       <div className="qualityBar spacer" />
-                      <div className="qualityBar">{'\n'}{quaArray[2]}</div>
+                      <div className="qualityBar">
+                        {'\n'}
+                        {quaArray[2]}
+                      </div>
                     </div>
                     <div className="qualityArrow" style={{ width: `${headObj.characteristics[quality].value * 20}% ` }}>&#9660;</div>
                   </div>
