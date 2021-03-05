@@ -6,7 +6,12 @@ import arrowLeft from '@iconify-icons/mdi/arrow-left';
 import chevronUp from '@iconify-icons/mdi/chevron-up';
 import chevronDown from '@iconify-icons/mdi/chevron-down';
 
-const ImageGallery = ({ styles, selectedStyle }) => {
+const ImageGallery = ({
+  styles,
+  selectedStyle,
+  selectedImageId,
+  updateSelectedImageId,
+}) => {
   const photos = [];
   for (let i = 0; i < styles.length; i += 1) {
     const style = styles[i];
@@ -16,30 +21,84 @@ const ImageGallery = ({ styles, selectedStyle }) => {
       image: style.photos[0].url,
     });
   }
-  let selectedImage = '';
-  let highlightedThumbnail = '';
+  let previousImageId = '';
+  let selectedImageUrl = '';
+  let nextImageId = '';
 
-  for (let i = 0; i < photos.length; i += 1) {
-    const photo = photos[i];
-    if (selectedStyle.style_id === photo.id) {
-      selectedImage = photo.image;
-      highlightedThumbnail = photo.thumbnail;
-      break;
+  if (selectedImageId !== null) {
+    for (let i = 0; i < photos.length; i += 1) {
+      const currentPhoto = photos[i];
+      if (selectedImageId === currentPhoto.id) {
+        selectedImageUrl = currentPhoto.image;
+        if (i > 0) {
+          const previousPhoto = photos[i - 1];
+          previousImageId = previousPhoto.id;
+        }
+        if (i < photos.length - 1) {
+          const nextPhoto = photos[i + 1];
+          nextImageId = nextPhoto.id;
+        }
+        break;
+      }
+    }
+  } else {
+    for (let i = 0; i < photos.length; i += 1) {
+      const currentPhoto = photos[i];
+      if (selectedStyle.style_id === currentPhoto.id) {
+        selectedImageUrl = currentPhoto.image;
+        if (i > 0) {
+          const previousPhoto = photos[i - 1];
+          previousImageId = previousPhoto.id;
+        }
+        if (i < photos.length - 1) {
+          const nextPhoto = photos[i + 1];
+          nextImageId = nextPhoto.id;
+        }
+        break;
+      }
     }
   }
 
+  const thumbnails = [];
+
+  photos.forEach((photo) => {
+    thumbnails.push(
+      <img className="thumbnail" src={photo.thumbnail} alt="" />,
+    );
+  });
+
   return (
     <div className="image-gallery-container">
-      <img className="image-gallery-large-image" src={selectedImage} alt="" />
+      <img className="image-gallery-large-image" src={selectedImageUrl} alt="" />
       <div className="thumbnail-container">
         <span className="image-gallery-chevron-up"><Icon icon={chevronUp} /></span>
-        <img className="thumbnail" src={highlightedThumbnail} alt="" />
-        <img className="thumbnail" src={highlightedThumbnail} alt="" />
-        <img className="thumbnail" src={highlightedThumbnail} alt="" />
+        {thumbnails}
         <span className="image-gallery-chevron-down"><Icon icon={chevronDown} /></span>
       </div>
-      <span className="image-gallery-left-arrow"><Icon icon={arrowLeft} /></span>
-      <span className="image-gallery-right-arrow"><Icon icon={arrowRight} /></span>
+      {previousImageId !== '' && (
+        <span
+          className="image-gallery-left-arrow"
+          onClick={() => updateSelectedImageId(previousImageId)}
+          onKeyDown={() => updateSelectedImageId(previousImageId)}
+          tabIndex="0"
+          aria-label="previous image"
+          role="button"
+        >
+          <Icon icon={arrowLeft} />
+        </span>
+      )}
+      {nextImageId !== '' && (
+        <span
+          className="image-gallery-right-arrow"
+          onClick={() => updateSelectedImageId(nextImageId)}
+          onKeyDown={() => updateSelectedImageId(nextImageId)}
+          tabIndex="0"
+          aria-label="next image"
+          role="button"
+        >
+          <Icon icon={arrowRight} />
+        </span>
+      )}
     </div>
   );
 };
@@ -56,6 +115,12 @@ ImageGallery.propTypes = {
     // eslint-disable-next-line react/forbid-prop-types
     skus: PropTypes.object,
   }).isRequired,
+  updateSelectedImageId: PropTypes.func.isRequired,
+  selectedImageId: PropTypes.number,
+};
+
+ImageGallery.defaultProps = {
+  selectedImageId: null,
 };
 
 export default ImageGallery;

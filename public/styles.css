@@ -41,21 +41,21 @@
 
 .image-gallery-large-image {
   width: 95%;
-  height: auto;
+  height: 33em;
 }
 
 .thumbnail-container {
   position: absolute;
-  top: 2em;
+  top: 1em;
   left: 2em;
-  width: 4em;
+  width: 3.5em;
   display: flex;
   flex-direction: column;
 }
 
 .thumbnail {
   width: 100%;
-  height: 4em;
+  height: 3.5em;
   margin-bottom: 0.5em;
 }
 
@@ -64,6 +64,7 @@
   font-size: 1.5em;
   width: fit-content;
   margin: auto;
+  cursor: pointer;
 }
 
 .image-gallery-left-arrow {
@@ -71,6 +72,7 @@
   top: 45%;
   left: 5em;
   font-size: 1.5em;
+  cursor: pointer;
 }
 
 .image-gallery-right-arrow {
@@ -78,6 +80,12 @@
   top: 45%;
   right: 4em;
   font-size: 1.5em;
+  cursor: pointer;
+}
+
+.image-gallery-left-arrow:focus,
+.image-gallery-right-arrow:focus {
+  outline: none;
 }
 
 

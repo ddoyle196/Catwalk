@@ -19,6 +19,7 @@ class Overview extends React.Component {
       selectedQuantity: null,
       isFavorite: false,
       outOfStock: false,
+      selectedImageId: null,
       cart: [],
     };
     this.addToCartHandler = this.addToCartHandler.bind(this);
@@ -27,6 +28,7 @@ class Overview extends React.Component {
     this.updateSelectedSize = this.updateSelectedSize.bind(this);
     this.updateSelectedQuantity = this.updateSelectedQuantity.bind(this);
     this.updateOutOfStock = this.updateOutOfStock.bind(this);
+    this.updateSelectedImageId = this.updateSelectedImageId.bind(this);
   }
 
   componentDidMount() {
@@ -110,6 +112,7 @@ class Overview extends React.Component {
       selectedSize: null,
       selectedQuantity: null,
       outOfStock: false,
+      selectedImageId: null,
     });
   }
 
@@ -132,6 +135,12 @@ class Overview extends React.Component {
     });
   }
 
+  updateSelectedImageId(imageId) {
+    this.setState({
+      selectedImageId: imageId,
+    });
+  }
+
   render() {
     const {
       product,
@@ -142,6 +151,7 @@ class Overview extends React.Component {
       selectedQuantity,
       isFavorite,
       outOfStock,
+      selectedImageId,
     } = this.state;
 
     if (product === null || styles === null || ratings === null || selectedStyle === null) {
@@ -152,7 +162,12 @@ class Overview extends React.Component {
       <div className="overview-container">
         <div className="overview-top-container">
           <div className="overview-top-left-container">
-            <ImageGallery styles={styles} selectedStyle={selectedStyle} />
+            <ImageGallery
+              styles={styles}
+              selectedStyle={selectedStyle}
+              selectedImageId={selectedImageId}
+              updateSelectedImageId={this.updateSelectedImageId}
+            />
           </div>
           <div className="overview-top-right-container">
             <SideProductInfo product={product} ratings={ratings} />
