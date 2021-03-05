@@ -4,7 +4,7 @@ const RelatedProduct = class extends React.PureComponent {
   render() {
     return (
       <div>
-        <h1>HI ROMI U SMART LOL</h1>
+        <h1>Hi</h1>
       </div>
     );
   }

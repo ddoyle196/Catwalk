@@ -385,7 +385,7 @@ const QuestionsAnswers = class extends React.PureComponent {
                 <span
                   className="qa modal-little-messages"
                 >
-                  For authentication reasons, you will not be emailed” will appear.
+                  For authentication reasons, you will not be emailed.
                 </span>
               </div>
               <div className="qa modal-body">
