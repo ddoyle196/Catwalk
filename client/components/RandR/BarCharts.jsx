@@ -4,9 +4,12 @@ import PropTypes from 'prop-types';
 
 export const Charts = (headObj) => {
   const { ratings, recommended, characteristics } = headObj;
-  console.log(headObj);
 
   const starLevels = ['1 stars', '2 stars', '3 stars', '4 stars', '5 stars'];
+  const qualFit = ["Too tight", "Great Fit", "Too loose"];
+  const qualLen = ["Short", "Just Right", "Long"];
+  const qualCom = ["Poor", "Average", "Perfect"];
+  const qualQua = ["Low", "Medium", "High"];
   const barStats = [];
   // eslint-disable-next-line guard-for-in
 
@@ -38,7 +41,7 @@ export const Charts = (headObj) => {
     temp.count = Number(ratings[i]) || 0;
     barStats.push(temp);
   }
-  const rPercent = (Number(recommended[Object.keys(recommended)[0]]) / Number(voteCount)) * 100;
+  const rPercent = Math.round((Number(recommended[Object.keys(recommended)[0]]) / Number(voteCount)) * 100);
 
   let charMap = Object.keys(headObj.characteristics);
 
@@ -63,24 +66,36 @@ export const Charts = (headObj) => {
               </td>
             </tr>
           ))}
-          {charMap.map((quality) => (
-            <tr className="dataRow" key={headObj.characteristics[quality].value}>
-              <td>
-                <div className="qualityHolder">
-                  <div className="quality">{quality}</div>
-                  {/* <div className="starLev">{headObj.characteristics[quality].value}</div> */}
-                  <div className="fullQBar">
-                    <div className="qualityBar" />
-                    <div className="qualityBar spacer" />
-                    <div className="qualityBar" />
-                    <div className="qualityBar spacer" />
-                    <div className="qualityBar" />
+          {charMap.map((quality) => {
+            let quaArray = [];
+            if (quality === 'Fit') {
+              quaArray = qualFit;
+            } else if (quality === 'Length') {
+              quaArray = qualLen;
+            } else if (quality === 'Comfort') {
+              quaArray = qualCom;
+            } else if (quality === 'Quality') {
+              quaArray = qualQua;
+            }
+            return (
+              <tr className="qualityRow" key={headObj.characteristics[quality].value}>
+                <td>
+                  <div className="qualityHolder">
+                    <div className="quality">{quality}</div>
+                    {/* <div className="starLev">{headObj.characteristics[quality].value}</div> */}
+                    <div className="fullQBar">
+                      <div className="qualityBar">{'\n'}{quaArray[0]}</div>
+                      <div className="qualityBar spacer" />
+                      <div className="qualityBar">{'\n'}{quaArray[1]}</div>
+                      <div className="qualityBar spacer" />
+                      <div className="qualityBar">{'\n'}{quaArray[2]}</div>
+                    </div>
+                    <div className="qualityArrow" style={{ width: `${headObj.characteristics[quality].value * 20}% ` }}>&#9660;</div>
                   </div>
-                  <div className="qualityArrow" style={{ width: `${headObj.characteristics[quality].value * 20}% ` }}>&#9660;</div>
-                </div>
-              </td>
-            </tr>
-          ))}
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>

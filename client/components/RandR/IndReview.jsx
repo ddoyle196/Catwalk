@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import moment from 'moment';
+import axios from 'axios';
 
 import { Icon } from '@iconify/react';
 import checkCircleOutline from '@iconify-icons/mdi/check-circle-outline';
@@ -23,10 +24,13 @@ class IndReview extends React.Component {
       notificationMessage: '',
       showImageModal: false,
       imageUrl: '',
+      id: props.review.review_id,
     };
     this.handleCloseModal = this.handleCloseModal.bind(this);
     this.showPhotos = this.showPhotos.bind(this);
     this.showPhotosLarge = this.showPhotosLarge.bind(this);
+    this.AddReviewrHelpfulness = this.AddReviewHelpfulness.bind(this);
+    this.handleReviewReport = this.handleReviewReport.bind(this);
   }
 
   handleCloseModal(modalType) {
@@ -40,6 +44,47 @@ class IndReview extends React.Component {
     if (modalType === 'image') {
       this.setState({
         showImageModal: false,
+      });
+    }
+  }
+
+  handleReviewReport(id) {
+    axios.put(`/reviews/${id}/report`)
+      .then((result) => {
+        if (result.status === 204) {
+          this.setState({
+            reported: true,
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  handleAnswerHelpfulness(id) {
+    axios.put(`/answers/${id}/helpful`)
+      .then((result) => {
+        if (result.status === 204) {
+          this.getAnswersFromQuestionId('refresh'); // Check
+        }
+      })
+      .catch(() => {
+        this.setState({
+          showNotificationModal: true,
+          notificationCode: 'error',
+          notificationMessage: 'There was an error in the server, please try later',
+        });
+      });
+  }
+
+  AddReviewHelpfulness() {
+    const { id, AnswerHelpfulness } = this.props;
+    const { helpfulness } = this.state;
+    if (!helpfulness) {
+      AnswerHelpfulness(id);
+      this.setState({
+        helpfulness: true,
       });
     }
   }
@@ -79,31 +124,6 @@ class IndReview extends React.Component {
     });
   }
 
-  // handleAnswerReport(id) {
-  //   axios.put(`/answers/${id}/report`)
-  //     .then((result) => {
-  //       if (result.status === 204) {
-  //         this.setState({
-  //           reported: true,
-  //         });
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // }
-
-  // AddAnswerHelpfulness() {
-  //   const { id, AnswerHelpfulness } = this.props;
-  //   const { helpfulness } = this.state;
-  //   if (!helpfulness) {
-  //     AnswerHelpfulness(id);
-  //     this.setState({
-  //       helpfulness: true,
-  //     });
-  //   }
-  // }
-
   render() {
     const { Fragment } = React;
     const { review } = this.props;
@@ -118,6 +138,7 @@ class IndReview extends React.Component {
       notificationMessage,
       showImageModal,
       imageUrl,
+      id,
     } = this.state;
 
     const fullBody = this.fullBody.bind(this);
@@ -203,23 +224,22 @@ class IndReview extends React.Component {
             </div>
           ) : null}
         </div>
-
-        {/* <div className="question-format">
+        <div className="rr-review-format">
           <span>
             {'Helpful? '}
             <u
               className="pointer"
-              onClick={() => this.AddReviewHelpfulness()}
+              onClick={() => this.AddAnswerHelpfulness()}
               onKeyDown={this.handleButtonClick}
               role="button"
               tabIndex={0}
             >
               Yes
             </u>
-            {` (${review.helpfulness})`}
+            {` (${helpfulness})`}
           </span>
         </div>
-        <div className="question-format reset">
+        <div className="rr-review-format rr-reset-format">
           <span>
             <u
               className="pointer"
@@ -231,8 +251,7 @@ class IndReview extends React.Component {
               {reported ? 'Reported' : 'Report'}
             </u>
           </span>
-        </div> */}
-        <hr />
+        </div>
       </div>
     );
   }
