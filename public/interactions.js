@@ -13,18 +13,24 @@ $(window).on('load', () => {
       if (widget === 'qa') {
         widget = 'Questions & Answers';
       }
+      if (widget === 'rr') {
+        widget = 'Ratings & Reviews';
+      }
+      if (widget === 'ov') {
+        widget = 'Overview';
+      }
       const body = {
         widget,
         element,
         time,
       };
-      // console.log(body);
+      console.log(body);
       $.ajax({
         type: 'POST',
         url: '/interactions',
         data: JSON.stringify(body),
         success: () => {
-          // console.log('success');
+          console.log('success');
         },
         contentType: 'application/json',
       });

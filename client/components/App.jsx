@@ -10,7 +10,8 @@ const App = () => (
   <div>
     {/* <Overview /> */}
     {/* <QuestionsAnswers /> */}
-    <RelatedProduct />
+    <QuestionsAnswers />
+    {/* <RelatedProduct /> */}
     {/* <RandR productId={19379} /> */}
   </div>
 );

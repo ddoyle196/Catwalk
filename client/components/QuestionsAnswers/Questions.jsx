@@ -292,7 +292,7 @@ const Question = class extends React.PureComponent {
         return (
           <div>
             <span
-              className="modal-error-message"
+              className="qa modal-error-message"
             >
               {`Please enter an ${input} with the correct format`}
             </span>
@@ -303,7 +303,7 @@ const Question = class extends React.PureComponent {
         return (
           <div>
             <span
-              className="modal-error-message"
+              className="qa modal-error-message"
             >
               {`One or many ${input}'s url are invalid, check again and submit`}
             </span>
@@ -313,7 +313,7 @@ const Question = class extends React.PureComponent {
       return (
         <div>
           <span
-            className="modal-error-message"
+            className="qa modal-error-message"
           >
             {`Please enter a ${input === 'body' ? 'question' : 'nickname'} with more than 3 letters`}
           </span>
@@ -420,16 +420,16 @@ const Question = class extends React.PureComponent {
           modalType="submit-qa"
           modalCode=""
         >
-          <div className="modal-title">
+          <div className="qa modal-title">
             <span>Submit your Answer</span>
           </div>
-          <div className="modal-subtitle">
+          <div className="qa modal-subtitle">
             <span>{`${pName}: ${question_body}`}</span>
           </div>
-          <div className="modal-form">
-            <div className="modal-name">
+          <div className="qa modal-form">
+            <div className="qa modal-name">
               <span
-                className="modal-input-titles"
+                className="qa modal-input-titles"
               >
                 What is your nickname: *
               </span>
@@ -437,20 +437,20 @@ const Question = class extends React.PureComponent {
                 type="text"
                 name="name"
                 placeholder="Example: jack543!"
-                className={`modal-input ${name ? '' : 'modal-input-error'}`}
+                className={`qa modal-input ${name ? '' : 'modal-input-error'}`}
                 onChange={this.handleInputChange}
                 maxLength="60"
               />
               {this.showValidationErrors('name')}
               <span
-                className="modal-little-messages"
+                className="qa modal-little-messages"
               >
                 For privacy reasons, do not use your full name or email address
               </span>
             </div>
-            <div className="modal-email">
+            <div className="qa modal-email">
               <span
-                className="modal-input-titles"
+                className="qa modal-input-titles"
               >
                 Your email: *
               </span>
@@ -458,20 +458,20 @@ const Question = class extends React.PureComponent {
                 type="text"
                 name="email"
                 placeholder="Example: jack@email.com"
-                className={`modal-input ${email ? '' : 'modal-input-error'}`}
+                className={`qa modal-input ${email ? '' : 'modal-input-error'}`}
                 onChange={this.handleInputChange}
                 maxLength="60"
               />
               {this.showValidationErrors('email')}
               <span
-                className="modal-little-messages"
+                className="qa modal-little-messages"
               >
                 For authentication reasons, you will not be emailed” will appear.
               </span>
             </div>
-            <div className="modal-body">
+            <div className="qa modal-body">
               <span
-                className="modal-input-titles"
+                className="qa modal-input-titles"
               >
                 Your Answer: *
               </span>
@@ -479,7 +479,7 @@ const Question = class extends React.PureComponent {
                 type="text"
                 name="body"
                 placeholder="Add Your Answer here..."
-                className={`modal-input ${body ? '' : 'modal-input-error'}`}
+                className={`qa modal-input ${body ? '' : 'modal-input-error'}`}
                 onChange={this.handleInputChange}
                 cols="40"
                 rows="5"
@@ -488,7 +488,7 @@ const Question = class extends React.PureComponent {
               {this.showValidationErrors('body')}
             </div>
             <u
-              className={`modal-add-photo ${!answerWithPhoto ? '' : 'no-display'} pointer`}
+              className={`qa modal-add-photo ${!answerWithPhoto ? '' : 'no-display'} pointer`}
               onClick={this.handlePhotoSubmit}
               onKeyDown={this.handleButtonClick}
               role="button"
@@ -496,9 +496,9 @@ const Question = class extends React.PureComponent {
             >
               Add Photo
             </u>
-            <div className={`modal-photo ${answerWithPhoto ? '' : 'no-display'}`}>
+            <div className={`qa modal-photo ${answerWithPhoto ? '' : 'no-display'}`}>
               <span
-                className="modal-input-titles"
+                className="qa modal-input-titles"
               >
                 Upload your photos:
               </span>
@@ -507,7 +507,7 @@ const Question = class extends React.PureComponent {
                 type="url"
                 name="photo1"
                 placeholder="Photo URL Here... "
-                className={`modal-input ${photo ? '' : 'modal-input-error'}`}
+                className={`qa modal-input ${photo ? '' : 'modal-input-error'}`}
                 onChange={this.handleInputChange}
                 maxLength="300"
               />
@@ -515,7 +515,7 @@ const Question = class extends React.PureComponent {
                 type="url"
                 name="photo2"
                 placeholder="Photo URL Here... "
-                className={`modal-input ${photo ? '' : 'modal-input-error'}`}
+                className={`qa modal-input ${photo ? '' : 'modal-input-error'}`}
                 onChange={this.handleInputChange}
                 maxLength="300"
               />
@@ -523,7 +523,7 @@ const Question = class extends React.PureComponent {
                 type="url"
                 name="photo3"
                 placeholder="Photo URL Here... "
-                className={`modal-input ${photo ? '' : 'modal-input-error'}`}
+                className={`qa modal-input ${photo ? '' : 'modal-input-error'}`}
                 onChange={this.handleInputChange}
                 maxLength="300"
               />
@@ -531,7 +531,7 @@ const Question = class extends React.PureComponent {
                 type="url"
                 name="photo4"
                 placeholder="Photo URL Here... "
-                className={`modal-input ${photo ? '' : 'modal-input-error'}`}
+                className={`qa modal-input ${photo ? '' : 'modal-input-error'}`}
                 onChange={this.handleInputChange}
                 maxLength="300"
               />
@@ -539,7 +539,7 @@ const Question = class extends React.PureComponent {
                 type="url"
                 name="photo5"
                 placeholder="Photo URL Here... "
-                className={`modal-input ${photo ? '' : 'modal-input-error'}`}
+                className={`qa modal-input ${photo ? '' : 'modal-input-error'}`}
                 onChange={this.handleInputChange}
                 maxLength="300"
               />
