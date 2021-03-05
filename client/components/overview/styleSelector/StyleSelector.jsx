@@ -14,8 +14,8 @@ const StyleSelector = ({ styles, selectedStyle, updateSelectedStyle }) => {
       keyCount += 1;
       styleCircles.push(
         <div
-          onClick={() => updateSelectedStyle(s.name)}
-          onKeyDown={() => updateSelectedStyle(s.name)}
+          onClick={() => updateSelectedStyle(s)}
+          onKeyDown={() => updateSelectedStyle(s)}
           role="button"
           tabIndex="0"
           aria-label={`Select ${s.name} style`}
@@ -23,7 +23,7 @@ const StyleSelector = ({ styles, selectedStyle, updateSelectedStyle }) => {
           className="style-circle"
           style={{ backgroundColor: s.name }}
         >
-          {s.name === selectedStyle && (
+          {s.name === selectedStyle.name && (
             <span>
               <span className="selected-check-background" />
               <span className="selected-check-container">
@@ -43,7 +43,7 @@ const StyleSelector = ({ styles, selectedStyle, updateSelectedStyle }) => {
           &gt;
         </strong>
         <span className="selected-style-text">
-          {selectedStyle.toUpperCase()}
+          {selectedStyle.name.toUpperCase()}
         </span>
       </p>
       <div className="style-circles-container">
@@ -55,7 +55,16 @@ const StyleSelector = ({ styles, selectedStyle, updateSelectedStyle }) => {
 
 StyleSelector.propTypes = {
   styles: PropTypes.arrayOf(PropTypes.object).isRequired,
-  selectedStyle: PropTypes.string.isRequired,
+  selectedStyle: PropTypes.shape({
+    style_id: PropTypes.number,
+    name: PropTypes.string.isRequired,
+    original_price: PropTypes.string,
+    sale_price: PropTypes.string,
+    'default?': PropTypes.bool,
+    photos: PropTypes.arrayOf(PropTypes.object),
+    // eslint-disable-next-line react/forbid-prop-types
+    skus: PropTypes.object,
+  }).isRequired,
   updateSelectedStyle: PropTypes.func.isRequired,
 };
 

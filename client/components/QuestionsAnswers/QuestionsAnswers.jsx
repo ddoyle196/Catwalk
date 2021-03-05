@@ -15,6 +15,8 @@ const handleEmailValidation = (email) => {
   return !!email.match(mailformat);
 };
 
+let apiCalls = 0;
+
 const QuestionsAnswers = class extends React.PureComponent {
   constructor() {
     super();
@@ -23,6 +25,7 @@ const QuestionsAnswers = class extends React.PureComponent {
       questionsList: [],
       page: 1,
       count: 4,
+      noQuestions: false,
       haveMoreQuestions: true,
       showQuestionModal: false,
       showNotificationModal: false,
@@ -161,7 +164,11 @@ const QuestionsAnswers = class extends React.PureComponent {
 
   getQuestionListById(productId, type) {
     let fixedCall;
-    const { questionsDisplayed, page, count } = this.state;
+    const {
+      questionsDisplayed,
+      page,
+      count,
+    } = this.state;
     if (type === 'get') {
       fixedCall = `/questions?product_id=${productId}&page=${page}&count=${count}`;
     }
@@ -170,7 +177,12 @@ const QuestionsAnswers = class extends React.PureComponent {
     }
     axios.get(fixedCall)
       .then((response) => {
-        if (response.data.results.length === 0) {
+        if (response.data.results.length === 0 && apiCalls === 0) {
+          this.setState({
+            haveMoreQuestions: false,
+            noQuestions: true,
+          });
+        } else if (response.data.results.length === 0) {
           this.setState({
             haveMoreQuestions: false,
           });
@@ -188,6 +200,7 @@ const QuestionsAnswers = class extends React.PureComponent {
             questionsList: response.data.results,
           });
         }
+        apiCalls += 1;
       })
       .catch(() => {
         this.setState({
@@ -226,7 +239,7 @@ const QuestionsAnswers = class extends React.PureComponent {
         return (
           <div>
             <span
-              className="modal-error-message"
+              className="qa modal-error-message"
             >
               {`Please enter an ${input} with the correct format`}
             </span>
@@ -236,7 +249,7 @@ const QuestionsAnswers = class extends React.PureComponent {
       return (
         <div>
           <span
-            className="modal-error-message"
+            className="qa modal-error-message"
           >
             {`Please enter a ${input === 'body' ? 'question' : 'nickname'} with more than 3 letters`}
           </span>
@@ -251,7 +264,7 @@ const QuestionsAnswers = class extends React.PureComponent {
     if (haveMoreQuestions) {
       return (
         <button
-          className="qa-buttons"
+          className="qa-more-questions qa-buttons"
           type="button"
           onClick={this.handleMoreQuestions}
         >
@@ -270,6 +283,7 @@ const QuestionsAnswers = class extends React.PureComponent {
       showNotificationModal,
       notificationCode,
       notificationMessage,
+      noQuestions,
     } = this.state;
     const { name, body, email } = validateQuestionInput;
     return (
@@ -289,7 +303,7 @@ const QuestionsAnswers = class extends React.PureComponent {
             <Icon icon={magnifyIcon} width="20" height="20" />
           </div>
         </div>
-        <div className="qa-question-scroll">
+        <div className={`qa-question-scroll ${noQuestions ? 'no-display' : ''}`}>
           {questionsDisplayed.map((singleQuestion) => (
             <Question
               key={singleQuestion.question_id}
@@ -303,7 +317,7 @@ const QuestionsAnswers = class extends React.PureComponent {
         <div className="qa-options">
           {this.AddMoreQuestionButton()}
           <button
-            className="qa-buttons"
+            className="qa-add-question qa-buttons"
             type="button"
             onClick={this.showQuestionModal}
           >
@@ -325,16 +339,16 @@ const QuestionsAnswers = class extends React.PureComponent {
             modalType="submit-qa"
             modalCode=""
           >
-            <div className="modal-title">
+            <div className="qa modal-title">
               <span>Ask Your Question!</span>
             </div>
-            <div className="modal-subtitle">
+            <div className="qa modal-subtitle">
               <span>{`About the ${pName}`}</span>
             </div>
-            <div className="modal-form">
-              <div className="modal-name">
+            <div className="qa modal-form">
+              <div className="qa modal-name">
                 <span
-                  className="modal-input-titles"
+                  className="qa modal-input-titles"
                 >
                   What is your nickname: *
                 </span>
@@ -342,20 +356,20 @@ const QuestionsAnswers = class extends React.PureComponent {
                   type="text"
                   name="name"
                   placeholder="Example: jackson11!"
-                  className={`modal-input ${name ? '' : 'modal-input-error'}`}
+                  className={`qa modal-input ${name ? '' : 'modal-input-error'}`}
                   onChange={(e) => { this.inputChange(e, 'QModal'); }}
                   maxLength="60"
                 />
                 {this.showValidationErrors('name')}
                 <span
-                  className="modal-little-messages"
+                  className="qa modal-little-messages"
                 >
                   For privacy reasons, do not use your full name or email address
                 </span>
               </div>
-              <div className="modal-email">
+              <div className="qa modal-email">
                 <span
-                  className="modal-input-titles"
+                  className="qa modal-input-titles"
                 >
                   Your email: *
                 </span>
@@ -363,20 +377,20 @@ const QuestionsAnswers = class extends React.PureComponent {
                   type="text"
                   name="email"
                   placeholder="Why did you like the product or not?"
-                  className={`modal-input ${email ? '' : 'modal-input-error'}`}
+                  className={`qa modal-input ${email ? '' : 'modal-input-error'}`}
                   onChange={(e) => { this.inputChange(e, 'QModal'); }}
                   maxLength="60"
                 />
                 {this.showValidationErrors('email')}
                 <span
-                  className="modal-little-messages"
+                  className="qa modal-little-messages"
                 >
-                  For authentication reasons, you will not be emailed” will appear.
+                  For authentication reasons, you will not be emailed.
                 </span>
               </div>
-              <div className="modal-body">
+              <div className="qa modal-body">
                 <span
-                  className="modal-input-titles"
+                  className="qa modal-input-titles"
                 >
                   Your Question: *
                 </span>
@@ -384,7 +398,7 @@ const QuestionsAnswers = class extends React.PureComponent {
                   type="text"
                   name="body"
                   placeholder="Add Your Question here..."
-                  className={`modal-input ${body ? '' : 'modal-input-error'}`}
+                  className={`qa modal-input ${body ? '' : 'modal-input-error'}`}
                   onChange={(e) => { this.inputChange(e, 'QModal'); }}
                   cols="40"
                   rows="5"

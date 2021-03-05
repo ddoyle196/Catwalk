@@ -96,7 +96,7 @@ const Answers = class extends React.PureComponent {
   }
 
   render() {
-    const { id, answer } = this.props;
+    const { id, answer, collapseAnswers } = this.props;
     const {
       reported,
       showNotificationModal,
@@ -112,7 +112,7 @@ const Answers = class extends React.PureComponent {
       helpfulness,
     } = answer;
     return (
-      <div className="qa-answer-box">
+      <div className={`qa-answer-box ${collapseAnswers ? 'no-display' : ''}`}>
         <div className="qa-answer-letter">
           <span><b>A:</b></span>
         </div>
@@ -135,7 +135,7 @@ const Answers = class extends React.PureComponent {
             <span>
               {'Helpful? '}
               <u
-                className="pointer"
+                className="qa-answer-helpfulness pointer"
                 onClick={() => this.AddAnswerHelpfulness()}
                 onKeyDown={this.handleButtonClick}
                 role="button"
@@ -149,7 +149,7 @@ const Answers = class extends React.PureComponent {
           <div className="qa-answer-format qa-reset-format">
             <span>
               <u
-                className="pointer"
+                className="qa-answer-report pointer"
                 onClick={() => this.handleAnswerReport(id)}
                 onKeyDown={this.handleButtonClick}
                 role="button"
@@ -190,6 +190,7 @@ const Answers = class extends React.PureComponent {
 Answers.propTypes = {
   id: PropTypes.number.isRequired,
   AnswerHelpfulness: PropTypes.func.isRequired,
+  collapseAnswers: PropTypes.bool.isRequired,
   answer: PropTypes.shape({
     body: PropTypes.string.isRequired,
     answerer_name: PropTypes.string.isRequired,
