@@ -1,5 +1,4 @@
 import React from 'react';
-import $ from 'jquery';
 import axios from 'axios';
 // import PropTypes from 'prop-types';
 
@@ -13,20 +12,35 @@ class RandR extends React.PureComponent {
       ratings: null,
       productId: props.productId,
       page: 1,
-      count: 5,
+      count: 10,
       reviews: null,
-      sort: 'newest',
+      sort: 'relevant',
+      ratingFilter: [false, false, false, false, false],
     };
+    this.updateSort = this.updateSort.bind(this);
+    this.updateRatingFilter = this.updateRatingFilter.bind(this);
   }
 
   componentDidMount() {
+    let { reviews } = this.state;
     this.updateMetaData();
     this.updateReviews();
   }
 
+  updateRatingFilter(e) {
+    let { ratingFilter } = this.state;
+    let temp = [...ratingFilter];
+    temp[e] === true ? temp[e] = false : temp[e] = true;
+    this.setState({ ratingFilter: temp });
+  }
+
+  updateSort(selected) {
+    this.setState({ sort: selected }, () => { this.updateReviews(); });
+  }
+
   updateMetaData() {
     const { productId } = this.state;
-    let { ratings } = this.state;
+    const { ratings } = this.state;
     axios.get(`metadata/${productId}`)
       .then((r) => {
         this.setState({
@@ -37,16 +51,16 @@ class RandR extends React.PureComponent {
 
   updateReviews() {
     // get reviews
-    const {
+    let {
       productId, page, count, sort,
     } = this.state;
     let { reviews } = this.state;
 
     const params = {
-      page: page,
-      count: count,
-      sort: sort,
-      productId: productId,
+      page,
+      count,
+      sort,
+      productId,
     };
 
     axios.get('http://localhost:3000/reviews', { params })
@@ -58,14 +72,30 @@ class RandR extends React.PureComponent {
   }
 
   render() {
-    const { reviews, ratings, sort } = this.state;
+    const { reviews, ratings, sort, ratingFilter } = this.state;
+    const { updateSort } = this;
+    let voteCount = 0;
+    if (ratings) {
+      for (const key in ratings.ratings) {
+        voteCount += Number(ratings.ratings[key]);
+      }
+    }
     return (
-      <div>
+      <div className="r-box">
+        <div className="headerBlock">RATINGS & REVIEWS</div>
         <div className="histogramBlock">
-          {ratings ? <Histograms ratings={ratings} /> : null}
+          {ratings ? <Histograms ratings={ratings} updateRF={this.updateRatingFilter} /> : null}
         </div>
         <div className="reviewBlock">
-          {reviews ? <Reviews reviews={reviews} sort={sort} /> : null}
+          {reviews && ratings ? (
+            <Reviews
+              reviews={reviews}
+              sort={sort}
+              ratings={voteCount}
+              updateSort={this.updateSort}
+              ratingFilter={ratingFilter}
+            />
+          ) : null}
         </div>
       </div>
     );

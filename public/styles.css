@@ -2,6 +2,33 @@
   box-sizing: border-box;
 }
 
+/******* PROJECT CSS ********/
+/*
+
+font-family: 'Raleway', sans-serif;
+font-family: 'Roboto', sans-serif;
+font-family: 'Open Sans', sans-serif;
+*/
+
+body {
+  font-family: 'Arial', sans-serif;
+  width: 90%;
+  margin: auto;
+  color: #535353;
+}
+
+textarea {
+  font-family: 'Arial', sans-serif;
+}
+
+::placeholder{
+  color: rgb(71, 71, 71);
+}
+
+.pointer{
+  cursor: pointer;
+}
+
 /******* OVERVIEW WIDGET *******/
 .overview-container {
   padding-top: 2em;
@@ -157,108 +184,408 @@
 
 
 /******* QUESTIONS AND ANSWERS *******/
+.qa-box {
+  width: 80%;
+  margin: auto;
+}
 
-.modal {
+.qa-box .qa-title {
+  margin-top: 3%;
+  margin-bottom: 2%;
+}
+
+.qa-box .qa-question-input {
+  margin-top: 1%;
+  margin-bottom: 2%;
+  border: 1px solid black;
+}
+
+.qa-box .qa-question-input .qa-input {
+  width: 96%;
+  padding: 14px;
+  margin: 10px auto;
+  font-size: 16px;
+  position: relative;
+  font-weight: bold;
+  border: none;
+  display: inline;
+}
+
+.qa-box .qa-question-input .qa-search-icon {
+  display: inline;
+}
+
+.qa-box .qa-question-box {
+  width: 100%;
+  margin-bottom: 3%;
+}
+
+.qa-box .qa-question-scroll {
+  height: 650px;
+  overflow: auto;
+}
+
+.qa-box .qa-question-box .qa-question-single .qa-question-letter {
+  display: inline;
+  float: left;
+  width: 2%;
+  margin-bottom: 2%;
+}
+
+.qa-box .qa-question-box .qa-question-single .qa-question-body {
+  display: inline;
+  float: left;
+  width: 73%;
+  margin-bottom: 2%;
+}
+
+.qa-box .qa-question-box .qa-question-single .qa-questions-options {
+  float: right;
+  width: 25%;
+  margin-bottom: 2%;
+}
+
+.qa-box .qa-question-box .qa-question-single .qa-questions-options .qa-options-format {
+  display: inline;
+  border-right: 2px solid rgb(187, 180, 180);
+  margin: 5px;
+  padding-inline: 10px;
+  font-size: 12px;
+}
+
+.qa-box .qa-question-box .qa-question-single .qa-questions-options .qa-reset-format {
+  border: none;
+}
+
+.qa-box .qa-question-box .qa-answer-box {
+  margin-top: 1%;
+  margin-bottom: 1%;
+}
+
+.qa-box .qa-question-box .qa-answer-box .qa-image-box {
+  display: inline;
+}
+
+.qa-box .qa-question-box .qa-answer-box .qa-image-large{
+  width: 1024px;
+  height: 768px;
+}
+
+.qa-box .qa-question-box .qa-answer-box .qa-image-box .qa-image-thumbnails {
+  width: 120px;
+  height: 80px;
+  margin-inline: 1%;
+  border: 1px solid black;
+}
+
+.qa-box .qa-question-box .qa-answer-box .qa-answer-letter {
+  display: inline;
+  float: left;
+  width: 2%;
+  margin-bottom: 1%;
+  font-size: 18px;
+}
+
+.qa-box .qa-question-box .qa-answer-box .qa-answer-body {
+  display: inline;
+  float: left;
+  width: 98%;
+  margin-bottom: 1%;
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+}
+
+.qa-box .qa-question-box .qa-answer-box .qa-answer-options {
+  width: 90%;
+  margin-left: 2%;
+  font-size: 12px;
+}
+
+.qa-box .qa-question-box .qa-answer-box .qa-answer-options .qa-answer-format {
+  display: inline;
+  border-right: 2px solid rgb(187, 180, 180);
+  margin-right: 5px;
+  padding-right: 10px;
+}
+
+.qa-box .qa-question-box .qa-answer-box .qa-answer-options .qa-reset-format {
+  border: none;
+}
+
+.qa-box .qa-question-box .qa-more-answers {
+  font-size: 12px;
+  margin-left: 2%;
+}
+
+.qa-box .qa-options {
+  margin-top: 3%;
+}
+
+.qa-box .qa-options .qa-buttons {
+  display: inline;
+  margin-right: 15px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.modal-submit {
   position: fixed; /* Stay in place */
   z-index: 1; /* Sit on top */
   left: 0;
   top: 0;
-  width: 100%; 
-  height: 100%; 
+  width: 100%;
+  height: 100%;
   overflow: auto; /* Enable scroll if needed */
   background-color: rgb(0,0,0); /* Fallback color */
   background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
 
-.modal-content {
+.modal-submit .modal-content {
   background-color: #fefefe;
   margin: 15% auto; /* 15% from the top and centered */
   padding: 30px;
   border: 1px solid #888;
-  width: 50%; /* Could be more or less, depending on screen size */
+  width: 30%; /* Could be more or less, depending on screen size */
 }
 
-.modal-input{
-  margin: 5px;
-  width: 100%;
-}
-
-/* The Close Button */
-.modal-buttons {
-  margin: 5px;
-  color: rgb(77, 67, 67);
-  float: right;
-  font-size: 12px;
-  font-weight: bold;
-}
-
-.close {
-  background-color: rgb(218, 112, 112);
-}
-
-.modal-buttons:hover,
-.modal-buttons:focus {
-  color: black;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.question-inputbox{
-  width: 75%;
+.modal-submit .modal-content .modal-title{
+  width: auto;
   margin: auto;
+  font-size: 30px;
+  text-align: center;
 }
 
-.questions-container{
-  width: 100%;
+.modal-submit .modal-content .modal-subtitle {
+  width: auto;
+  margin: auto;
+  font-size: 20px;
+  text-align: center;
 }
 
-.question-blocks{
-  display: inline;
-  float: left;
+.modal-submit .modal-content .modal-form {
   width: 75%;
+  margin: 0 auto;
+  padding: 10px;
+  position: relative;
 }
 
-.pointer{
-  cursor: pointer;
+.modal-submit .modal-content .modal-form .modal-name {
+  margin: 10px auto;
 }
 
-.question-options{
-  display: inline;
-  float: left;
-  width: 25%;
+.modal-submit .modal-content .modal-form .modal-email {
+  margin: 10px auto;
 }
 
-.question-format{
-  display: inline;
-  border-right: 2px solid rgb(187, 180, 180);
-  margin: 5px;
-  padding-inline: 10px;
+.modal-submit .modal-content .modal-form .modal-body {
+  margin: 10px auto;
 }
 
-.reset{
-  border: none;
+.modal-submit .modal-content .modal-form .modal-input {
+  width: 100%;
+  padding: 14px;
+  font-size: 16px;
+  position: relative;
 }
+
+.modal-submit .modal-content .modal-form .modal-input-error {
+  border: 1px solid red;
+}
+
+.modal-submit .modal-content .modal-form .modal-error-message {
+  font-size: 12px;
+  color: red;
+}
+
+.modal-submit .modal-content .modal-form .modal-little-messages {
+  font-size: 10px;
+}
+
+.modal-submit .modal-content .modal-form .modal-input-titles {
+  font-size: 14px;
+}
+
+.modal-submit .modal-content .modal-buttons{
+  width: 50%;
+  margin: 0 auto;
+  padding: 10px;
+  position: relative;
+}
+
+.modal-submit .modal-content .modal-submit-button {
+  background-color: rgb(125, 255, 143);
+  color: black;
+  font-size: 18px;
+}
+
+.modal-submit .modal-content .modal-submit-button:hover {
+  background-color: rgb(0, 250, 33);
+  color: black;
+}
+
+.modal-submit .modal-content .modal-close {
+  background-color: rgb(218, 112, 112);
+  color: black;
+  font-size: 18px;
+}
+
+.modal-submit .modal-content .modal-close:hover {
+  background-color: rgb(251, 0, 0);
+  color: black;
+}
+
+.modal-notification {
+  position: fixed; /* Stay in place */
+  z-index: 5; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.modal-notification .modal-content {
+  margin: 2% auto; /* 3% from the top */
+  border: 1px solid rgb(255, 255, 255);
+  width: 50%; /* Could be more or less, depending on screen size */
+  height: 40px;
+  text-align: center;
+}
+
+.modal-notification .modal-text {
+  font-size: 30px;
+  color: white;
+  text-align: center;
+}
+
+.modal-notification .modal-success {
+  background-color: #05a300;
+}
+
+.modal-notification .modal-error {
+  background-color: #aa0000;
+}
+
+.modal-image {
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.modal-image .modal-content {
+  background-color: #fefefe;
+  margin: 5% auto; /* 15% from the top and centered */
+  padding: 5px;
+  border: 1px solid #888;
+  width: 1035px; /* Could be more or less, depending on screen size */
+}
+
 
 /* RATINGS AND REVIEWS */
+.r-box {
+  margin: 50px auto 20px auto;
+  width: 80%;
+}
+
 .headerBlock {
   width: 100%;
   text-align: left;
   color: grey;
 }
+
 .histogramBlock {
   display: inline-block;
-  width: 25%;
+  width: 35%;
   vertical-align:top;
-  padding: 2%;
-  margin: 2%;
+  margin: 1% 0%;
 }
 
 .reviewBlock {
   display: inline-block;
-  width: 50%;
+  width: 55%;
   vertical-align:top;
-  padding: 2%;
   margin: 2%;
+}
+
+.reviewList {
+  overflow-y: auto;
+  max-height: 75vh;
+  margin: 10px 0px;
+}
+
+.revContainer {
+  height: max-content;
+  margin: 20px 0px;
+}
+
+.Rheader {
+  display: flex;
+  margin: 2px;
+}
+
+.ratingSummary {
+    display: inline-block;
+    vertical-align:top;
+    margin: 2% 0%;
+    width: 100%;
+}
+
+.ratingLarge {
+display: inline-block;
+margin-block: 0%;
+width: max-content;
+font-size: 300%;
+}
+
+.histoStars {
+  display: inline-block;
+  margin-top: 5px;
+  width: max-content;
+  vertical-align: top;
+  margin-left: 15px;
+  }
+
+.revRating {
+  vertical-align: top;
+  float: left;
+}
+
+.userDate {
+  font-size: 80%;
+  vertical-align: top;
+  float: right;
+  margin-left: auto;
+}
+
+.smallLink {
+  font-size: 80%;
+  color: #535353;
+  margin-top: 8px;
+}
+
+.summary, .respHead{
+  font-weight: bold;
+  padding: 5px;
+}
+
+.recommendation {
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+.rBody {
+  padding: 5px;
+  margin: 10px 0px;
+}
+
+.response {
+  color: #535353;
+  background-color: #ebebeb;
+  padding: 10px;
 }
 
 button {
@@ -276,7 +603,9 @@ button {
 }
 
 button:hover {
-  outline: none;
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 button:active {
@@ -284,3 +613,139 @@ button:active {
   color: white;
   outline: none;
 }
+
+.revContainer .qa-answer-box .qa-image-box .qa-image-thumbnails {
+  width: 120px;
+  height: 80px;
+  margin-inline: 1%;
+  border: 1px solid black;
+}
+.revContainer .qa-answer-box .qa-image-box {
+  display: inline;
+}
+
+.revContainer .qa-answer-box .modal-image .qa-image-large{
+  height: 80vh;
+  max-width: min-content;
+}
+
+.revContainer .qa-answer-box .modal-image .modal-content {
+  background-color: #fefefe;
+  margin: 5% auto; /* 15% from the top and centered */
+  padding: 5px;
+  border: 1px solid #888;
+  width: min-content;
+}
+
+.dataBar {
+  display: inline-block;
+  margin: 0px;
+  height: 6px;
+  border-radius: 2px;
+  }
+
+.dataBar.voted {
+  background-color: lightgreen;
+}
+
+.dataBar.difference {
+  background-color: lightgrey;
+}
+
+.dataTable {
+  table-layout: fixed ;
+width: 100%;
+margin: 0%;
+}
+
+.percentageRow {
+  margin: 10% 5%;
+  }
+
+.dataRow {
+  margin: 10% 5%;
+  }
+.dataRow:hover {
+    margin: 10% 5%;
+    background-color: whitesmoke;
+    }
+
+.starLev {
+    display: inline-block;
+     max-width: 100%;
+      margin: 2.5% 2.5% 2.5% 0%;
+      text-decoration: underline;
+     }
+
+.ratingBar {
+  display: inline-block;
+    width: 55%;
+    margin: 2.5%;
+    }
+
+.ratingCount {
+  display: inline-block;
+  width: 5%;
+  margin: 2.5%;
+      }
+
+      .qualityHolder {
+        display: inline-block;
+          width: 95%;
+          margin: 2.5%  0% 30px 0%;
+          position: relative;
+          }
+
+      .quality {
+        display: inline-block;
+        width: 25%;
+          margin: 5% 0%;
+          text-decoration: underline;
+         }
+
+         .fullQBar {
+          position:absolute;
+          width: 100%;
+         }
+
+         .qualityArrow {
+          position:absolute;
+          text-align: right;
+          margin-top: -2px;
+           }
+
+    .qualityBar {
+      display: inline-block;
+        width: 31%;
+        background-color: lightgrey;
+        margin: 0px;
+  height: 6px;
+  border-radius: 2px;
+  font-size: 75%;
+  padding-top: 6px;
+  text-align: center;
+  white-space: pre;
+        }
+
+        .qualityBar.spacer{
+          display: inline-block;
+            width: 1%;
+            background-color: white;
+            }
+
+            .rr-review-format {
+              display: inline;
+              border-right: 2px solid rgb(187, 180, 180);
+              margin-right: 5px;
+              padding-right: 10px;
+            }
+
+            .rr-review-options.rr-reset-format {
+              border: none;
+            }
+
+            .rr-drop {
+              border: none;
+              border-bottom: solid;
+            }
+
