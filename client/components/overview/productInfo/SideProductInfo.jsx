@@ -13,6 +13,7 @@ const SideProductInfo = ({ product, ratings }) => {
     }
   };
   removeZerosFromPrice(product.default_price);
+  console.log(ratings);
   return (
     <div>
       <StarRating ratings={ratings} />
