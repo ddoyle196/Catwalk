@@ -25,21 +25,21 @@ const Modal = class extends React.PureComponent {
     const { modalType, children, modalCode } = this.props;
     if (modalType === 'submit-qa') {
       return (
-        <div className="modal-submit">
-          <div className="modal-content">
+        <div className="qa modal-submit">
+          <div className="qa modal-content">
             { children }
-            <div className="modal-buttons">
+            <div className="qa modal-buttons">
               <button
                 type="button"
                 onClick={this.submit}
-                className="modal-submit-button"
+                className="qa modal-submit-button"
               >
                 Submit
               </button>
               <button
                 type="button"
                 onClick={() => { this.closeModal('submit-qa'); }}
-                className="modal-close"
+                className="qa modal-close"
               >
                 Close
               </button>
@@ -63,13 +63,13 @@ const Modal = class extends React.PureComponent {
     if (modalType === 'image') {
       return (
         <div
-          className="modal-image"
+          className="qa modal-image"
           onClick={() => this.closeModal('image')}
           role="button"
           onKeyDown={this.handleButtonClick}
           tabIndex={0}
         >
-          <div className="modal-content">
+          <div className="qa modal-content">
             {children}
           </div>
         </div>
