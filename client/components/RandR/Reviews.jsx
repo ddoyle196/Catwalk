@@ -2,47 +2,99 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 
+import IndReview from './IndReview';
+
 class Reviews extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      reviews: props.reviews.results,
       displayCount: 2,
-      display: props.reviews.results.slice(0, 2),
       sort: props.sort,
+      ratingTotal: props.ratings,
+      options: ['relevant', 'newest', 'helpful'],
+      optionSelect: props.sort,
     };
   }
 
+  updateOptionSelect(selected) {
+    this.setState({ optionSelect: selected });
+  }
+
+
+
+  displayOptions() {
+    const { updateSort } = this.props;
+    const { options, optionSelect } = this.state;
+    return (
+      <select
+        value={optionSelect}
+        onChange={(e) => {
+          this.updateOptionSelect(e.target.value);
+          updateSort(e.target.value);
+        }}
+        className="rr-drop"
+      >
+        {
+          options.map((option) => (
+            <option
+              value={option}
+            >
+              {option}
+            </option>
+          ))
+        }
+      </select>
+    );
+  }
+
   renderTwo() {
-    const { reviews } = this.state;
-    let { displayCount } = this.state;
     this.setState({
-      displayCount: displayCount += 2,
-      display: reviews.slice(0, displayCount),
+      displayCount: this.state.displayCount += 2,
     });
   }
 
   render() {
-    const { reviews, displayCount } = this.state;
-    let { display, sort } = this.state;
+    const { displayCount, ratingTotal } = this.state;
+    let { ratingFilter } = this.props;
+    let { results } = this.props.reviews;
+    let display = results.slice(0, displayCount);
     const renderTwo = this.renderTwo.bind(this);
-    display = display ? display.map((review) => (
-      <h3>
-        {review.summary}
-      </h3>
-    )) : null;
+    const displayOptions = this.displayOptions.bind(this);
+    display = display.filter((review) => {
+      let check = false;
+      if (ratingFilter.indexOf(true) === -1) {
+        return true;
+      }
+      for (let i = 0; i < ratingFilter.length; i += 1) {
+        if (ratingFilter[i] === true && review.rating === i) {
+          check = true;
+        }
+      }
+      return check;
+    });
+
+    display = display.map((review) => (
+      <IndReview review={review} />
+    ));
     return (
       <div>
-        <div>{reviews.length} reviews, sorted by {sort} </div>
-        <div id="reviewList">{display}</div>
-        {reviews.length - displayCount > 0 ? <button type="button" onClick={renderTwo}>MORE REVIEWS</button> : null}
+        <div>
+          {ratingTotal}
+          {' '}
+          reviews, sorted by
+          {' '}
+          {displayOptions()}
+          {' '}
+        </div>
+        <div className="reviewList">{display}</div>
+        { results.length - displayCount > 0 ? <button type="button" onClick={renderTwo}>MORE REVIEWS</button> : null}
         <button type="button">ADD A REVIEW   +</button>
-      </div>
+      </div >
     );
   }
 }
 // Reviews.propTypes = {
 //   reviews: PropTypes.array.isRequired,
 // };
-
+//
 export default Reviews;

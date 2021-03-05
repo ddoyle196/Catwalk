@@ -165,7 +165,7 @@ app.post('/interactions', (req, res) => {
 app.get('/reviews', (req, res) => {
   // eslint-disable-next-line no-console
   const params = (req.query);
-  axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe/reviews?page=${params.page}&count=${params.count}&sort="${params.sort}"&product_id=${params.productId}`, {
+  axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe/reviews?page=${params.page}&count=${params.count}&sort=${params.sort}&product_id=${params.productId}`, {
     headers: {
       Authorization: GITHUB_API_KEY,
     },
