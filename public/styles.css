@@ -42,6 +42,7 @@
 .image-gallery-large-image {
   width: 95%;
   height: 33em;
+  cursor: zoom-in;
 }
 
 .thumbnail-container {
@@ -57,6 +58,22 @@
   width: 100%;
   height: 3.5em;
   margin-bottom: 0.5em;
+  cursor: pointer;
+  box-sizing: content-box;
+}
+
+.thumbnail:focus {
+  outline: none;
+}
+
+.thumbnail-image {
+  width: 100%;
+  height: 100%;
+}
+
+.underlined {
+  padding-bottom: 2px;
+  border-bottom: 3px solid black;
 }
 
 .image-gallery-chevron-up,
@@ -172,7 +189,7 @@
 }
 
 .style-circles-container {
-  width: 90%;
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
 }
@@ -180,8 +197,8 @@
 .style-circle {
   cursor: pointer;
   position: relative;
-  height: 3em;
-  width: 3em;
+  height: 4em;
+  width: 4em;
   border: 1px solid black;
   border-radius: 50%;
   margin-right: 1em;

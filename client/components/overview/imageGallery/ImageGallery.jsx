@@ -11,6 +11,8 @@ const ImageGallery = ({
   selectedStyle,
   selectedImageId,
   updateSelectedImageId,
+  displayedThumbnailSection,
+  updateDisplayedThumbnailSection,
 }) => {
   const photos = [];
   for (let i = 0; i < styles.length; i += 1) {
@@ -59,21 +61,74 @@ const ImageGallery = ({
     }
   }
 
-  const thumbnails = [];
+  let thumbnails = [];
+  let highlightedThumbnailCount = 0;
 
   photos.forEach((photo) => {
-    thumbnails.push(
-      <img className="thumbnail" src={photo.thumbnail} alt="" />,
-    );
+    if (selectedImageId !== null) {
+      thumbnails.push(
+        <span
+          className={selectedImageId === photo.id ? 'thumbnail underlined' : 'thumbnail'}
+          onClick={() => updateSelectedImageId(photo.id)}
+          onKeyDown={() => updateSelectedImageId(photo.id)}
+          tabIndex="0"
+          aria-label="thumbnail"
+          role="button"
+        >
+          <img className="thumbnail-image" src={photo.thumbnail} alt="" />
+        </span>,
+      );
+      highlightedThumbnailCount += 1;
+    } else {
+      thumbnails.push(
+        <span
+          className={selectedStyle.style_id === photo.id ? 'thumbnail underlined' : 'thumbnail'}
+          onClick={() => updateSelectedImageId(photo.id)}
+          onKeyDown={() => updateSelectedImageId(photo.id)}
+          tabIndex="0"
+          aria-label="thumbnail"
+          role="button"
+        >
+          <img className="thumbnail-image" src={photo.thumbnail} alt="" />
+        </span>,
+      );
+      highlightedThumbnailCount += 1;
+    }
   });
+
+  // TO DO -- CONTINUE WORKING HERE ON THE THUMBNAIL ARROW FUNCTIONALITY
+  // console.log('HIGHLIGHTED THUMBNAILS: ', highlightedThumbnailCount);
+  // const thumbnailSection = Math.floor(highlightedThumbnailCount / 4);
+  // console.log('thumbnail section: ', thumbnailSection);
+  // const first = thumbnailSection * 3;
+  // const last = (thumbnailSection + 1) * 3;
+  // thumbnails = thumbnails.slice(first, last);
 
   return (
     <div className="image-gallery-container">
       <img className="image-gallery-large-image" src={selectedImageUrl} alt="" />
       <div className="thumbnail-container">
-        <span className="image-gallery-chevron-up"><Icon icon={chevronUp} /></span>
+        <span
+          className="image-gallery-chevron-up"
+          onClick={() => updateDisplayedThumbnailSection(thumbnailSection - 1)}
+          onKeyDown={() => updateDisplayedThumbnailSection(thumbnailSection - 1)}
+          tabIndex="0"
+          aria-label="thumbnail"
+          role="button"
+        >
+          <Icon icon={chevronUp} />
+        </span>
         {thumbnails}
-        <span className="image-gallery-chevron-down"><Icon icon={chevronDown} /></span>
+        <span
+          className="image-gallery-chevron-down"
+          onClick={() => updateDisplayedThumbnailSection(thumbnailSection + 1)}
+          onKeyDown={() => updateDisplayedThumbnailSection(thumbnailSection + 1)}
+          tabIndex="0"
+          aria-label="thumbnail"
+          role="button"
+        >
+          <Icon icon={chevronDown} />
+        </span>
       </div>
       {previousImageId !== '' && (
         <span
@@ -117,10 +172,13 @@ ImageGallery.propTypes = {
   }).isRequired,
   updateSelectedImageId: PropTypes.func.isRequired,
   selectedImageId: PropTypes.number,
+  displayedThumbnailSection: PropTypes.number,
+  updateDisplayedThumbnailSection: PropTypes.func.isRequired,
 };
 
 ImageGallery.defaultProps = {
   selectedImageId: null,
+  displayedThumbnailSection: null,
 };
 
 export default ImageGallery;
