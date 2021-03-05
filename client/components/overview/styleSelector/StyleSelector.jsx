@@ -5,7 +5,6 @@ import checkCircleOutline from '@iconify-icons/mdi/check-circle-outline';
 import PropTypes from 'prop-types';
 
 const StyleSelector = ({ styles, selectedStyle, updateSelectedStyle }) => {
-  console.log('SELECTED STYLE: ', selectedStyle);
   let keyCount = 0;
   const colors = [];
   const styleCircles = [];

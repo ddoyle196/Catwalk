@@ -18,6 +18,7 @@ class Overview extends React.Component {
       selectedSize: null,
       selectedQuantity: null,
       isFavorite: false,
+      outOfStock: false,
       cart: [],
     };
     this.addToCartHandler = this.addToCartHandler.bind(this);
@@ -25,6 +26,7 @@ class Overview extends React.Component {
     this.isFavoriteHandler = this.isFavoriteHandler.bind(this);
     this.updateSelectedSize = this.updateSelectedSize.bind(this);
     this.updateSelectedQuantity = this.updateSelectedQuantity.bind(this);
+    this.updateOutOfStock = this.updateOutOfStock.bind(this);
   }
 
   componentDidMount() {
@@ -67,30 +69,32 @@ class Overview extends React.Component {
       selectedQuantity,
     } = this.state;
 
-    const cartItem = {
-      product: product.id,
-      style: selectedStyle.style_id,
-      size: selectedSize,
-      quantity: selectedQuantity,
-    };
+    if (selectedStyle !== null && selectedQuantity !== null) {
+      const cartItem = {
+        product: product.id,
+        style: selectedStyle.style_id,
+        size: selectedSize,
+        quantity: selectedQuantity,
+      };
 
-    // update the quantity of the selected size of the currently selected style
-    const sizes = selectedStyle.skus;
-    const sizeKeys = Object.keys(selectedStyle.skus);
-    for (let i = 0; i < sizeKeys.length; i += 1) {
-      const sizeKey = sizeKeys[i];
-      if (sizes[sizeKey].size === selectedSize) {
-        sizes[sizeKey].quantity -= Number(selectedQuantity);
-        break;
+      // update the quantity of the selected size of the currently selected style
+      const sizes = selectedStyle.skus;
+      const sizeKeys = Object.keys(selectedStyle.skus);
+      for (let i = 0; i < sizeKeys.length; i += 1) {
+        const sizeKey = sizeKeys[i];
+        if (sizes[sizeKey].size === selectedSize) {
+          sizes[sizeKey].quantity -= Number(selectedQuantity);
+          break;
+        }
       }
-    }
 
-    this.setState({
-      cart: [...cart, cartItem],
-      selectedSize: null,
-      selectedQuantity: null,
-      selectedStyle,
-    });
+      this.setState({
+        cart: [...cart, cartItem],
+        selectedSize: null,
+        selectedQuantity: null,
+        selectedStyle,
+      });
+    }
   }
 
   isFavoriteHandler() {
@@ -105,6 +109,7 @@ class Overview extends React.Component {
       selectedStyle: style,
       selectedSize: null,
       selectedQuantity: null,
+      outOfStock: false,
     });
   }
 
@@ -121,6 +126,12 @@ class Overview extends React.Component {
     });
   }
 
+  updateOutOfStock() {
+    this.setState({
+      outOfStock: true,
+    });
+  }
+
   render() {
     const {
       product,
@@ -130,6 +141,7 @@ class Overview extends React.Component {
       selectedSize,
       selectedQuantity,
       isFavorite,
+      outOfStock,
     } = this.state;
 
     if (product === null || styles === null || ratings === null || selectedStyle === null) {
@@ -159,6 +171,8 @@ class Overview extends React.Component {
               selectedQuantity={selectedQuantity}
               updateSelectedSize={this.updateSelectedSize}
               updateSelectedQuantity={this.updateSelectedQuantity}
+              updateOutOfStock={this.updateOutOfStock}
+              outOfStock={outOfStock}
             />
           </div>
         </div>

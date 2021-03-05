@@ -3,7 +3,13 @@ import PropTypes from 'prop-types';
 import { Icon } from '@iconify/react';
 import chevronDown from '@iconify-icons/mdi/chevron-down';
 
-const SizeSelector = ({ selectedStyle, selectedSize, updateSelectedSize }) => {
+const SizeSelector = ({
+  selectedStyle,
+  selectedSize,
+  updateSelectedSize,
+  updateOutOfStock,
+  outOfStock,
+}) => {
   const sizes = selectedStyle.skus;
   const sizeKeys = Object.keys(selectedStyle.skus);
   const options = [];
@@ -22,12 +28,20 @@ const SizeSelector = ({ selectedStyle, selectedSize, updateSelectedSize }) => {
       );
     }
   }
+
+  if (options.length === 0 && outOfStock === false) {
+    // hide the 'add to cart' button if the current style is out of stock
+    console.log('UPDATE OUT OF STOCK ACTIVATED IN SIZE SELECTOR COMPONENT');
+    updateOutOfStock();
+  }
+
   return (
     <div className="size-selector-container">
       <select
         onChange={(e) => updateSelectedSize(e.target.value)}
         value={selectedSize || (options.length === 0 ? 'out-of-stock' : 'select-size')}
         className="size-selector"
+        id="size-selector"
         disabled={options.length === 0}
       >
         {selectedSize === null && <option value="select-size">SELECT SIZE</option>}
@@ -52,6 +66,8 @@ SizeSelector.propTypes = {
   }).isRequired,
   selectedSize: PropTypes.string,
   updateSelectedSize: PropTypes.func.isRequired,
+  updateOutOfStock: PropTypes.func.isRequired,
+  outOfStock: PropTypes.bool.isRequired,
 };
 
 SizeSelector.defaultProps = {
