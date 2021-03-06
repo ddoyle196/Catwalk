@@ -208,7 +208,7 @@ class IndReview extends React.Component {
               <div className="recommendation">
                 <Icon icon={checkCircleOutline} />
                 {' '}
-              I recommend this product
+                I recommend this product
               </div>
             ) : null}
           </div>
@@ -232,7 +232,7 @@ class IndReview extends React.Component {
                 tabIndex={0}
               >
                 Yes
-            </u>
+              </u>
               {` (${helpfulness})`}
             </span>
           </div>
@@ -249,11 +249,11 @@ class IndReview extends React.Component {
               </u>
             </span>
           </div>
+          <hr />
         </div>
       );
-    } else {
-      return null;
     }
+    return null;
   }
 }
 

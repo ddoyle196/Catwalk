@@ -20,8 +20,6 @@ class Reviews extends React.Component {
     this.setState({ optionSelect: selected });
   }
 
-
-
   displayOptions() {
     const { updateSort } = this.props;
     const { options, optionSelect } = this.state;
@@ -55,41 +53,46 @@ class Reviews extends React.Component {
 
   render() {
     const { displayCount, ratingTotal } = this.state;
-    let { ratingFilter } = this.props;
-    let { results } = this.props.reviews;
-    let display = results.slice(0, displayCount);
+    const { ratingFilter } = this.props;
+    const { results } = this.props.reviews;
     const renderTwo = this.renderTwo.bind(this);
     const displayOptions = this.displayOptions.bind(this);
-    display = display.filter((review) => {
+
+    // reviews are already sorted
+    // filter here based on parent filter fed in from histogram selections
+    const display = results.filter((review) => {
       let check = false;
       if (ratingFilter.indexOf(true) === -1) {
         return true;
       }
       for (let i = 0; i < ratingFilter.length; i += 1) {
-        if (ratingFilter[i] === true && review.rating === i) {
+        if (ratingFilter[i] === true && review.rating === i + 1) {
           check = true;
         }
       }
       return check;
     });
-
-    display = display.map((review) => (
+    // cut down to two original
+    const trimmedDisplay = display.slice(0, displayCount);
+    // create reviews html
+    const finalDisplay = trimmedDisplay.map((review) => (
       <IndReview review={review} />
     ));
+
     return (
       <div>
         <div>
-          {ratingTotal}
+          {display.length}
           {' '}
           reviews, sorted by
           {' '}
           {displayOptions()}
           {' '}
         </div>
-        <div className="reviewList">{display}</div>
-        { results.length - displayCount > 0 ? <button type="button" onClick={renderTwo}>MORE REVIEWS</button> : null}
+        <div className="reviewList">{finalDisplay}</div>
+        { display.length - displayCount > 0 ? <button type="button" onClick={renderTwo}>MORE REVIEWS</button> : null}
         <button type="button">ADD A REVIEW   +</button>
-      </div >
+      </div>
     );
   }
 }

@@ -19,18 +19,25 @@ class RandR extends React.PureComponent {
     };
     this.updateSort = this.updateSort.bind(this);
     this.updateRatingFilter = this.updateRatingFilter.bind(this);
+    this.clearRatingFilter = this.clearRatingFilter.bind(this);
   }
 
   componentDidMount() {
-    let { reviews } = this.state;
+    const { reviews } = this.state;
     this.updateMetaData();
     this.updateReviews();
   }
 
   updateRatingFilter(e) {
-    let { ratingFilter } = this.state;
-    let temp = [...ratingFilter];
+    const { ratingFilter } = this.state;
+    const temp = [...ratingFilter];
     temp[e] === true ? temp[e] = false : temp[e] = true;
+    this.setState({ ratingFilter: temp });
+  }
+
+  clearRatingFilter() {
+    const { ratingFilter } = this.state;
+    const temp = [false, false, false, false, false];
     this.setState({ ratingFilter: temp });
   }
 
@@ -51,10 +58,10 @@ class RandR extends React.PureComponent {
 
   updateReviews() {
     // get reviews
-    let {
+    const {
       productId, page, count, sort,
     } = this.state;
-    let { reviews } = this.state;
+    const { reviews } = this.state;
 
     const params = {
       page,
@@ -72,7 +79,9 @@ class RandR extends React.PureComponent {
   }
 
   render() {
-    const { reviews, ratings, sort, ratingFilter } = this.state;
+    const {
+      reviews, ratings, sort, ratingFilter,
+    } = this.state;
     const { updateSort } = this;
     let voteCount = 0;
     if (ratings) {
@@ -84,7 +93,14 @@ class RandR extends React.PureComponent {
       <div className="r-box">
         <div className="headerBlock">RATINGS & REVIEWS</div>
         <div className="histogramBlock">
-          {ratings ? <Histograms ratings={ratings} updateRF={this.updateRatingFilter} /> : null}
+          {ratings ? (
+            <Histograms
+              ratings={ratings}
+              updateRF={this.updateRatingFilter}
+              ratingFilter={ratingFilter}
+              clearRatingFilter={this.clearRatingFilter}
+            />
+          ) : null}
         </div>
         <div className="reviewBlock">
           {reviews && ratings ? (
