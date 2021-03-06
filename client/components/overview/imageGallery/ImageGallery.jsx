@@ -62,12 +62,13 @@ const ImageGallery = ({
   }
 
   let thumbnails = [];
-  let highlightedThumbnailCount = 0;
 
+  let keyCount = 0;
   photos.forEach((photo) => {
     if (selectedImageId !== null) {
       thumbnails.push(
         <span
+          key={keyCount += 1}
           className={selectedImageId === photo.id ? 'thumbnail underlined' : 'thumbnail'}
           onClick={() => updateSelectedImageId(photo.id)}
           onKeyDown={() => updateSelectedImageId(photo.id)}
@@ -78,10 +79,10 @@ const ImageGallery = ({
           <img className="thumbnail-image" src={photo.thumbnail} alt="" />
         </span>,
       );
-      highlightedThumbnailCount += 1;
     } else {
       thumbnails.push(
         <span
+          key={keyCount += 1}
           className={selectedStyle.style_id === photo.id ? 'thumbnail underlined' : 'thumbnail'}
           onClick={() => updateSelectedImageId(photo.id)}
           onKeyDown={() => updateSelectedImageId(photo.id)}
@@ -92,17 +93,41 @@ const ImageGallery = ({
           <img className="thumbnail-image" src={photo.thumbnail} alt="" />
         </span>,
       );
-      highlightedThumbnailCount += 1;
     }
   });
 
+  let highlightedThumbnailPosition = 0;
+
+  if (displayedThumbnailSection === null) {
+    if (selectedImageId !== null) {
+      for (let i = 0; i < photos.length; i += 1) {
+        const photo = photos[i];
+        if (photo.id === selectedImageId) {
+          highlightedThumbnailPosition += (i + 1);
+          break;
+        }
+      }
+    } else {
+      for (let i = 0; i < photos.length; i += 1) {
+        const photo = photos[i];
+        if (photo.id === selectedStyle.style_id) {
+          highlightedThumbnailPosition += (i + 1);
+          break;
+        }
+      }
+    }
+  }
+
   // TO DO -- CONTINUE WORKING HERE ON THE THUMBNAIL ARROW FUNCTIONALITY
-  // console.log('HIGHLIGHTED THUMBNAILS: ', highlightedThumbnailCount);
-  // const thumbnailSection = Math.floor(highlightedThumbnailCount / 4);
-  // console.log('thumbnail section: ', thumbnailSection);
-  // const first = thumbnailSection * 3;
-  // const last = (thumbnailSection + 1) * 3;
-  // thumbnails = thumbnails.slice(first, last);
+  let thumbnailSection;
+  if (displayedThumbnailSection === null) {
+    thumbnailSection = Math.floor(highlightedThumbnailPosition / 8);
+  } else {
+    thumbnailSection = displayedThumbnailSection;
+  }
+  const first = thumbnailSection * 7;
+  const last = (thumbnailSection + 1) * 7;
+  thumbnails = thumbnails.slice(first, last);
 
   return (
     <div className="image-gallery-container">
