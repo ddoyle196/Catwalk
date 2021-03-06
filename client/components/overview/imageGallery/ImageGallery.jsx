@@ -1,10 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Icon } from '@iconify/react';
-import arrowRight from '@iconify-icons/mdi/arrow-right';
-import arrowLeft from '@iconify-icons/mdi/arrow-left';
+// import arrowRight from '@iconify-icons/mdi/arrow-right';
+// import arrowLeft from '@iconify-icons/mdi/arrow-left';
 import chevronUp from '@iconify-icons/mdi/chevron-up';
 import chevronDown from '@iconify-icons/mdi/chevron-down';
+import arrowExpandAll from '@iconify-icons/mdi/arrow-expand-all';
+import arrowLeftBoldOutline from '@iconify-icons/mdi/arrow-left-bold-outline';
+import arrowRightBoldOutline from '@iconify-icons/mdi/arrow-right-bold-outline';
 
 const ImageGallery = ({
   styles,
@@ -168,7 +171,7 @@ const ImageGallery = ({
           aria-label="previous image"
           role="button"
         >
-          <Icon icon={arrowLeft} />
+          <Icon icon={arrowLeftBoldOutline} />
         </span>
       )}
       {nextImageId !== '' && (
@@ -180,9 +183,10 @@ const ImageGallery = ({
           aria-label="next image"
           role="button"
         >
-          <Icon icon={arrowRight} />
+          <Icon icon={arrowRightBoldOutline} />
         </span>
       )}
+      <span className="image-gallery-expand-all"><Icon icon={arrowExpandAll} /></span>
     </div>
   );
 };
