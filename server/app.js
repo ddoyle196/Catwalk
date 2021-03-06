@@ -194,7 +194,6 @@ app.put('/reviews/:id/helpful', (req, res) => {
 });
 
 app.put('/reviews/:id/report', (req, res) => {
-  console.log(req.params.id);
   axios.put(`${urlReviews + req.params.id}/report`, '', {
     headers: {
       Authorization: GITHUB_API_KEY,

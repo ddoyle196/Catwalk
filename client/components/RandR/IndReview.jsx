@@ -17,6 +17,7 @@ class IndReview extends React.Component {
     this.state = {
       reported: false,
       helpfulness: false,
+      unhelpfulness: Math.round(Math.random(this.props.helpfulness * 2) * 10),
       showNotificationModal: false,
       notificationCode: '',
       notificationMessage: '',
@@ -65,11 +66,6 @@ class IndReview extends React.Component {
 
   handleReviewHelpfulness(id) {
     axios.put(`/reviews/${id}/helpful`)
-      .then((result) => {
-        if (result.status === 204) {
-          this.getAnswersFromQuestionId('refresh'); // Check
-        }
-      })
       .catch(() => {
         this.setState({
           showNotificationModal: true,
@@ -80,10 +76,12 @@ class IndReview extends React.Component {
   }
 
   AddReviewHelpfulness() {
-    const { id, AnswerHelpfulness } = this.props;
+    const { review } = this.props;
+    console.log(review);
+    const { review_id } = review;
     const { helpfulness } = this.state;
     if (!helpfulness) {
-      this.handleReviewHelpfulness(id);
+      this.handleReviewHelpfulness(review_id);
       this.setState({
         helpfulness: true,
       });
@@ -129,7 +127,7 @@ class IndReview extends React.Component {
     const { Fragment } = React;
     const { review } = this.props;
     const { helpfulness } = review;
-    console.log(review);
+    const { unhelpfulness } = this.state;
 
     if (review) {
       const bodyDisplay = review.body.slice(0, 249);
@@ -239,6 +237,19 @@ class IndReview extends React.Component {
                 Yes
               </u>
               {` (${helpfulness})`}
+            </span>
+          </div>
+          <div className="rr-review-format">
+            <span>
+              <u
+                className="pointer"
+                onKeyDown={this.handleButtonClick}
+                role="button"
+                tabIndex={0}
+              >
+                No
+              </u>
+              {` (${unhelpfulness})`}
             </span>
           </div>
           <div className="rr-review-format rr-reset-format">

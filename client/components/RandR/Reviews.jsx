@@ -132,7 +132,7 @@ class Reviews extends React.Component {
         <div className="rr-search-icon">
             <Icon icon={magnifyIcon} />
           </div>
-          <input className=''
+          <input
             type="text"
             name="name"
             placeholder="Search product reviews..."
@@ -149,7 +149,7 @@ class Reviews extends React.Component {
           {' '}
         </div>
         <div className="reviewList">{finalDisplay}</div>
-        { display.length - displayCount > 0 ? <button type="button" onClick={renderTwo} className="rr-button">MORE REVIEWS</button> : null}
+        { refined.length - displayCount > 0 ? <button type="button" onClick={renderTwo} className="rr-button">MORE REVIEWS</button> : null}
         <button type="button" className="rr-button">ADD A REVIEW   +</button>
       </div>
     );

@@ -988,6 +988,7 @@ margin: 0%;
 
 .rr-input {
   width: 90%;
+  min-width: 50px;
   padding: 14px;
   margin: 0px auto;
   font-size: 16px;
