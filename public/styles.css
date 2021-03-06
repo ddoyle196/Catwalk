@@ -21,12 +21,16 @@ textarea {
   font-family: 'Arial', sans-serif;
 }
 
-::placeholder{
+::placeholder {
   color: rgb(71, 71, 71);
 }
 
-.pointer{
+.pointer {
   cursor: pointer;
+}
+
+.no-display {
+  display:none;
 }
 
 /******* OVERVIEW WIDGET *******/
@@ -61,14 +65,79 @@ textarea {
 
 /* OVERVIEW WIDGET -- IMAGE GALLERY */
 .image-gallery-container {
+  position: relative;
   width: 100%;
   height: fit-content;
 }
 
 .image-gallery-large-image {
   width: 95%;
-  height: auto;
+  height: 33em;
+  cursor: zoom-in;
 }
+
+.thumbnail-container {
+  position: absolute;
+  top: 1em;
+  left: 2em;
+  width: 3.5em;
+  display: flex;
+  flex-direction: column;
+}
+
+.thumbnail {
+  width: 100%;
+  height: 3.5em;
+  margin-bottom: 0.5em;
+  cursor: pointer;
+  box-sizing: content-box;
+}
+
+.thumbnail:focus {
+  outline: none;
+}
+
+.thumbnail-image {
+  width: 100%;
+  height: 100%;
+}
+
+.underlined {
+  padding-bottom: 2px;
+  border-bottom: 3px solid black;
+}
+
+.image-gallery-chevron-up,
+.image-gallery-chevron-down {
+  font-size: 1.5em;
+  width: fit-content;
+  margin: auto;
+  cursor: pointer;
+}
+
+.image-gallery-left-arrow {
+  position: absolute;
+  top: 45%;
+  left: 5em;
+  font-size: 1.5em;
+  cursor: pointer;
+}
+
+.image-gallery-right-arrow {
+  position: absolute;
+  top: 45%;
+  right: 4em;
+  font-size: 1.5em;
+  cursor: pointer;
+}
+
+.image-gallery-left-arrow:focus,
+.image-gallery-right-arrow:focus {
+  outline: none;
+}
+
+
+
 
 /* OVERVIEW WIDGET -- SIDE PRODUCT INFO */
 .product-category {
@@ -134,6 +203,12 @@ textarea {
   color: lightgray;
 }
 
+/* OVERVIEW WIDGET -- STAR RATING */
+
+.star-rating-container {
+  display: inline-block;
+}
+
 /* OVERVIEW WIDGET -- STYLE SELECTOR */
 
 .style-label {
@@ -145,7 +220,7 @@ textarea {
 }
 
 .style-circles-container {
-  width: 90%;
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
 }
@@ -153,8 +228,8 @@ textarea {
 .style-circle {
   cursor: pointer;
   position: relative;
-  height: 3em;
-  width: 3em;
+  height: 4em;
+  width: 4em;
   border: 1px solid black;
   border-radius: 50%;
   margin-right: 1em;
@@ -180,6 +255,110 @@ textarea {
   top: -1px;
   right: -1px;
   border-radius: 50%;
+}
+
+/* OVERVIEW WIDGET -- ADD TO CART */
+
+.cart-top-container {
+  width: 100%;
+  margin-bottom: 1em;
+}
+
+.size-selector-container,
+.quantity-selector-container {
+  position: relative;
+  display: inline-block;
+}
+
+.size-selector-container {
+  margin-right: 0.5em;
+  width: 60%;
+}
+
+.quantity-selector-container {
+  margin-left: 0.5em;
+  width: 30%;
+}
+
+.option-arrow-icon {
+  z-index: -1;
+  position: absolute;
+  top: 0.65em;
+  right: 0.65em;
+  font-size: 1.2em;
+}
+
+.size-selector,
+.quantity-selector {
+  appearance:  none;
+  width: 100%;
+  cursor: pointer;
+  background-color: transparent;
+  /* border-style: 1px solid grey;
+  background-color: white; */
+  /* color: grey; */
+  padding: 15px 20px;
+  /* text-align: center; */
+  display: inline-block;
+  /* font-size: 12px; */
+  /* margin: 2px; */
+  outline: none;
+}
+
+.quantity-selector:focus,
+.size-selector:focus {
+  outline: none;
+}
+
+.add-to-cart-container {
+  width: 75%;
+  margin-right: 0.5em;
+  position: relative;
+  display: inline-block;
+}
+
+.plus-icon {
+  z-index: -1;
+  position: absolute;
+  top: 0.70em;
+  right: 0.65em;
+  font-size: 1.2em;
+}
+
+.add-to-cart-button {
+  width: 100%;
+  cursor: pointer;
+  background-color: transparent;
+  display: inline-block;
+  padding: 15px 20px;
+  border: 1px solid black;
+}
+.add-to-cart-button:focus {
+  outline: none;
+}
+
+.mark-as-favorite {
+  width: 15%;
+  font-size: 1.3em;
+  margin-left: 0.5em;
+  text-align: center;
+  padding: 12px 20px 8px 15px;
+  border: 1px solid black;
+  cursor: pointer;
+}
+.mark-as-favorite:focus {
+  outline: none;
+}
+
+.cart-bottom-container {
+  display: flex;
+  width: 100%;
+}
+
+/******* RELATED PRODUCTS ********/
+.rp-box {
+  width: 80%;
+  margin: auto;
 }
 
 
@@ -317,6 +496,11 @@ textarea {
   margin-left: 2%;
 }
 
+.qa-box .qa-question-box .qa-collapse-answers {
+  font-size: 12px;
+  margin-left: 2%;
+}
+
 .qa-box .qa-options {
   margin-top: 3%;
 }
@@ -342,7 +526,7 @@ textarea {
 
 .modal-submit .modal-content {
   background-color: #fefefe;
-  margin: 15% auto; /* 15% from the top and centered */
+  margin: 3% auto; /* 15% from the top and centered */
   padding: 30px;
   border: 1px solid #888;
   width: 30%; /* Could be more or less, depending on screen size */
@@ -379,6 +563,14 @@ textarea {
 
 .modal-submit .modal-content .modal-form .modal-body {
   margin: 10px auto;
+}
+
+.modal-submit .modal-content .modal-form .modal-photo {
+  margin: 10px auto;
+}
+
+.modal-submit .modal-content .modal-form .modal-photo .modal-input {
+  margin: 5px auto;
 }
 
 .modal-submit .modal-content .modal-form .modal-input {

@@ -15,9 +15,22 @@ class Overview extends React.Component {
       styles: null,
       ratings: null,
       selectedStyle: null,
+      selectedSize: null,
+      selectedQuantity: null,
+      isFavorite: false,
+      outOfStock: false,
+      selectedImageId: null,
+      displayedThumbnailSection: null,
+      cart: [],
     };
     this.addToCartHandler = this.addToCartHandler.bind(this);
     this.updateSelectedStyle = this.updateSelectedStyle.bind(this);
+    this.isFavoriteHandler = this.isFavoriteHandler.bind(this);
+    this.updateSelectedSize = this.updateSelectedSize.bind(this);
+    this.updateSelectedQuantity = this.updateSelectedQuantity.bind(this);
+    this.updateOutOfStock = this.updateOutOfStock.bind(this);
+    this.updateSelectedImageId = this.updateSelectedImageId.bind(this);
+    this.updateDisplayedThumbnailSection = this.updateDisplayedThumbnailSection.bind(this);
   }
 
   componentDidMount() {
@@ -27,14 +40,13 @@ class Overview extends React.Component {
   getProductAndStyles(productId) {
     let product = {};
     let styles = [];
-    let selectedStyle = '';
     axios.get(`/products/${productId}`)
       .then((response) => {
         product = response.data;
         axios.get(`products/${productId}/styles`)
           .then((res) => {
             styles = res.data.results;
-            selectedStyle = styles[0].name;
+            const [selectedStyle] = styles;
             axios.get(`metadata/${productId}`)
               .then((r) => {
                 this.setState({
@@ -52,16 +64,88 @@ class Overview extends React.Component {
       });
   }
 
-  // eslint-disable-next-line class-methods-use-this
   addToCartHandler() {
-    // eslint-disable-next-line no-console
-    console.log('Add to cart handler was clicked!');
+    const {
+      cart,
+      product,
+      selectedStyle,
+      selectedSize,
+      selectedQuantity,
+    } = this.state;
+
+    if (selectedStyle !== null && selectedQuantity !== null) {
+      const cartItem = {
+        product: product.id,
+        style: selectedStyle.style_id,
+        size: selectedSize,
+        quantity: selectedQuantity,
+      };
+
+      // update the quantity of the selected size of the currently selected style
+      const sizes = selectedStyle.skus;
+      const sizeKeys = Object.keys(selectedStyle.skus);
+      for (let i = 0; i < sizeKeys.length; i += 1) {
+        const sizeKey = sizeKeys[i];
+        if (sizes[sizeKey].size === selectedSize) {
+          sizes[sizeKey].quantity -= Number(selectedQuantity);
+          break;
+        }
+      }
+
+      this.setState({
+        cart: [...cart, cartItem],
+        selectedSize: null,
+        selectedQuantity: null,
+        selectedStyle,
+      });
+    }
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  updateSelectedStyle(name) {
+  isFavoriteHandler() {
+    const { isFavorite } = this.state;
     this.setState({
-      selectedStyle: name,
+      isFavorite: !isFavorite,
+    });
+  }
+
+  updateSelectedStyle(style) {
+    this.setState({
+      selectedStyle: style,
+      selectedSize: null,
+      selectedQuantity: null,
+      outOfStock: false,
+      selectedImageId: null,
+    });
+  }
+
+  updateSelectedSize(size) {
+    this.setState({
+      selectedSize: size,
+      selectedQuantity: '1',
+    });
+  }
+
+  updateSelectedQuantity(quantity) {
+    this.setState({
+      selectedQuantity: quantity,
+    });
+  }
+
+  updateOutOfStock() {
+    this.setState({
+      outOfStock: true,
+    });
+  }
+
+  updateSelectedImageId(imageId) {
+    this.setState({
+      selectedImageId: imageId,
+    });
+  }
+
+  updateDisplayedThumbnailSection(section) {
+    this.setState({
+      displayedThumbnailSection: section,
     });
   }
 
@@ -71,6 +155,12 @@ class Overview extends React.Component {
       styles,
       ratings,
       selectedStyle,
+      selectedSize,
+      selectedQuantity,
+      isFavorite,
+      outOfStock,
+      selectedImageId,
+      displayedThumbnailSection,
     } = this.state;
 
     if (product === null || styles === null || ratings === null || selectedStyle === null) {
@@ -81,7 +171,14 @@ class Overview extends React.Component {
       <div className="overview-container">
         <div className="overview-top-container">
           <div className="overview-top-left-container">
-            <ImageGallery styles={styles} />
+            <ImageGallery
+              styles={styles}
+              selectedStyle={selectedStyle}
+              selectedImageId={selectedImageId}
+              updateSelectedImageId={this.updateSelectedImageId}
+              displayedThumbnailSection={displayedThumbnailSection}
+              updateDisplayedThumbnailSection={this.updateDisplayedThumbnailSection}
+            />
           </div>
           <div className="overview-top-right-container">
             <SideProductInfo product={product} ratings={ratings} />
@@ -90,7 +187,19 @@ class Overview extends React.Component {
               selectedStyle={selectedStyle}
               updateSelectedStyle={this.updateSelectedStyle}
             />
-            <AddToCart addToCartHandler={this.addToCartHandler} />
+            <AddToCart
+              addToCartHandler={this.addToCartHandler}
+              isFavorite={isFavorite}
+              isFavoriteHandler={this.isFavoriteHandler}
+              styles={styles}
+              selectedStyle={selectedStyle}
+              selectedSize={selectedSize}
+              selectedQuantity={selectedQuantity}
+              updateSelectedSize={this.updateSelectedSize}
+              updateSelectedQuantity={this.updateSelectedQuantity}
+              updateOutOfStock={this.updateOutOfStock}
+              outOfStock={outOfStock}
+            />
           </div>
         </div>
         <div className="overview-bottom-container">
