@@ -39,7 +39,8 @@ const ExpandedView = ({
         aria-label="expanded image"
         role="button"
       >
-        <img className={magnified ? 'magnified-image' : 'expanded-image'} src={selectedImageUrl} alt="" />
+        {magnified ? (
+          <div className="magnified-image" style={{ backgroundImage: `url(${selectedImageUrl})` }} />) : (<img className="expanded-image" src={selectedImageUrl} alt="" />)}
       </span>
       <span
         className="close-expanded-view"
