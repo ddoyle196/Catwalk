@@ -166,6 +166,10 @@ textarea {
   height: 100%;
 }
 
+.expanded-image:hover {
+  cursor: url('https://api.iconify.design/mdi:plus.svg?height=24'), auto;
+}
+
 .close-expanded-view {
   position: fixed;
   top: 1.5em;
