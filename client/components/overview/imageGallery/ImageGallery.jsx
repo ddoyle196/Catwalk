@@ -133,27 +133,31 @@ const ImageGallery = ({
     <div className="image-gallery-container">
       <img className="image-gallery-large-image" src={selectedImageUrl} alt="" />
       <div className="thumbnail-container">
-        <span
-          className="image-gallery-chevron-up"
-          onClick={() => updateDisplayedThumbnailSection(thumbnailSection - 1)}
-          onKeyDown={() => updateDisplayedThumbnailSection(thumbnailSection - 1)}
-          tabIndex="0"
-          aria-label="thumbnail"
-          role="button"
-        >
-          <Icon icon={chevronUp} />
-        </span>
+        {thumbnailSection > 0 && (
+          <span
+            className="image-gallery-chevron-up"
+            onClick={() => updateDisplayedThumbnailSection(thumbnailSection - 1)}
+            onKeyDown={() => updateDisplayedThumbnailSection(thumbnailSection - 1)}
+            tabIndex="0"
+            aria-label="thumbnail"
+            role="button"
+          >
+            <Icon icon={chevronUp} />
+          </span>
+        )}
         {thumbnails}
-        <span
-          className="image-gallery-chevron-down"
-          onClick={() => updateDisplayedThumbnailSection(thumbnailSection + 1)}
-          onKeyDown={() => updateDisplayedThumbnailSection(thumbnailSection + 1)}
-          tabIndex="0"
-          aria-label="thumbnail"
-          role="button"
-        >
-          <Icon icon={chevronDown} />
-        </span>
+        {(photos.length - (thumbnailSection + 1) * 7) > 0 && (
+          <span
+            className="image-gallery-chevron-down"
+            onClick={() => updateDisplayedThumbnailSection(thumbnailSection + 1)}
+            onKeyDown={() => updateDisplayedThumbnailSection(thumbnailSection + 1)}
+            tabIndex="0"
+            aria-label="thumbnail"
+            role="button"
+          >
+            <Icon icon={chevronDown} />
+          </span>
+        )}
       </div>
       {previousImageId !== '' && (
         <span
