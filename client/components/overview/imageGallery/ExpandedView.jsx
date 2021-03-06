@@ -51,7 +51,7 @@ const ExpandedView = ({
       >
         <Icon icon={closeIcon} />
       </span>
-      {previousImageId !== '' && (
+      {(previousImageId !== '' && !magnified) && (
         <span
           className="expanded-view-left-arrow"
           onClick={() => updateSelectedImageId(previousImageId)}
@@ -63,7 +63,7 @@ const ExpandedView = ({
           <Icon icon={arrowLeftBoldOutline} />
         </span>
       )}
-      {nextImageId !== '' && (
+      {(nextImageId !== '' && !magnified) && (
         <span
           className="expanded-view-right-arrow"
           onClick={() => updateSelectedImageId(nextImageId)}
@@ -75,9 +75,13 @@ const ExpandedView = ({
           <Icon icon={arrowRightBoldOutline} />
         </span>
       )}
-      <div className="expanded-view-thumbnail-icon-container">
-        {thumbnailIcons}
-      </div>
+      {!magnified && (
+        <div
+          className="expanded-view-thumbnail-icon-container"
+        >
+          {thumbnailIcons}
+        </div>
+      )}
     </div>
   );
 };
