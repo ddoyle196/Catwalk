@@ -12,6 +12,8 @@ const ExpandedView = ({
   previousImageId,
   updateSelectedImageId,
   photos,
+  magnified,
+  updateMagnified,
 }) => {
   const thumbnailIcons = [];
   photos.forEach((photo) => {
@@ -29,7 +31,16 @@ const ExpandedView = ({
 
   return (
     <div className="expanded-view-container">
-      <img className="expanded-image" src={selectedImageUrl} alt="" />
+      <span
+        className="expanded-image-container"
+        onClick={updateMagnified}
+        onKeyDown={updateMagnified}
+        tabIndex="0"
+        aria-label="expanded image"
+        role="button"
+      >
+        <img className={magnified ? 'magnified-image' : 'expanded-image'} src={selectedImageUrl} alt="" />
+      </span>
       <span
         className="close-expanded-view"
         onClick={updateExpandedView}
@@ -78,6 +89,8 @@ ExpandedView.propTypes = {
   previousImageId: PropTypes.number,
   updateSelectedImageId: PropTypes.func.isRequired,
   photos: PropTypes.arrayOf(PropTypes.object).isRequired,
+  magnified: PropTypes.bool.isRequired,
+  updateMagnified: PropTypes.func.isRequired,
 };
 
 ExpandedView.defaultProps = {

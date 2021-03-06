@@ -17,6 +17,8 @@ const ImageGallery = ({
   updateDisplayedThumbnailSection,
   expandedView,
   updateExpandedView,
+  magnified,
+  updateMagnified,
 }) => {
   const photos = [];
   for (let i = 0; i < styles.length; i += 1) {
@@ -142,6 +144,8 @@ const ImageGallery = ({
           nextImageId={nextImageId}
           updateSelectedImageId={updateSelectedImageId}
           photos={photos}
+          magnified={magnified}
+          updateMagnified={updateMagnified}
         />
       )}
       <span
@@ -228,6 +232,8 @@ ImageGallery.propTypes = {
   updateDisplayedThumbnailSection: PropTypes.func.isRequired,
   expandedView: PropTypes.bool.isRequired,
   updateExpandedView: PropTypes.func.isRequired,
+  magnified: PropTypes.bool.isRequired,
+  updateMagnified: PropTypes.func.isRequired,
 };
 
 ImageGallery.defaultProps = {

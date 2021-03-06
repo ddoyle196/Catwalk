@@ -22,6 +22,7 @@ class Overview extends React.Component {
       selectedImageId: null,
       displayedThumbnailSection: null,
       expandedView: false,
+      magnified: false,
       cart: [],
     };
     this.addToCartHandler = this.addToCartHandler.bind(this);
@@ -33,6 +34,7 @@ class Overview extends React.Component {
     this.updateSelectedImageId = this.updateSelectedImageId.bind(this);
     this.updateDisplayedThumbnailSection = this.updateDisplayedThumbnailSection.bind(this);
     this.updateExpandedView = this.updateExpandedView.bind(this);
+    this.updateMagnified = this.updateMagnified.bind(this);
   }
 
   componentDidMount() {
@@ -158,6 +160,13 @@ class Overview extends React.Component {
     });
   }
 
+  updateMagnified() {
+    const { magnified } = this.state;
+    this.setState({
+      magnified: !magnified,
+    });
+  }
+
   render() {
     const {
       product,
@@ -171,6 +180,7 @@ class Overview extends React.Component {
       selectedImageId,
       displayedThumbnailSection,
       expandedView,
+      magnified,
     } = this.state;
 
     if (product === null || styles === null || ratings === null || selectedStyle === null) {
@@ -190,6 +200,8 @@ class Overview extends React.Component {
               updateDisplayedThumbnailSection={this.updateDisplayedThumbnailSection}
               expandedView={expandedView}
               updateExpandedView={this.updateExpandedView}
+              magnified={magnified}
+              updateMagnified={this.updateMagnified}
             />
           </div>
           <div className="overview-top-right-container">
