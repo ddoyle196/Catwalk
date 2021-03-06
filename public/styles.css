@@ -679,8 +679,9 @@ textarea {
 
 /* RATINGS AND REVIEWS */
 .r-box {
-  margin: 50px auto 20px auto;
+  margin: 50px auto 0px auto;
   width: 80%;
+  min-height: 785px;
 }
 
 .headerBlock {
@@ -699,15 +700,15 @@ textarea {
 
 .reviewBlock {
   display: inline-block;
-  width: 55%;
+  width: 60%;
   min-width: 300px;
   vertical-align:top;
-  margin: 3% 2% 2% 2%;
+  margin: 0% 2% 2% 2%;
 }
 
 .reviewList {
   overflow-y: auto;
-  max-height: 75vh;
+  max-height: 70vh;
   margin: 10px 0px;
 }
 
@@ -780,9 +781,10 @@ font-size: 300%;
   color: #535353;
   background-color: #ebebeb;
   padding: 10px;
+  margin-bottom: 15px;
 }
 
-button {
+.rr-button {
   border: grey;
   border-style: solid;
   border-width: 1px;
@@ -792,17 +794,17 @@ button {
   text-align: center;
   display: inline-block;
   font-size: 12px;
-  margin: 2px;
+  margin: 2px 5px 2px 2px;
   outline: none;
 }
 
-button:hover {
+.rr-button:hover {
   color: black;
   text-decoration: none;
   cursor: pointer;
 }
 
-button:active {
+.rr-button:active {
   background-color: grey;
   color: white;
   outline: none;
@@ -857,10 +859,10 @@ margin: 0%;
   }
 
 .dataRow {
-  margin: 10% 5%;
+  /* margin: 10% 5%; */
+  width: 100%;
   }
 .dataRow:hover {
-    margin: 10% 5%;
     background-color: whitesmoke;
     }
 
@@ -936,9 +938,10 @@ margin: 0%;
 
             .rr-review-options.rr-reset-format {
               border: none;
-            }a
+            }
 
             .rr-drop {
+              font-size: 105%;
               border: none;
               border-bottom: solid;
             }
@@ -976,4 +979,34 @@ margin: 0%;
       white-space:pre-wrap;
       vertical-align: middle;
     }
+
+
+.rr-review-input {
+  margin: 2% 0% 5% 0%;
+  border: 1px solid black;
+}
+
+.rr-input {
+  width: 90%;
+  padding: 14px;
+  margin: 0px auto;
+  font-size: 16px;
+  position: relative;
+  font-weight: bold;
+  border: none;
+  display: inline;
+}
+
+.rr-input:focus {
+  outline: none;
+}
+
+.rr-search-icon {
+  padding: 5px;
+  width: 5%;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+
 

@@ -8,6 +8,7 @@ const port = 3000;
 
 const urlQuestions = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe/qa/questions/';
 const urlAnswers = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe/qa/answers/';
+const urlReviews = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe/reviews/';
 const urlInteractions = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe/interactions';
 const pId = 19378;
 
@@ -175,6 +176,35 @@ app.get('/reviews', (req, res) => {
     })
     .catch((err) => {
       console.log(err);
+    });
+});
+
+app.put('/reviews/:id/helpful', (req, res) => {
+  axios.put(`${urlReviews + req.params.id}/helpful`, '', {
+    headers: {
+      Authorization: GITHUB_API_KEY,
+    },
+  })
+    .then(() => {
+      res.status(204).send('No Content');
+    })
+    .catch(() => {
+      res.status(404).send('Invalid');
+    });
+});
+
+app.put('/reviews/:id/report', (req, res) => {
+  console.log(req.params.id);
+  axios.put(`${urlReviews + req.params.id}/report`, '', {
+    headers: {
+      Authorization: GITHUB_API_KEY,
+    },
+  })
+    .then(() => {
+      res.status(204).send('No Content');
+    })
+    .catch(() => {
+      res.status(404).send('Invalid');
     });
 });
 

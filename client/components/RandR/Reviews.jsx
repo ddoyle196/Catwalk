@@ -2,6 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 
+import { Icon } from '@iconify/react';
+import magnifyIcon from '@iconify-icons/mdi/magnify';
+
 import IndReview from './IndReview';
 
 class Reviews extends React.Component {
@@ -13,7 +16,24 @@ class Reviews extends React.Component {
       ratingTotal: props.ratings,
       options: ['relevant', 'newest', 'helpful'],
       optionSelect: props.sort,
+      query: '',
     };
+    this.handleInputChange = this.handleInputChange.bind(this);
+  }
+
+  handleInputChange(e) {
+    const { target } = e;
+    const { value } = target;
+    this.setState({
+      query: value,
+    });
+  }
+
+  handleNewQuery() {
+    const { query } = this.state;
+    this.setState({
+      newQuery: query,
+    });
   }
 
   updateOptionSelect(selected) {
@@ -35,9 +55,10 @@ class Reviews extends React.Component {
         {
           options.map((option) => (
             <option
+              key={option}
               value={option}
             >
-              {option}
+              {option === 'helpful' ? 'helpfulness' : option === 'relevant' ? 'relevance' : 'newest'}
             </option>
           ))
         }
@@ -52,15 +73,27 @@ class Reviews extends React.Component {
   }
 
   render() {
-    const { displayCount, ratingTotal } = this.state;
-    const { ratingFilter } = this.props;
+    const { displayCount, ratingTotal, query } = this.state;
+    const { ratingFilter, sort } = this.props;
     const { results } = this.props.reviews;
     const renderTwo = this.renderTwo.bind(this);
     const displayOptions = this.displayOptions.bind(this);
 
-    // reviews are already sorted
+    let preSort = results;
+    // reviews are already sorted if sorted by new or helpful
+    if (sort === 'relevant') {
+      preSort = results.sort((a, b) => {
+        let moreHelp = a.helpfulness > b.helpfulness ? a.helpfulness : b.helpfulness;
+        let parsedAD = Date.parse(a.date);
+        let parsedBD = Date.parse(b.date);
+        let moreRecent = parsedAD > parsedBD ? parsedAD : parsedBD;
+        let aRel = ((a.helpfulness / moreHelp) * 2 + (parsedAD / moreRecent));
+        let bRel = ((b.helpfulness / moreHelp) * 2 + (parsedBD / moreRecent));
+        return aRel - bRel;
+      });
+    }
     // filter here based on parent filter fed in from histogram selections
-    const display = results.filter((review) => {
+    let display = preSort.filter((review) => {
       let check = false;
       if (ratingFilter.indexOf(true) === -1) {
         return true;
@@ -72,17 +105,43 @@ class Reviews extends React.Component {
       }
       return check;
     });
+    let refined = [];
+    //filter based on search query, if any
+    if (query !== '' && query.length >= 3) {
+        refined = display.filter((review) => {
+        let check = false;
+        if (review.summary.indexOf(query) !== -1 || review.body.indexOf(query) !== -1) {
+          check = true;
+        }
+        return check;
+      });
+    } else {
+      refined = display;
+    }
+
     // cut down to two original
-    const trimmedDisplay = display.slice(0, displayCount);
+    const trimmedDisplay = refined.slice(0, displayCount);
     // create reviews html
     const finalDisplay = trimmedDisplay.map((review) => (
-      <IndReview review={review} />
+      <IndReview review={review} key={review.review_id} />
     ));
 
     return (
       <div>
+        <div className="rr-review-input">
+        <div className="rr-search-icon">
+            <Icon icon={magnifyIcon} />
+          </div>
+          <input className=''
+            type="text"
+            name="name"
+            placeholder="Search product reviews..."
+            className="rr-input"
+            onChange={(e) => { this.handleInputChange(e); }}
+          />
+        </div>
         <div>
-          {display.length}
+          {refined.length}
           {' '}
           reviews, sorted by
           {' '}
@@ -90,8 +149,8 @@ class Reviews extends React.Component {
           {' '}
         </div>
         <div className="reviewList">{finalDisplay}</div>
-        { display.length - displayCount > 0 ? <button type="button" onClick={renderTwo}>MORE REVIEWS</button> : null}
-        <button type="button">ADD A REVIEW   +</button>
+        { display.length - displayCount > 0 ? <button type="button" onClick={renderTwo} className="rr-button">MORE REVIEWS</button> : null}
+        <button type="button" className="rr-button">ADD A REVIEW   +</button>
       </div>
     );
   }

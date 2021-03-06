@@ -26,7 +26,7 @@ class IndReview extends React.Component {
     this.handleCloseModal = this.handleCloseModal.bind(this);
     this.showPhotos = this.showPhotos.bind(this);
     this.showPhotosLarge = this.showPhotosLarge.bind(this);
-    this.AddReviewrHelpfulness = this.AddReviewHelpfulness.bind(this);
+    this.ReviewHelpfulness = this.AddReviewHelpfulness.bind(this);
     this.handleReviewReport = this.handleReviewReport.bind(this);
   }
 
@@ -54,13 +54,17 @@ class IndReview extends React.Component {
           });
         }
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
+        this.setState({
+          showNotificationModal: true,
+          notificationCode: 'error',
+          notificationMessage: 'There was an error in the server, please try later',
+        });
       });
   }
 
-  handleAnswerHelpfulness(id) {
-    axios.put(`/answers/${id}/helpful`)
+  handleReviewHelpfulness(id) {
+    axios.put(`/reviews/${id}/helpful`)
       .then((result) => {
         if (result.status === 204) {
           this.getAnswersFromQuestionId('refresh'); // Check
@@ -79,7 +83,7 @@ class IndReview extends React.Component {
     const { id, AnswerHelpfulness } = this.props;
     const { helpfulness } = this.state;
     if (!helpfulness) {
-      AnswerHelpfulness(id);
+      this.handleReviewHelpfulness(id);
       this.setState({
         helpfulness: true,
       });
@@ -124,6 +128,8 @@ class IndReview extends React.Component {
   render() {
     const { Fragment } = React;
     const { review } = this.props;
+    const { helpfulness } = review;
+    console.log(review);
 
     if (review) {
       const bodyDisplay = review.body.slice(0, 249);
@@ -131,7 +137,6 @@ class IndReview extends React.Component {
       const id = review.review_id;
       const {
         reported,
-        helpfulness,
         showNotificationModal,
         notificationCode,
         notificationMessage,
@@ -226,7 +231,7 @@ class IndReview extends React.Component {
               {'Helpful? '}
               <u
                 className="pointer"
-                onClick={() => this.AddAnswerHelpfulness()}
+                onClick={() => this.AddReviewHelpfulness()}
                 onKeyDown={this.handleButtonClick}
                 role="button"
                 tabIndex={0}
@@ -240,7 +245,7 @@ class IndReview extends React.Component {
             <span>
               <u
                 className="pointer"
-                onClick={() => this.handleAnswerReport(id)}
+                onClick={() => this.handleReviewReport(id)}
                 onKeyDown={this.handleButtonClick}
                 role="button"
                 tabIndex={0}

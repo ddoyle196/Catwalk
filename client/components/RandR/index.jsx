@@ -23,7 +23,6 @@ class RandR extends React.PureComponent {
   }
 
   componentDidMount() {
-    const { reviews } = this.state;
     this.updateMetaData();
     this.updateReviews();
   }

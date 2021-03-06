@@ -98,20 +98,21 @@ export const Charts = (headObj, clickFunc, filter, clearFilter) => {
           ) : null}
           {barStats.map((percentage) => (
             <tr
-              className="dataRow"
               key={headObj.product_id.concat(percentage.starLev)}
               value={percentage.starLev}
-              onClick={(element) => {
+              onClick={() => {
                 clickFunc(percentage.val);
               }}
             >
               <td>
-                <div className="starLev">{percentage.starLev}</div>
-                <div className="ratingBar">
-                  <div className="dataBar voted" style={{ width: `${percentage.percent}%` }} />
-                  <div className="dataBar difference" style={{ width: `${100 - percentage.percent}%` }} />
+                <div className="dataRow">
+                  <div className="starLev">{percentage.starLev}</div>
+                  <div className="ratingBar">
+                    <div className="dataBar voted" style={{ width: `${percentage.percent}%` }} />
+                    <div className="dataBar difference" style={{ width: `${100 - percentage.percent}%` }} />
+                  </div>
+                  <div className="ratingCount">{percentage.count}</div>
                 </div>
-                <div className="ratingCount">{percentage.count}</div>
               </td>
             </tr>
           ))}
