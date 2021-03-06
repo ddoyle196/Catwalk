@@ -21,6 +21,7 @@ class Overview extends React.Component {
       outOfStock: false,
       selectedImageId: null,
       displayedThumbnailSection: null,
+      expandedView: false,
       cart: [],
     };
     this.addToCartHandler = this.addToCartHandler.bind(this);
@@ -31,6 +32,7 @@ class Overview extends React.Component {
     this.updateOutOfStock = this.updateOutOfStock.bind(this);
     this.updateSelectedImageId = this.updateSelectedImageId.bind(this);
     this.updateDisplayedThumbnailSection = this.updateDisplayedThumbnailSection.bind(this);
+    this.updateExpandedView = this.updateExpandedView.bind(this);
   }
 
   componentDidMount() {
@@ -149,6 +151,13 @@ class Overview extends React.Component {
     });
   }
 
+  updateExpandedView() {
+    const { expandedView } = this.state;
+    this.setState({
+      expandedView: !expandedView,
+    });
+  }
+
   render() {
     const {
       product,
@@ -161,6 +170,7 @@ class Overview extends React.Component {
       outOfStock,
       selectedImageId,
       displayedThumbnailSection,
+      expandedView,
     } = this.state;
 
     if (product === null || styles === null || ratings === null || selectedStyle === null) {
@@ -178,6 +188,8 @@ class Overview extends React.Component {
               updateSelectedImageId={this.updateSelectedImageId}
               displayedThumbnailSection={displayedThumbnailSection}
               updateDisplayedThumbnailSection={this.updateDisplayedThumbnailSection}
+              expandedView={expandedView}
+              updateExpandedView={this.updateExpandedView}
             />
           </div>
           <div className="overview-top-right-container">

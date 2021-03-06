@@ -1,13 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Icon } from '@iconify/react';
-// import arrowRight from '@iconify-icons/mdi/arrow-right';
-// import arrowLeft from '@iconify-icons/mdi/arrow-left';
 import chevronUp from '@iconify-icons/mdi/chevron-up';
 import chevronDown from '@iconify-icons/mdi/chevron-down';
 import arrowExpandAll from '@iconify-icons/mdi/arrow-expand-all';
 import arrowLeftBoldOutline from '@iconify-icons/mdi/arrow-left-bold-outline';
 import arrowRightBoldOutline from '@iconify-icons/mdi/arrow-right-bold-outline';
+import ExpandedView from './ExpandedView';
 
 const ImageGallery = ({
   styles,
@@ -16,6 +15,8 @@ const ImageGallery = ({
   updateSelectedImageId,
   displayedThumbnailSection,
   updateDisplayedThumbnailSection,
+  expandedView,
+  updateExpandedView,
 }) => {
   const photos = [];
   for (let i = 0; i < styles.length; i += 1) {
@@ -121,7 +122,6 @@ const ImageGallery = ({
     }
   }
 
-  // TO DO -- CONTINUE WORKING HERE ON THE THUMBNAIL ARROW FUNCTIONALITY
   let thumbnailSection;
   if (displayedThumbnailSection === null) {
     thumbnailSection = Math.floor(highlightedThumbnailPosition / 8);
@@ -134,7 +134,26 @@ const ImageGallery = ({
 
   return (
     <div className="image-gallery-container">
-      <img className="image-gallery-large-image" src={selectedImageUrl} alt="" />
+      {expandedView && (
+        <ExpandedView
+          selectedImageUrl={selectedImageUrl}
+          updateExpandedView={updateExpandedView}
+          previousImageId={previousImageId}
+          nextImageId={nextImageId}
+          updateSelectedImageId={updateSelectedImageId}
+          photos={photos}
+        />
+      )}
+      <span
+        className="image-gallery-large-image-container"
+        onClick={updateExpandedView}
+        onKeyDown={updateExpandedView}
+        aria-label="open expanded view"
+        tabIndex="0"
+        role="button"
+      >
+        <img className="image-gallery-large-image" src={selectedImageUrl} alt="" />
+      </span>
       <div className="thumbnail-container">
         {thumbnailSection > 0 && (
           <span
@@ -186,7 +205,7 @@ const ImageGallery = ({
           <Icon icon={arrowRightBoldOutline} />
         </span>
       )}
-      <span className="image-gallery-expand-all"><Icon icon={arrowExpandAll} /></span>
+      {/* <span className="image-gallery-expand-all"><Icon icon={arrowExpandAll} /></span> */}
     </div>
   );
 };
@@ -207,6 +226,8 @@ ImageGallery.propTypes = {
   selectedImageId: PropTypes.number,
   displayedThumbnailSection: PropTypes.number,
   updateDisplayedThumbnailSection: PropTypes.func.isRequired,
+  expandedView: PropTypes.bool.isRequired,
+  updateExpandedView: PropTypes.func.isRequired,
 };
 
 ImageGallery.defaultProps = {
