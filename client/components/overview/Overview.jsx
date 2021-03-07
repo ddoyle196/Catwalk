@@ -23,6 +23,7 @@ class Overview extends React.Component {
       displayedThumbnailSection: null,
       expandedView: false,
       magnified: false,
+      magnifiedStartingCoordinates: [],
       cart: [],
     };
     this.addToCartHandler = this.addToCartHandler.bind(this);
@@ -160,11 +161,22 @@ class Overview extends React.Component {
     });
   }
 
-  updateMagnified() {
+  updateMagnified(e) {
     const { magnified } = this.state;
-    this.setState({
-      magnified: !magnified,
-    });
+    if (magnified) {
+      this.setState({
+        magnified: false,
+      });
+    } else {
+      console.log('COORDINATES: ', e.nativeEvent.offsetX, e.nativeEvent.offsetY);
+      this.setState({
+        magnified: true,
+        magnifiedStartingCoordinates: [
+          e.nativeEvent.offsetX,
+          e.nativeEvent.offsetY,
+        ],
+      });
+    }
   }
 
   render() {
@@ -181,6 +193,7 @@ class Overview extends React.Component {
       displayedThumbnailSection,
       expandedView,
       magnified,
+      magnifiedStartingCoordinates,
     } = this.state;
 
     if (product === null || styles === null || ratings === null || selectedStyle === null) {
@@ -202,6 +215,7 @@ class Overview extends React.Component {
               updateExpandedView={this.updateExpandedView}
               magnified={magnified}
               updateMagnified={this.updateMagnified}
+              magnifiedStartingCoordinates={magnifiedStartingCoordinates}
             />
           </div>
           <div className="overview-top-right-container">

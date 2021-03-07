@@ -19,6 +19,7 @@ const ImageGallery = ({
   updateExpandedView,
   magnified,
   updateMagnified,
+  magnifiedStartingCoordinates,
 }) => {
   const photos = [];
   for (let i = 0; i < styles.length; i += 1) {
@@ -146,6 +147,7 @@ const ImageGallery = ({
           photos={photos}
           magnified={magnified}
           updateMagnified={updateMagnified}
+          magnifiedStartingCoordinates={magnifiedStartingCoordinates}
         />
       )}
       <span
@@ -234,11 +236,13 @@ ImageGallery.propTypes = {
   updateExpandedView: PropTypes.func.isRequired,
   magnified: PropTypes.bool.isRequired,
   updateMagnified: PropTypes.func.isRequired,
+  magnifiedStartingCoordinates: PropTypes.arrayOf(PropTypes.number),
 };
 
 ImageGallery.defaultProps = {
   selectedImageId: null,
   displayedThumbnailSection: null,
+  magnifiedStartingCoordinates: [],
 };
 
 export default ImageGallery;
