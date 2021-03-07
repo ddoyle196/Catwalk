@@ -30,9 +30,9 @@ const ImageGallery = ({
       image: style.photos[0].url,
     });
   }
-  let previousImageId = '';
-  let selectedImageUrl = '';
-  let nextImageId = '';
+  let previousImageId = -1;
+  let selectedImageUrl;
+  let nextImageId = -1;
 
   if (selectedImageId !== null) {
     for (let i = 0; i < photos.length; i += 1) {
@@ -187,7 +187,7 @@ const ImageGallery = ({
           </span>
         )}
       </div>
-      {previousImageId !== '' && (
+      {previousImageId !== -1 && (
         <span
           className="image-gallery-left-arrow"
           onClick={() => updateSelectedImageId(previousImageId)}
@@ -199,7 +199,7 @@ const ImageGallery = ({
           <Icon icon={arrowLeftBoldOutline} />
         </span>
       )}
-      {nextImageId !== '' && (
+      {nextImageId !== -1 && (
         <span
           className="image-gallery-right-arrow"
           onClick={() => updateSelectedImageId(nextImageId)}

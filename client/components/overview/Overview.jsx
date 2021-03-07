@@ -168,7 +168,6 @@ class Overview extends React.Component {
         magnified: false,
       });
     } else {
-      console.log('COORDINATES: ', e.nativeEvent.offsetX, e.nativeEvent.offsetY);
       this.setState({
         magnified: true,
         magnifiedStartingCoordinates: [
