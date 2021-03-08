@@ -21,6 +21,9 @@ class Overview extends React.Component {
       outOfStock: false,
       selectedImageId: null,
       displayedThumbnailSection: null,
+      expandedView: false,
+      magnified: false,
+      magnifiedStartingCoordinates: [],
       cart: [],
     };
     this.addToCartHandler = this.addToCartHandler.bind(this);
@@ -31,6 +34,8 @@ class Overview extends React.Component {
     this.updateOutOfStock = this.updateOutOfStock.bind(this);
     this.updateSelectedImageId = this.updateSelectedImageId.bind(this);
     this.updateDisplayedThumbnailSection = this.updateDisplayedThumbnailSection.bind(this);
+    this.updateExpandedView = this.updateExpandedView.bind(this);
+    this.updateMagnified = this.updateMagnified.bind(this);
   }
 
   componentDidMount() {
@@ -149,6 +154,30 @@ class Overview extends React.Component {
     });
   }
 
+  updateExpandedView() {
+    const { expandedView } = this.state;
+    this.setState({
+      expandedView: !expandedView,
+    });
+  }
+
+  updateMagnified(e) {
+    const { magnified } = this.state;
+    if (magnified) {
+      this.setState({
+        magnified: false,
+      });
+    } else {
+      this.setState({
+        magnified: true,
+        magnifiedStartingCoordinates: [
+          e.nativeEvent.offsetX,
+          e.nativeEvent.offsetY,
+        ],
+      });
+    }
+  }
+
   render() {
     const {
       product,
@@ -161,6 +190,9 @@ class Overview extends React.Component {
       outOfStock,
       selectedImageId,
       displayedThumbnailSection,
+      expandedView,
+      magnified,
+      magnifiedStartingCoordinates,
     } = this.state;
 
     if (product === null || styles === null || ratings === null || selectedStyle === null) {
@@ -178,6 +210,11 @@ class Overview extends React.Component {
               updateSelectedImageId={this.updateSelectedImageId}
               displayedThumbnailSection={displayedThumbnailSection}
               updateDisplayedThumbnailSection={this.updateDisplayedThumbnailSection}
+              expandedView={expandedView}
+              updateExpandedView={this.updateExpandedView}
+              magnified={magnified}
+              updateMagnified={this.updateMagnified}
+              magnifiedStartingCoordinates={magnifiedStartingCoordinates}
             />
           </div>
           <div className="overview-top-right-container">
