@@ -22,13 +22,25 @@ const ImageGallery = ({
   magnifiedStartingCoordinates,
 }) => {
   const photos = [];
+  let imageId = 0;
   for (let i = 0; i < styles.length; i += 1) {
     const style = styles[i];
-    photos.push({
-      id: style.style_id,
-      thumbnail: style.photos[0].thumbnail_url,
-      image: style.photos[0].url,
-    });
+    for (let j = 0; j < style.photos.length; j += 1) {
+      if (j === 0) {
+        photos.push({
+          style_id: style.style_id,
+          image_id: imageId += 1,
+          thumbnail: style.photos[j].thumbnail_url,
+          image: style.photos[j].url,
+        });
+      } else {
+        photos.push({
+          image_id: imageId += 1,
+          thumbnail: style.photos[j].thumbnail_url,
+          image: style.photos[j].url,
+        });
+      }
+    }
   }
   let previousImageId = -1;
   let selectedImageUrl;
@@ -37,15 +49,15 @@ const ImageGallery = ({
   if (selectedImageId !== null) {
     for (let i = 0; i < photos.length; i += 1) {
       const currentPhoto = photos[i];
-      if (selectedImageId === currentPhoto.id) {
+      if (selectedImageId === currentPhoto.image_id) {
         selectedImageUrl = currentPhoto.image;
         if (i > 0) {
           const previousPhoto = photos[i - 1];
-          previousImageId = previousPhoto.id;
+          previousImageId = previousPhoto.image_id;
         }
         if (i < photos.length - 1) {
           const nextPhoto = photos[i + 1];
-          nextImageId = nextPhoto.id;
+          nextImageId = nextPhoto.image_id;
         }
         break;
       }
@@ -53,15 +65,15 @@ const ImageGallery = ({
   } else {
     for (let i = 0; i < photos.length; i += 1) {
       const currentPhoto = photos[i];
-      if (selectedStyle.style_id === currentPhoto.id) {
+      if (selectedStyle.style_id === currentPhoto.style_id) {
         selectedImageUrl = currentPhoto.image;
         if (i > 0) {
           const previousPhoto = photos[i - 1];
-          previousImageId = previousPhoto.id;
+          previousImageId = previousPhoto.image_id;
         }
         if (i < photos.length - 1) {
           const nextPhoto = photos[i + 1];
-          nextImageId = nextPhoto.id;
+          nextImageId = nextPhoto.image_id;
         }
         break;
       }
@@ -76,9 +88,9 @@ const ImageGallery = ({
       thumbnails.push(
         <span
           key={keyCount += 1}
-          className={selectedImageId === photo.id ? 'thumbnail underlined' : 'thumbnail'}
-          onClick={() => updateSelectedImageId(photo.id)}
-          onKeyDown={() => updateSelectedImageId(photo.id)}
+          className={selectedImageId === photo.image_id ? 'thumbnail underlined' : 'thumbnail'}
+          onClick={() => updateSelectedImageId(photo.image_id)}
+          onKeyDown={() => updateSelectedImageId(photo.image_id)}
           tabIndex="0"
           aria-label="thumbnail"
           role="button"
@@ -90,9 +102,9 @@ const ImageGallery = ({
       thumbnails.push(
         <span
           key={keyCount += 1}
-          className={selectedStyle.style_id === photo.id ? 'thumbnail underlined' : 'thumbnail'}
-          onClick={() => updateSelectedImageId(photo.id)}
-          onKeyDown={() => updateSelectedImageId(photo.id)}
+          className={selectedStyle.style_id === photo.style_id ? 'thumbnail underlined' : 'thumbnail'}
+          onClick={() => updateSelectedImageId(photo.image_id)}
+          onKeyDown={() => updateSelectedImageId(photo.image_id)}
           tabIndex="0"
           aria-label="thumbnail"
           role="button"
@@ -109,7 +121,7 @@ const ImageGallery = ({
     if (selectedImageId !== null) {
       for (let i = 0; i < photos.length; i += 1) {
         const photo = photos[i];
-        if (photo.id === selectedImageId) {
+        if (photo.image_id === selectedImageId) {
           highlightedThumbnailPosition += (i + 1);
           break;
         }
@@ -117,7 +129,7 @@ const ImageGallery = ({
     } else {
       for (let i = 0; i < photos.length; i += 1) {
         const photo = photos[i];
-        if (photo.id === selectedStyle.style_id) {
+        if (photo.style_id === selectedStyle.style_id) {
           highlightedThumbnailPosition += (i + 1);
           break;
         }
@@ -211,7 +223,16 @@ const ImageGallery = ({
           <Icon icon={arrowRightBoldOutline} />
         </span>
       )}
-      {/* <span className="image-gallery-expand-all"><Icon icon={arrowExpandAll} /></span> */}
+      <span
+        className="image-gallery-expand-all"
+        onClick={updateExpandedView}
+        onKeyDown={updateExpandedView}
+        aria-label="open expanded view"
+        tabIndex="0"
+        role="button"
+      >
+        <Icon icon={arrowExpandAll} />
+      </span>
     </div>
   );
 };
