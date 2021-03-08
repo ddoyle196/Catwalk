@@ -8,10 +8,10 @@ import RelatedProduct from './RelatedProduct/RelatedProduct';
 
 const App = () => (
   <div>
-    {/* <Overview /> */}
-    {/* <QuestionsAnswers /> */}
+    <Overview />
+    <QuestionsAnswers />
     <RelatedProduct />
-    {/* <RandR productId={19379} /> */}
+    <RandR productId={19379} />
   </div>
 );
 
