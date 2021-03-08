@@ -372,12 +372,20 @@ flex-wrap: wrap;
   margin-bottom: 1em;
 }
 
+.style-circle-image {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
 .style-circle:focus {
 outline: none;
 }
 
 .selected-check-background {
-float: right;
+position: absolute;
+top: 0px;
+right: 0px;
 width: 13px;
 height: 13px;
 border-radius: 50%;

@@ -12,6 +12,7 @@ const StyleSelector = ({ styles, selectedStyle, updateSelectedStyle }) => {
     if (!colors.includes(s.name)) {
       colors.push(s.name);
       keyCount += 1;
+      const stylePhoto = s.photos[0].url;
       styleCircles.push(
         <div
           onClick={() => updateSelectedStyle(s)}
@@ -21,8 +22,8 @@ const StyleSelector = ({ styles, selectedStyle, updateSelectedStyle }) => {
           aria-label={`Select ${s.name} style`}
           key={keyCount}
           className="style-circle"
-          style={{ backgroundColor: s.name }}
         >
+          <img className="style-circle-image" src={stylePhoto} alt="" />
           {s.name === selectedStyle.name && (
             <span>
               <span className="selected-check-background" />
