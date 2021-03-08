@@ -11,10 +11,12 @@ export const Charts = (headObj, clickFunc, filter, clearFilter) => {
   const { ratings, recommended, characteristics } = headObj;
 
   const starLevels = ['1 stars', '2 stars', '3 stars', '4 stars', '5 stars'];
-  const qualFit = ['Too tight', 'Great Fit', 'Too loose'];
-  const qualLen = ['Short', 'Just Right', 'Long'];
-  const qualCom = ['Poor', 'Average', 'Perfect'];
-  const qualQua = ['Low', 'Medium', 'High'];
+  const qualFit = ['Runs tight', 'Perfect', 'Runs long'];
+  const qualLen = ['Short', 'Perfect', 'Long'];
+  const qualCom = ['Uncomfortable', 'Ok', 'Perfect'];
+  const qualQua = ['Poor', 'Expected', 'Perfect'];
+  const qualWid = ['Narrow', 'Perfect', 'Wide'];
+  const qualSize = ['Too Small', 'Perfect', 'Too Large'];
   const barStats = [];
   // eslint-disable-next-line guard-for-in
 
@@ -126,6 +128,10 @@ export const Charts = (headObj, clickFunc, filter, clearFilter) => {
               quaArray = qualCom;
             } else if (quality === 'Quality') {
               quaArray = qualQua;
+            } else if (quality === 'Width') {
+              quaArray = qualWid;
+            } else if (quality === 'Size') {
+              quaArray = qualSize;
             }
             return (
               <tr className="qualityRow" key={headObj.characteristics[quality].value}>

@@ -10,7 +10,6 @@ class RandR extends React.PureComponent {
     super(props);
     this.state = {
       ratings: null,
-      productId: props.productId,
       page: 1,
       count: 10,
       reviews: null,
@@ -35,7 +34,6 @@ class RandR extends React.PureComponent {
   }
 
   clearRatingFilter() {
-    const { ratingFilter } = this.state;
     const temp = [false, false, false, false, false];
     this.setState({ ratingFilter: temp });
   }
@@ -45,8 +43,7 @@ class RandR extends React.PureComponent {
   }
 
   updateMetaData() {
-    const { productId } = this.state;
-    const { ratings } = this.state;
+    const { productId } = this.props;
     axios.get(`metadata/${productId}`)
       .then((r) => {
         this.setState({
@@ -58,9 +55,9 @@ class RandR extends React.PureComponent {
   updateReviews() {
     // get reviews
     const {
-      productId, page, count, sort,
+      page, count, sort,
     } = this.state;
-    const { reviews } = this.state;
+    const { productId } = this.props;
 
     const params = {
       page,
@@ -81,6 +78,7 @@ class RandR extends React.PureComponent {
     const {
       reviews, ratings, sort, ratingFilter,
     } = this.state;
+    const { pName } = this.props;
     const { updateSort } = this;
     let voteCount = 0;
     if (ratings) {
@@ -109,6 +107,7 @@ class RandR extends React.PureComponent {
               ratings={voteCount}
               updateSort={this.updateSort}
               ratingFilter={ratingFilter}
+              pName={pName}
             />
           ) : null}
         </div>
