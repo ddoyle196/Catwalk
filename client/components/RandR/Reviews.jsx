@@ -171,7 +171,7 @@ class Reviews extends React.Component {
     const {
       newReview, photos, reviewWithPhoto, characteristics,
     } = this.state;
-    console.log(Object.values(characteristics));
+    const { product_id } = this.props;
     const photoArray = Object.values(photos).filter((photo) => photo !== '');
     const validatePhotos = photoArray.map((photo) => handleUrlValidation(photo));
     const validateReview = {
@@ -179,7 +179,7 @@ class Reviews extends React.Component {
       recommend: newReview.recommend === 'true' || newReview.recommend === 'false',
       characteristics: Object.values(characteristics).every((trait) => parseInt(trait) >= 1 && parseInt(trait) <= 5 && parseInt(trait) % 1 === 0 && trait !== ''),
       summary: newReview.summary.length > 3 || newReview.summary.length === 0,
-      body: newReview.body.length > 50,
+      body: newReview.body.length >= 50,
       name: newReview.name.length > 3,
       email: newReview.email.length > 3 && handleEmailValidation(newReview.email),
     };
@@ -196,7 +196,9 @@ class Reviews extends React.Component {
         || (!reviewWithPhoto)
       )
     ) {
-      const newPhotoReview = { ...newReview, photos: photoArray };
+      const newPhotoReview = {
+        ...newReview, characteristics, product_id, photos: photoArray,
+      };
       axios.post('/reviews', newPhotoReview)
         .then((result) => {
           if (result.status === 201) {
@@ -208,6 +210,7 @@ class Reviews extends React.Component {
               validateReviewInput: {
                 rating: true,
                 recommend: true,
+                characteristics: true,
                 summary: true,
                 body: true,
                 photo: true,

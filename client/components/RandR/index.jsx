@@ -78,7 +78,7 @@ class RandR extends React.PureComponent {
     const {
       reviews, ratings, sort, ratingFilter,
     } = this.state;
-    const { pName } = this.props;
+    const { pName, productID } = this.props;
     const { updateSort } = this;
     let voteCount = 0;
     if (ratings) {
@@ -108,6 +108,7 @@ class RandR extends React.PureComponent {
               updateSort={this.updateSort}
               ratingFilter={ratingFilter}
               pName={pName}
+              product_id={productID}
             />
           ) : null}
         </div>

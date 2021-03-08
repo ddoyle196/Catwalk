@@ -1078,7 +1078,8 @@ vertical-align: middle;
     .rr-modal-submit .rr-modal-content .rr-modal-form .rr-modal-rating .rr-star-holder{
       display: inline-block;
       text-align: center;
-      width: 40%;
+      width: 50%;
+      min-width: 150px;
       margin: 10px auto 0% auto;
       }
 
@@ -1144,6 +1145,7 @@ vertical-align: middle;
   }
   .rr-modal-submit .rr-modal-content .rr-modal-form .rr-modal-input-titles-sub {
    font-weight: bold;
+   margin-top: 15px;
     }
 
   .rr-modal-submit .rr-modal-content .rr-modal-buttons{
