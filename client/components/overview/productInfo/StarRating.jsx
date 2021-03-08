@@ -1,17 +1,11 @@
 /* eslint-disable no-restricted-syntax */
 import React from 'react';
 import { InlineIcon } from '@iconify/react';
-
 import Q0Star from '@iconify-icons/fluent/star-20-regular';
-
 import Q1Star from '@iconify-icons/fluent/star-one-quarter-20-filled';
-
 import Q2Star from '@iconify-icons/fluent/star-half-20-filled';
-
 import Q3Star from '@iconify-icons/fluent/star-three-quarter-20-filled';
-
 import Q4Star from '@iconify-icons/fluent/star-20-filled';
-
 import PropTypes from 'prop-types';
 
 const StarRating = ({ ratings }) => {

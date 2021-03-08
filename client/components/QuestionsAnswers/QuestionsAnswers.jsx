@@ -7,8 +7,8 @@ import magnifyIcon from '@iconify-icons/mdi/magnify';
 import Question from './Questions';
 import Modal from '../shared/Modal';
 
-const pId = 19378;
-const pName = 'Alberto Romper';
+const pId = 19380;
+const pName = 'Ned 300 Jacket';
 
 const handleEmailValidation = (email) => {
   const mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;

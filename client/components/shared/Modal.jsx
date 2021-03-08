@@ -105,25 +105,25 @@ const Modal = class extends React.PureComponent {
         </div>
       );
     }
-    if (modalType === 'submit-review') { // CHANGE IT
+    if (modalType === 'submit-rr') {
       return (
-        <div className="modal-submit">
-          <div className="modal-content">
+        <div className="rr-modal-submit">
+          <div className="rr-modal-content">
             { children }
-            <div className="modal-buttons">
+            <div className="rr-modal-buttons">
               <button
                 type="button"
                 onClick={this.submit}
-                className="modal-submit-button"
+                className="rr-button"
               >
-                Submit
+                SUBMIT
               </button>
               <button
-                type="submit"
-                onClick={() => { this.closeModal('submit-review'); }}
-                className="modal-close"
+                type="button"
+                onClick={() => { this.closeModal('submit-rr'); }}
+                className="rr-button"
               >
-                Close
+                CLOSE
               </button>
             </div>
           </div>
