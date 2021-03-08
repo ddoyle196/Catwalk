@@ -412,6 +412,24 @@ textarea {
   color: white;
 }
 
+.rp-box .rp-single-box .rp-image-box .rp-button-left {
+  position: absolute;
+  left: 0;
+  top: 45%;
+  z-index: 1;
+  background-color: transparent;
+  border: none;
+}
+
+.rp-box .rp-single-box .rp-image-box .rp-button-right {
+  position: absolute;
+  left: 79%;
+  top: 45%;
+  z-index: 1;
+  background-color: transparent;
+  border: none;
+}
+
 .rp-box .rp-single-box .rp-product-details {
   width: 95%;
   margin: auto;
