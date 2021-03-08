@@ -164,7 +164,7 @@ outline: none;
 
 .expanded-view-container {
   position: fixed;
-  z-index: 1;
+  z-index: 6;
   top: 0;
   left: 0;
   width: 100vw;
@@ -277,6 +277,7 @@ margin-block-end: 0;
 .bottom-product-info-container {
 width: 90%;
 margin: auto;
+height: fit-content;
 }
 
 .bottom-product-info-left-container {
@@ -284,6 +285,7 @@ display: inline-block;
 vertical-align: text-top;
 padding-top: 0.3em;
 width: 70%;
+padding-right: 2em;
 }
 
 .bottom-product-info-right-container {
@@ -292,10 +294,17 @@ padding-left: 1.5em;
 display: inline-block;
 vertical-align: text-top;
 width: 30%;
+height: 100%;
+position: relative;
 }
 
 .feature-text-container {
 margin-block-start: 0;
+margin-block-end: 0;
+}
+
+.feature-text-container:last-of-type {
+  margin-block-end: 1.5em;
 }
 
 .feature-check-icon {
@@ -314,7 +323,10 @@ font-size: 1.2em;
 }
 
 .social-media-icon-container {
-float: right;
+/* float: right; */
+position: absolute;
+bottom: 0;
+right: 0;
 }
 
 .social-media-icon {
