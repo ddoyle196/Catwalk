@@ -29,6 +29,14 @@ textarea {
   cursor: pointer;
 }
 
+.red-colored {
+  color:red;
+}
+
+.line-through {
+  text-decoration-line: line-through; 
+}
+
 .no-display {
   display:none;
 }
@@ -490,6 +498,101 @@ textarea {
   margin: auto;
 }
 
+.rp-scroll-horizontal {
+  width: 100%;
+  height: 420px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+}
+
+.rp-box .rp-box-title {
+  font-size: 20px;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.rp-box .rp-single-box {
+  width: 19%;
+  height: 380px;
+  border: 1px solid black;
+  margin: 5px 20px 5px 0;
+  display: inline-block;
+}
+
+.rp-box .rp-single-box .rp-image-box {
+  position: relative;
+  width: 100%;
+  height: 70%;
+}
+
+.rp-box .rp-single-box .rp-image-box .rp-product-thumbnail {
+  position: absolute;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+}
+
+.rp-box .rp-single-box .rp-image-box .rp-starred {
+  position: absolute;
+  left: 90%;
+  top: 2%;
+  z-index: 1;
+  color: white;
+}
+
+.rp-box .rp-single-box .rp-image-box .rp-button-left {
+  position: absolute;
+  left: 0;
+  top: 45%;
+  z-index: 1;
+  background-color: transparent;
+  border: none;
+}
+
+.rp-box .rp-single-box .rp-image-box .rp-button-right {
+  position: absolute;
+  left: 79%;
+  top: 45%;
+  z-index: 1;
+  background-color: transparent;
+  border: none;
+}
+
+.rp-box .rp-single-box .rp-product-details {
+  width: 95%;
+  margin: auto;
+  white-space: normal;
+}
+
+.rp-box .rp-single-box .rp-product-details .rp-product-category {
+  margin: 5px 0 5px 0;
+  font-size: 12px;
+}
+
+.rp-box .rp-single-box .rp-product-details .rp-product-name {
+  margin: 5px 0 5px 0;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.rp-box .rp-single-box .rp-product-details .rp-product-price {
+  margin: 5px 0 5px 0;
+  font-size: 12px;
+}
+
+.rp-box .rp-single-box .rp-product-details .rp-product-price .rp-regular-price {
+  margin: 0 5px 0 0;
+  font-size: 12px;
+}
+
+.rp-box .rp-single-box .rp-product-details .rp-product-price .rp-sale-price{
+  font-size: 14px;
+}
+
+.rp-box .rp-single-box .rp-product-details .rp-product-rating{
+  margin-top: 5px;
+}
 
 /******* QUESTIONS AND ANSWERS *******/
 .qa-box {
