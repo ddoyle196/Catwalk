@@ -505,6 +505,7 @@ class Reviews extends React.Component {
                   const indexCheck = index + 1;
                   return (
                     <button
+                      key={`star${index}`}
                       type="submit"
                       className="rr-star-button pointer"
                       value={indexCheck}
