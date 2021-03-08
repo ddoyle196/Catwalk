@@ -1,17 +1,42 @@
 /* eslint-disable no-restricted-syntax */
 import React from 'react';
 import PropTypes from 'prop-types';
+const { Fragment } = React;
 
-export const Charts = (headObj, clickFunc) => {
+import { Icon, InlineIcon } from '@iconify/react';
+import dismissCircle24Filled from '@iconify-icons/fluent/dismiss-circle-24-filled';
+
+
+export const Charts = (headObj, clickFunc, filter, clearFilter) => {
   const { ratings, recommended, characteristics } = headObj;
 
   const starLevels = ['1 stars', '2 stars', '3 stars', '4 stars', '5 stars'];
-  const qualFit = ['Too tight', 'Great Fit', 'Too loose'];
-  const qualLen = ['Short', 'Just Right', 'Long'];
-  const qualCom = ['Poor', 'Average', 'Perfect'];
-  const qualQua = ['Low', 'Medium', 'High'];
+  const qualFit = ['Runs tight', 'Perfect', 'Runs long'];
+  const qualLen = ['Short', 'Perfect', 'Long'];
+  const qualCom = ['Uncomfortable', 'Ok', 'Perfect'];
+  const qualQua = ['Poor', 'Expected', 'Perfect'];
+  const qualWid = ['Narrow', 'Perfect', 'Wide'];
+  const qualSize = ['Too Small', 'Perfect', 'Too Large'];
   const barStats = [];
   // eslint-disable-next-line guard-for-in
+
+  let filterCheck;
+  let filterVals = [];
+
+  if (filter.indexOf(true) === -1) {
+    filterCheck = false;
+  } else {
+    filterCheck = true;
+    for (let i = 0; i < filter.length; i += 1) {
+      if (filter[i]) {
+        if (filterVals.length === 0) {
+          filterVals[i] = (<div className="filterIndicator">  {i + 1} star</div>);
+        } else {
+          filterVals[i] = (<Fragment><div className="filterSpacer"> </div><div className="filterIndicator"> {i + 1} star</div></Fragment>);
+        }
+      }
+    }
+  }
 
   let benchmark;
 
@@ -55,22 +80,41 @@ export const Charts = (headObj, clickFunc) => {
               <div className="starLev">{`${rPercent}% of reviews recommend this product`}</div>
             </td>
           </tr>
+          {filterCheck ? (
+            <tr className="percentageRow">
+              <td>
+                <div>Filtered by:{filterVals}
+                </div>
+              </td>
+            </tr>
+          ) : null}
+          {filterCheck ? (
+            <tr className="centeredRow pointer">
+              <td>
+                <div onClick={() => { clearFilter() }}>
+                  <div className="cancelFilter">Remove all filters </div>
+                  <div className="cancelFilterIcon"><Icon icon={dismissCircle24Filled} /></div>
+                </div>
+              </td>
+            </tr>
+          ) : null}
           {barStats.map((percentage) => (
             <tr
-              className="dataRow"
               key={headObj.product_id.concat(percentage.starLev)}
               value={percentage.starLev}
-              onClick={(element) => {
+              onClick={() => {
                 clickFunc(percentage.val);
               }}
             >
               <td>
-                <div className="starLev">{percentage.starLev}</div>
-                <div className="ratingBar">
-                  <div className="dataBar voted" style={{ width: `${percentage.percent}%` }} />
-                  <div className="dataBar difference" style={{ width: `${100 - percentage.percent}%` }} />
+                <div className="dataRow">
+                  <div className="starLev">{percentage.starLev}</div>
+                  <div className="ratingBar">
+                    <div className="dataBar voted" style={{ width: `${percentage.percent}%` }} />
+                    <div className="dataBar difference" style={{ width: `${100 - percentage.percent}%` }} />
+                  </div>
+                  <div className="ratingCount">{percentage.count}</div>
                 </div>
-                <div className="ratingCount">{percentage.count}</div>
               </td>
             </tr>
           ))}
@@ -84,13 +128,16 @@ export const Charts = (headObj, clickFunc) => {
               quaArray = qualCom;
             } else if (quality === 'Quality') {
               quaArray = qualQua;
+            } else if (quality === 'Width') {
+              quaArray = qualWid;
+            } else if (quality === 'Size') {
+              quaArray = qualSize;
             }
             return (
               <tr className="qualityRow" key={headObj.characteristics[quality].value}>
                 <td>
                   <div className="qualityHolder">
                     <div className="quality">{quality}</div>
-                    {/* <div className="starLev">{headObj.characteristics[quality].value}</div> */}
                     <div className="fullQBar">
                       <div className="qualityBar">
                         {'\n'}

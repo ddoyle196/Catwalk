@@ -11,7 +11,7 @@ const App = () => (
     <Overview />
     <QuestionsAnswers />
     {/* <RelatedProduct /> */}
-    <RandR productId={19379} />
+    <RandR productId={19389} pName="Enoch Tank Top" />
   </div>
 );
 
