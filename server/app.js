@@ -8,8 +8,10 @@ const port = 3000;
 
 const urlQuestions = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe/qa/questions/';
 const urlAnswers = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe/qa/answers/';
+const urlReviews = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe/reviews/';
 const urlInteractions = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe/interactions';
-const pId = 19378;
+const urlProduct = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe/products/';
+const pId = 19380;
 
 app.use(express.static(path.join(__dirname, '../public')));
 app.use(express.json());
@@ -51,7 +53,7 @@ app.get('/questions/:productId/answers', (req, res) => {
 // GET PRODUCT BY ID
 app.get('/products/:id', (req, res) => {
   const productId = req.params.id;
-  axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe/products/${productId}`, {
+  axios.get(`${urlProduct + productId}`, {
     headers: {
       Authorization: GITHUB_API_KEY,
     },
@@ -162,6 +164,42 @@ app.post('/interactions', (req, res) => {
     });
 });
 
+// Get related products with photo thumbnails
+app.get('/related/:productId', (req, res) => {
+  axios.get(`${urlProduct + req.params.productId}/related`, {
+    headers: {
+      Authorization: GITHUB_API_KEY,
+    },
+  })
+    .then((response) => {
+      const relatedProductDetails = response.data.map((product) => (
+        axios.get(`${urlProduct + product}`, {
+          headers: {
+            Authorization: GITHUB_API_KEY,
+          },
+        })));
+
+      const relatedProductStyles = response.data.map((product) => (
+        axios.get(`${urlProduct + product}/styles`, {
+          headers: {
+            Authorization: GITHUB_API_KEY,
+          },
+        })));
+
+      const relatedProduct = [...relatedProductDetails, ...relatedProductStyles];
+      axios.all(relatedProduct)
+        .then(axios.spread((...responses) => {
+          const data = responses.map((product) => (
+            product.data
+          ));
+          res.status(200).json(data);
+        }))
+        .catch(() => {
+          res.status(404).send('Invalid');
+        });
+    });
+});
+
 app.get('/reviews', (req, res) => {
   // eslint-disable-next-line no-console
   const params = (req.query);
@@ -178,10 +216,56 @@ app.get('/reviews', (req, res) => {
     });
 });
 
+app.post('/reviews', (req, res) => {
+  // eslint-disable-next-line no-console
+  const params = (req.query);
+  console.log(params);
+  // axios.put(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe/reviews?page=${params.page}&count=${params.count}&sort=${params.sort}&product_id=${params.productId}`, {
+  //   headers: {
+  //     Authorization: GITHUB_API_KEY,
+  //   },
+  res.status(201).send('Received');
+});
+// .then((response) => {
+//   res.json(response.data);
+// })
+// .catch((err) => {
+//   console.log(err);
+// });
+// });
+
+app.put('/reviews/:id/helpful', (req, res) => {
+  axios.put(`${urlReviews + req.params.id}/helpful`, '', {
+    headers: {
+      Authorization: GITHUB_API_KEY,
+    },
+  })
+    .then(() => {
+      res.status(204).send('No Content');
+    })
+    .catch(() => {
+      res.status(404).send('Invalid');
+    });
+});
+
+app.put('/reviews/:id/report', (req, res) => {
+  axios.put(`${urlReviews + req.params.id}/report`, '', {
+    headers: {
+      Authorization: GITHUB_API_KEY,
+    },
+  })
+    .then(() => {
+      res.status(204).send('No Content');
+    })
+    .catch(() => {
+      res.status(404).send('Invalid');
+    });
+});
+
 // GET STYLES FOR A GIVEN PRODUCT
 app.get('/products/:id/styles', (req, res) => {
   const productId = req.params.id;
-  axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe/products/${productId}/styles`, {
+  axios.get(`${urlProduct + productId}/styles`, {
     headers: {
       Authorization: GITHUB_API_KEY,
     },
