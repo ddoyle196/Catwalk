@@ -18,7 +18,6 @@ const RelatedProduct = class extends React.PureComponent {
   }
 
   getRelatedProducts() {
-    const { relatedProducts } = this.state;
     const { pId } = this.props;
     axios.get(`/related/${pId}`, {
       headers: {
@@ -34,17 +33,22 @@ const RelatedProduct = class extends React.PureComponent {
   }
 
   render() {
+    const { relatedProducts } = this.state;
     return (
       <div className="rp-box">
         <span className="rp-box-title">RELATED PRODUCTS</span>
         <div className="rp-scroll-horizontal">
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
+          {relatedProducts.map((singleRelatedProduct) => (
+            <ProductCard
+              key={singleRelatedProduct.id}
+              productId={singleRelatedProduct.id}
+              name={singleRelatedProduct.name}
+              ratings={singleRelatedProduct.ratings}
+              price={Number(singleRelatedProduct.default_price)}
+              category={singleRelatedProduct.category}
+              styles={singleRelatedProduct.results}
+            />
+          ))}
         </div>
       </div>
     );
