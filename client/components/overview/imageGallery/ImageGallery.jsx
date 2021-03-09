@@ -146,7 +146,6 @@ const ImageGallery = ({
   const first = thumbnailSection * 7;
   const last = (thumbnailSection + 1) * 7;
   thumbnails = thumbnails.slice(first, last);
-
   return (
     <div className="image-gallery-container">
       {expandedView && (

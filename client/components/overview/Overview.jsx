@@ -145,6 +145,7 @@ class Overview extends React.Component {
   updateSelectedImageId(imageId) {
     this.setState({
       selectedImageId: imageId,
+      displayedThumbnailSection: null,
     });
   }
 
