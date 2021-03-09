@@ -539,7 +539,7 @@ margin: auto;
   position: absolute;
   left: 90%;
   top: 2%;
-  z-index: 1;
+  z-index: 0;
   color: white;
 }
 
@@ -547,7 +547,7 @@ margin: auto;
   position: absolute;
   left: 0;
   top: 45%;
-  z-index: 1;
+  z-index: 0;
   background-color: transparent;
   border: none;
 }
@@ -556,7 +556,7 @@ margin: auto;
   position: absolute;
   left: 79%;
   top: 45%;
-  z-index: 1;
+  z-index: 0;
   background-color: transparent;
   border: none;
 }

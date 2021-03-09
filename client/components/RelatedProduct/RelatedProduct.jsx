@@ -1,9 +1,8 @@
 import React from 'react';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 import ProductCard from './ProductCard';
 import { GITHUB_API_KEY } from '../../../config';
-
-const pId = 19378;
 
 const RelatedProduct = class extends React.PureComponent {
   constructor(props) {
@@ -20,6 +19,7 @@ const RelatedProduct = class extends React.PureComponent {
 
   getRelatedProducts() {
     const { relatedProducts } = this.state;
+    const { pId } = this.props;
     axios.get(`/related/${pId}`, {
       headers: {
         Authorization: GITHUB_API_KEY,
@@ -49,6 +49,10 @@ const RelatedProduct = class extends React.PureComponent {
       </div>
     );
   }
+};
+
+RelatedProduct.propTypes = {
+  pId: PropTypes.number.isRequired,
 };
 
 export default RelatedProduct;

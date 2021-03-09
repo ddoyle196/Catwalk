@@ -11,7 +11,6 @@ const urlAnswers = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe/qa/answe
 const urlReviews = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe/reviews/';
 const urlInteractions = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe/interactions';
 const urlProduct = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe/products/';
-const pId = 19380;
 
 app.use(express.static(path.join(__dirname, '../public')));
 app.use(express.json());
@@ -23,7 +22,7 @@ app.get('/test', (req, res) => {
 });
 
 app.get('/questions', (req, res) => {
-  axios.get(`${urlQuestions}?product_id=${pId}&page=${req.query.page || 1}&count=${req.query.count || 4}`, {
+  axios.get(`${urlQuestions}?product_id=${req.query.product_id}&page=${req.query.page || 1}&count=${req.query.count || 4}`, {
     headers: {
       Authorization: GITHUB_API_KEY,
     },
@@ -192,7 +191,21 @@ app.get('/related/:productId', (req, res) => {
           const data = responses.map((product) => (
             product.data
           ));
-          res.status(200).json(data);
+          const dataRP = data.slice(0, Math.abs(data.length / 2));
+          const dataRPS = data.slice(Math.abs(data.length / 2));
+          const mergedData = (arr1, arr2) => {
+            let result = [];
+            result = arr1.map((obj) => {
+              const index = arr2.findIndex((el) => Number(el.product_id) === obj.id);
+              const toMerge = index !== -1 ? arr2[index] : {};
+              return {
+                ...obj,
+                ...toMerge,
+              };
+            });
+            return result;
+          };
+          res.status(200).json(mergedData(dataRP, dataRPS));
         }))
         .catch(() => {
           res.status(404).send('Invalid');
