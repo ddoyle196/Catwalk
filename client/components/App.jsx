@@ -9,10 +9,10 @@ const pName = 'Alberto Romper';
 
 const App = () => (
   <div>
-    <Overview />
+    {/* <Overview /> */}
     <RelatedProduct pId={pId} />
-    <QuestionsAnswers pId={pId} pName={pName} />
-    <RandR productId={pId} pName={pName} />
+    {/* <QuestionsAnswers pId={pId} pName={pName} />
+    <RandR productId={pId} pName={pName} /> */}
   </div>
 );
 

@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import React from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
@@ -25,7 +26,6 @@ const RelatedProduct = class extends React.PureComponent {
       },
     })
       .then((result) => {
-        console.log(result.data);
         this.setState({
           relatedProducts: result.data,
         });
@@ -38,17 +38,28 @@ const RelatedProduct = class extends React.PureComponent {
       <div className="rp-box">
         <span className="rp-box-title">RELATED PRODUCTS</span>
         <div className="rp-scroll-horizontal">
-          {relatedProducts.map((singleRelatedProduct) => (
-            <ProductCard
-              key={singleRelatedProduct.id}
-              productId={singleRelatedProduct.id}
-              name={singleRelatedProduct.name}
-              ratings={singleRelatedProduct.ratings}
-              price={Number(singleRelatedProduct.default_price)}
-              category={singleRelatedProduct.category}
-              styles={singleRelatedProduct.results}
-            />
-          ))}
+          {relatedProducts.map((singleRelatedProduct) => {
+            const {
+              id, name, ratings, default_price, category, results,
+            } = singleRelatedProduct;
+            const getDefault = results
+              .filter((singleStyle) => singleStyle['default?'])[0];
+            const getThumbnailImages = getDefault
+              .photos.map((thumbnails) => (thumbnails.thumbnail_url));
+            const { sale_price } = getDefault;
+            return (
+              <ProductCard
+                key={id}
+                productId={id}
+                name={name}
+                ratings={ratings}
+                price={Number(default_price)}
+                category={category}
+                thumbnailImages={getThumbnailImages}
+                salePrice={Number(sale_price)}
+              />
+            );
+          })}
         </div>
       </div>
     );
