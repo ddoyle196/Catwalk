@@ -11,6 +11,8 @@ const ExpandedView = ({
   updateExpandedView,
   nextImageId,
   previousImageId,
+  selectedImageId,
+  selectedStyleId,
   updateSelectedImageId,
   photos,
   magnified,
@@ -20,17 +22,31 @@ const ExpandedView = ({
   const thumbnailIcons = [];
   let keyCount = 0;
   photos.forEach((photo) => {
-    thumbnailIcons.push(
-      <span
-        key={keyCount += 1}
-        onClick={() => updateSelectedImageId(photo.image_id)}
-        onKeyDown={() => updateSelectedImageId(photo.image_id)}
-        aria-label="expanded view thumbnail icon"
-        tabIndex="0"
-        role="button"
-        className={photo.image === selectedImageUrl ? 'thumbnail-icon-highlighted' : 'thumbnail-icon'}
-      />,
-    );
+    if (selectedImageId !== null) {
+      thumbnailIcons.push(
+        <span
+          key={keyCount += 1}
+          onClick={() => updateSelectedImageId(photo.image_id)}
+          onKeyDown={() => updateSelectedImageId(photo.image_id)}
+          aria-label="expanded view thumbnail icon"
+          tabIndex="0"
+          role="button"
+          className={photo.image_id === selectedImageId ? 'thumbnail-icon-highlighted' : 'thumbnail-icon'}
+        />,
+      );
+    } else {
+      thumbnailIcons.push(
+        <span
+          key={keyCount += 1}
+          onClick={() => updateSelectedImageId(photo.image_id)}
+          onKeyDown={() => updateSelectedImageId(photo.image_id)}
+          aria-label="expanded view thumbnail icon"
+          tabIndex="0"
+          role="button"
+          className={photo.style_id === selectedStyleId ? 'thumbnail-icon-highlighted' : 'thumbnail-icon'}
+        />,
+      );
+    }
   });
 
   return (
@@ -100,11 +116,13 @@ ExpandedView.propTypes = {
   updateExpandedView: PropTypes.func.isRequired,
   nextImageId: PropTypes.number.isRequired,
   previousImageId: PropTypes.number.isRequired,
+  selectedImageId: PropTypes.number.isRequired,
   updateSelectedImageId: PropTypes.func.isRequired,
   photos: PropTypes.arrayOf(PropTypes.object).isRequired,
   magnified: PropTypes.bool.isRequired,
   updateMagnified: PropTypes.func.isRequired,
   magnifiedStartingCoordinates: PropTypes.arrayOf(PropTypes.number),
+  selectedStyleId: PropTypes.number.isRequired,
 };
 
 ExpandedView.defaultProps = {

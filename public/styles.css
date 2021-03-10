@@ -57,14 +57,14 @@ margin-bottom: 2em;
 
 .overview-top-left-container {
 display: inline-block;
-width: 70%;
+width: 71%;
 }
 
 .overview-top-right-container {
 display: inline-block;
 vertical-align: top;
 padding-top: 2em;
-width: 30%;
+width: 29%;
 }
 
 .overview-bottom-container {
@@ -86,7 +86,7 @@ height: fit-content;
 
 .image-gallery-large-image {
   width: 95%;
-  height: 32em;
+  height: 33em;
   object-fit: cover;
 }
 
@@ -119,7 +119,7 @@ object-fit: cover;
 
 .underlined {
 padding-bottom: 2px;
-border-bottom: 3px solid black;
+border-bottom: 3px solid white;
 }
 
 .image-gallery-chevron-up,
@@ -128,7 +128,7 @@ font-size: 1.5em;
 width: fit-content;
 margin: auto;
 cursor: pointer;
-color: black;
+color: white;
 }
 
 .image-gallery-chevron-up:focus,
@@ -141,7 +141,7 @@ color: black;
   top: 45%;
   left: 5em;
   font-size: 1.5em;
-  color: black;
+  color: white;
   cursor: pointer;
 }
 
@@ -150,7 +150,7 @@ color: black;
   top: 45%;
   right: 2.5em;
   font-size: 1.5em;
-  color: black;
+  color: white;
   cursor: pointer;
 }
 
@@ -165,7 +165,11 @@ outline: none;
   right: 2.5em;
   font-size: 1.5em;
   cursor: zoom-in;
-  color: black;
+  color: white;
+}
+
+.image-gallery-expand-all:focus {
+  outline: none;
 }
 
 /* OVERVIEW WIDGET -- EXPANDED VIEW */
@@ -187,7 +191,7 @@ outline: none;
 .expanded-image {
   width: 100%;
   height: 100%;
-  object-fit: none;
+  object-fit: contain;
   background-color: black;
 }
 
@@ -212,7 +216,7 @@ outline: none;
   right: 1.5em;
   font-size: 1.5em;
   cursor: pointer;
-  color: black;
+  color: white;
 }
 
 .close-expanded-view:focus {
@@ -224,7 +228,7 @@ outline: none;
   top: 50%;
   right: 2em;
   font-size: 2.5em;
-  color: black;
+  color: white;
   cursor: pointer;
 }
 
@@ -233,7 +237,7 @@ outline: none;
   top: 50%;
   left: 2em;
   font-size: 2.5em;
-  color: black;
+  color: white;
   cursor: pointer;
 }
 
@@ -250,17 +254,18 @@ outline: none;
   width: 100%;
 }
 .thumbnail-icon {
-  width: 1em;
-  height: 1em;
+  width: 0.75em;
+  height: 0.75em;
   border-radius: 50%;
-  margin-right: 0.5em;
+  margin-right: 0.25em;
   background-color: black;
+  border: 1px solid white;
   cursor: pointer;
 }
 
 .thumbnail-icon-highlighted {
-  width: 1em;
-  height: 1em;
+  width: 0.75em;
+  height: 0.75em;
   border-radius: 50%;
   margin-right: 0.5em;
   background-color: white;
