@@ -1,5 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { InlineIcon } from '@iconify/react';
+import Star from '@iconify-icons/fluent/star-20-regular';
+import Modal from '../shared/Modal';
 
 const CardThumbnails = class extends React.PureComponent {
   constructor(props) {
@@ -7,9 +10,12 @@ const CardThumbnails = class extends React.PureComponent {
 
     this.state = {
       thumbnailImageIndex: 1,
+      displayComparisonModal: false,
     };
     this.mountThumbnailImages = this.mountThumbnailImages.bind(this);
     this.handleThumbnailImage = this.handleThumbnailImage.bind(this);
+    this.handleCloseModal = this.handleCloseModal.bind(this);
+    this.showComparisonModal = this.showComparisonModal.bind(this);
   }
 
   handleThumbnailImage(index) {
@@ -24,6 +30,12 @@ const CardThumbnails = class extends React.PureComponent {
     }
     this.setState({
       thumbnailImageIndex: newIndex,
+    });
+  }
+
+  handleCloseModal() {
+    this.setState({
+      displayComparisonModal: false,
     });
   }
 
@@ -44,11 +56,32 @@ const CardThumbnails = class extends React.PureComponent {
     });
   }
 
+  showComparisonModal() {
+    this.setState({
+      displayComparisonModal: true,
+    });
+  }
+
   render() {
     const { thumbnailUrl } = this.props;
+    const { displayComparisonModal } = this.state;
     return (
       <div className="rp-image-box">
-        <span className="rp-starred">S</span>
+        <Modal
+          showModal={displayComparisonModal}
+          handleCloseModal={this.handleCloseModal}
+          handleSubmit={() => {}}
+          modalType="product-comparison"
+          modalCode=""
+        >
+          <span>HI</span>
+        </Modal>
+        <InlineIcon
+          className="rp-starred pointer"
+          icon={Star}
+          role="button"
+          onClick={this.showComparisonModal}
+        />
         {this.mountThumbnailImages()}
         <button
           className={`rp-button-left ${thumbnailUrl.length > 1 ? '' : 'no-display'}`}

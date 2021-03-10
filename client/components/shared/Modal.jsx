@@ -90,7 +90,7 @@ const Modal = class extends React.PureComponent {
         </div>
       );
     }
-    if (modalType === 'image') {
+    if (modalType === 'product-comparison') {
       return (
         <div
           className="modal-image"
