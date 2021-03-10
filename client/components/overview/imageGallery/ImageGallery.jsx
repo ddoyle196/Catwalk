@@ -139,7 +139,7 @@ const ImageGallery = ({
 
   let thumbnailSection;
   if (displayedThumbnailSection === null) {
-    thumbnailSection = Math.floor(highlightedThumbnailPosition / 8);
+    thumbnailSection = Math.floor(highlightedThumbnailPosition / 7.1);
   } else {
     thumbnailSection = displayedThumbnailSection;
   }
