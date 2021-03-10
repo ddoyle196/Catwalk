@@ -300,10 +300,10 @@ vertical-align: text-top;
 padding-top: 0.3em;
 width: 70%;
 padding-right: 2em;
+border-right: 2px solid black;
 }
 
 .bottom-product-info-right-container {
-border-left: 2px solid black;
 padding-left: 1.5em;
 display: inline-block;
 vertical-align: text-top;
@@ -315,10 +315,6 @@ position: relative;
 .feature-text-container {
 margin-block-start: 0;
 margin-block-end: 0;
-}
-
-.feature-text-container:last-of-type {
-  margin-block-end: 1.5em;
 }
 
 .feature-check-icon {
@@ -339,7 +335,7 @@ font-size: 1.2em;
 .social-media-icon-container {
 /* float: right; */
 position: absolute;
-bottom: 0;
+top: 5px;
 right: 0;
 }
 
@@ -357,6 +353,7 @@ color: lightgray;
 
 .star-rating-container {
 display: inline-block;
+margin-right: 0.5em;
 }
 
 /* OVERVIEW WIDGET -- STYLE SELECTOR */

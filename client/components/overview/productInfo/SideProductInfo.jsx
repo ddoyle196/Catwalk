@@ -16,7 +16,7 @@ const SideProductInfo = ({ product, ratings }) => {
   return (
     <div>
       <StarRating ratings={ratings} />
-      <span>  LINK: Read all reviews</span>
+      <a href="#headerBlock">Read all reviews</a>
       {product.category && <p className="product-category">{product.category.toUpperCase()}</p>}
       {product.name && <p className="expanded-product-name">{product.name}</p>}
       {product.default_price && (
