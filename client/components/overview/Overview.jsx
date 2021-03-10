@@ -39,7 +39,7 @@ class Overview extends React.Component {
   }
 
   componentDidMount() {
-    this.getProductAndStyles(19093);
+    this.getProductAndStyles(19096);
   }
 
   getProductAndStyles(productId) {
@@ -159,6 +159,7 @@ class Overview extends React.Component {
     const { expandedView } = this.state;
     this.setState({
       expandedView: !expandedView,
+      magnified: false,
     });
   }
 
