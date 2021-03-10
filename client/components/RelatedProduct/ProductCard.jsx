@@ -13,6 +13,7 @@ const ProductCard = class extends React.PureComponent {
     };
     this.handleCloseModal = this.handleCloseModal.bind(this);
     this.processProductStyles = this.processProductStyles.bind(this);
+    this.processProductComparison = this.processProductComparison.bind(this);
   }
 
   handleCloseModal(modalType) {
@@ -30,6 +31,25 @@ const ProductCard = class extends React.PureComponent {
         thumbnailUrl={thumbnailImages}
       />
     );
+  }
+
+  processProductComparison() {
+    const { parentProductFeatures, productFeatures } = this.props;
+    const mergedData = (arr1, arr2) => {
+      let result = [];
+      result = arr1.map((obj) => {
+        const index = arr2.findIndex((el) => el.feature === obj.feature);
+        const toMergeStyle = index !== -1 ? arr2[index] : {};
+        return {
+          ...obj,
+          ...toMergeStyle,
+        };
+      });
+      return result;
+    };
+    console.log('parentProductFeatures', parentProductFeatures);
+    console.log('productFeatures', productFeatures);
+    console.log(mergedData(parentProductFeatures, productFeatures));
   }
 
   render() {
@@ -52,6 +72,7 @@ const ProductCard = class extends React.PureComponent {
           modalCode=""
         >
           <span className="">HI</span>
+          {this.processProductComparison()}
         </Modal>
         {this.processProductStyles()}
         <div className="rp-product-details">
@@ -89,6 +110,18 @@ ProductCard.propTypes = {
   salePrice: PropTypes.number.isRequired,
   thumbnailImages: PropTypes.arrayOf(
     PropTypes.string.isRequired,
+  ).isRequired,
+  parentProductFeatures: PropTypes.arrayOf(
+    PropTypes.shape({
+      feature: PropTypes.string.isRequired,
+      value: PropTypes.string.isRequired,
+    }).isRequired,
+  ).isRequired,
+  productFeatures: PropTypes.arrayOf(
+    PropTypes.shape({
+      feature: PropTypes.string.isRequired,
+      value: PropTypes.string.isRequired,
+    }).isRequired,
   ).isRequired,
 };
 
