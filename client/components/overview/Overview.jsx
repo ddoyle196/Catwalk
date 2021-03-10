@@ -39,7 +39,7 @@ class Overview extends React.Component {
   }
 
   componentDidMount() {
-    this.getProductAndStyles(19095);
+    this.getProductAndStyles(19093);
   }
 
   getProductAndStyles(productId) {

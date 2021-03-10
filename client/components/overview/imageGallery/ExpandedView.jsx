@@ -23,8 +23,8 @@ const ExpandedView = ({
     thumbnailIcons.push(
       <span
         key={keyCount += 1}
-        onClick={() => updateSelectedImageId(photo.id)}
-        onKeyDown={() => updateSelectedImageId(photo.id)}
+        onClick={() => updateSelectedImageId(photo.image_id)}
+        onKeyDown={() => updateSelectedImageId(photo.image_id)}
         aria-label="expanded view thumbnail icon"
         tabIndex="0"
         role="button"

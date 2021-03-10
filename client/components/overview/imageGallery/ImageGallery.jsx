@@ -172,31 +172,29 @@ const ImageGallery = ({
         <img className="image-gallery-large-image" src={selectedImageUrl} alt="" />
       </span>
       <div className="thumbnail-container">
-        {thumbnailSection > 0 && (
-          <span
-            className="image-gallery-chevron-up"
-            onClick={() => updateDisplayedThumbnailSection(thumbnailSection - 1)}
-            onKeyDown={() => updateDisplayedThumbnailSection(thumbnailSection - 1)}
-            tabIndex="0"
-            aria-label="thumbnail"
-            role="button"
-          >
-            <Icon icon={chevronUp} />
-          </span>
-        )}
+        <span
+          className="image-gallery-chevron-up"
+          onClick={() => updateDisplayedThumbnailSection(thumbnailSection - 1)}
+          onKeyDown={() => updateDisplayedThumbnailSection(thumbnailSection - 1)}
+          tabIndex="0"
+          aria-label="thumbnail"
+          role="button"
+          style={{ visibility: `${thumbnailSection > 0 ? 'visible' : 'hidden'}` }}
+        >
+          <Icon icon={chevronUp} />
+        </span>
         {thumbnails}
-        {(photos.length - (thumbnailSection + 1) * 7) > 0 && (
-          <span
-            className="image-gallery-chevron-down"
-            onClick={() => updateDisplayedThumbnailSection(thumbnailSection + 1)}
-            onKeyDown={() => updateDisplayedThumbnailSection(thumbnailSection + 1)}
-            tabIndex="0"
-            aria-label="thumbnail"
-            role="button"
-          >
-            <Icon icon={chevronDown} />
-          </span>
-        )}
+        <span
+          className="image-gallery-chevron-down"
+          onClick={() => updateDisplayedThumbnailSection(thumbnailSection + 1)}
+          onKeyDown={() => updateDisplayedThumbnailSection(thumbnailSection + 1)}
+          tabIndex="0"
+          aria-label="thumbnail"
+          role="button"
+          style={{ visibility: `${photos.length - (thumbnailSection + 1) * 7 > 0 ? 'visible' : 'hidden'}` }}
+        >
+          <Icon icon={chevronDown} />
+        </span>
       </div>
       {previousImageId !== -1 && (
         <span

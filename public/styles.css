@@ -92,7 +92,7 @@ height: fit-content;
 
 .thumbnail-container {
 position: absolute;
-top: 1em;
+top: 0.5em;
 left: 2em;
 width: 3.5em;
 display: flex;
@@ -127,6 +127,12 @@ font-size: 1.5em;
 width: fit-content;
 margin: auto;
 cursor: pointer;
+color: black;
+}
+
+.image-gallery-chevron-up:focus,
+.image-gallery-chevron-down:focus {
+  outline: none;
 }
 
 .image-gallery-left-arrow {
@@ -158,6 +164,7 @@ outline: none;
   right: 2.5em;
   font-size: 1.5em;
   cursor: zoom-in;
+  color: black;
 }
 
 /* OVERVIEW WIDGET -- EXPANDED VIEW */
@@ -203,6 +210,7 @@ outline: none;
   right: 1.5em;
   font-size: 1.5em;
   cursor: pointer;
+  color: black;
 }
 
 .close-expanded-view:focus {
@@ -237,12 +245,11 @@ outline: none;
   display: flex;
   justify-content: center;
   bottom: 5%;
-  right: 25%;
-  width: 50%;
+  width: 100%;
 }
 .thumbnail-icon {
-  width: 2em;
-  height: 2em;
+  width: 1em;
+  height: 1em;
   border-radius: 50%;
   margin-right: 0.5em;
   background-color: black;
@@ -250,8 +257,8 @@ outline: none;
 }
 
 .thumbnail-icon-highlighted {
-  width: 2em;
-  height: 2em;
+  width: 1em;
+  height: 1em;
   border-radius: 50%;
   margin-right: 0.5em;
   background-color: white;
