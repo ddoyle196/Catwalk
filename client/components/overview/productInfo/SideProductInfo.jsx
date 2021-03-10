@@ -15,8 +15,12 @@ const SideProductInfo = ({ product, ratings }) => {
   removeZerosFromPrice(product.default_price);
   return (
     <div>
-      <StarRating ratings={ratings} />
-      <a href="#headerBlock">Read all reviews</a>
+      {Object.keys(ratings).length > 0 && (
+        <span>
+          <StarRating ratings={ratings} />
+          <a href="#headerBlock">Read all reviews</a>
+        </span>
+      )}
       {product.category && <p className="product-category">{product.category.toUpperCase()}</p>}
       {product.name && <p className="expanded-product-name">{product.name}</p>}
       {product.default_price && (
