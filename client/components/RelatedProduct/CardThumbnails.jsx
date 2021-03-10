@@ -25,7 +25,7 @@ const CardThumbnails = class extends React.PureComponent {
     if (newIndex > thumbnailUrl.length) {
       newIndex = 1;
     }
-    if (newIndex < thumbnailUrl.length) {
+    if (newIndex < 1) {
       newIndex = thumbnailUrl.length;
     }
     this.setState({
