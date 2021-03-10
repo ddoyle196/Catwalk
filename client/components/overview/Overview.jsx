@@ -24,6 +24,7 @@ class Overview extends React.Component {
       expandedView: false,
       magnified: false,
       magnifiedStartingCoordinates: [],
+      displaySelectSizeMessage: false,
       cart: [],
     };
     this.addToCartHandler = this.addToCartHandler.bind(this);
@@ -36,6 +37,7 @@ class Overview extends React.Component {
     this.updateDisplayedThumbnailSection = this.updateDisplayedThumbnailSection.bind(this);
     this.updateExpandedView = this.updateExpandedView.bind(this);
     this.updateMagnified = this.updateMagnified.bind(this);
+    this.promptSelectSize = this.promptSelectSize.bind(this);
   }
 
   componentDidMount() {
@@ -180,6 +182,18 @@ class Overview extends React.Component {
     }
   }
 
+  promptSelectSize() {
+    this.setState({
+      displaySelectSizeMessage: true,
+    }, () => {
+      setTimeout(() => {
+        this.setState({
+          displaySelectSizeMessage: false,
+        });
+      }, 1500);
+    });
+  }
+
   render() {
     const {
       product,
@@ -195,6 +209,7 @@ class Overview extends React.Component {
       expandedView,
       magnified,
       magnifiedStartingCoordinates,
+      displaySelectSizeMessage,
     } = this.state;
 
     if (product === null || styles === null || ratings === null || selectedStyle === null) {
@@ -238,6 +253,8 @@ class Overview extends React.Component {
               updateSelectedQuantity={this.updateSelectedQuantity}
               updateOutOfStock={this.updateOutOfStock}
               outOfStock={outOfStock}
+              promptSelectSize={this.promptSelectSize}
+              displaySelectSizeMessage={displaySelectSizeMessage}
             />
           </div>
         </div>

@@ -9,9 +9,9 @@ import RelatedProduct from './RelatedProduct/RelatedProduct';
 const App = () => (
   <div>
     <Overview />
-    {/* <RelatedProduct />
-    <QuestionsAnswers /> */}
-    <RandR productId={19380} pName="Ned 300 Jacket" />
+    {/* <RelatedProduct /> */}
+    {/* <QuestionsAnswers /> */}
+    {/* <RandR productId={19380} pName="Ned 300 Jacket" /> */}
   </div>
 );
 

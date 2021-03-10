@@ -196,7 +196,7 @@ outline: none;
 }
 
 .expanded-image:hover {
-  cursor: url('https://api.iconify.design/mdi:plus.svg?height=24'), auto;
+  cursor: url('https://api.iconify.design/mdi:plus.svg?height=24&color=%23ffffff'), auto;
 }
 
 .magnified-image {
@@ -207,7 +207,7 @@ outline: none;
 }
 
 .magnified-image:hover {
-  cursor: url('https://api.iconify.design/mdi:minus.svg?height=24'), auto;
+  cursor: url('https://api.iconify.design/mdi:minus.svg?height=24&color=%23ffffff'), auto;
 }
 
 .close-expanded-view {
@@ -430,6 +430,10 @@ margin-right: 0.5em;
 width: 60%;
 }
 
+.select-a-size-outline {
+  border: 2px solid red;
+}
+
 .quantity-selector-container {
 margin-left: 0.5em;
 width: 30%;
@@ -445,19 +449,12 @@ font-size: 1.2em;
 
 .size-selector,
 .quantity-selector {
-appearance:none;
+appearance: none;
 width: 100%;
 cursor: pointer;
 background-color: transparent;
-/* border-style: 1px solid grey;
-background-color: white; */
-/* color: grey; */
 padding: 15px 20px;
-/* text-align: center; */
 display: inline-block;
-/* font-size: 12px; */
-/* margin: 2px; */
-outline: none;
 }
 
 .quantity-selector:focus,
@@ -515,7 +512,7 @@ outline: none;
 .gold-star-icon {
   position: absolute;
   top: 25%;
-  left: 30%;
+  left: 27%;
   font-size: 1.3em;
 }
 
@@ -523,6 +520,13 @@ outline: none;
 display: flex;
 width: 100%;
 }
+
+.display-select-size-message {
+  color: red;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
 
 /******* RELATED PRODUCTS ********/
 .rp-box {

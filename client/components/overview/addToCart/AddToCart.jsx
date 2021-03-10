@@ -18,84 +18,62 @@ const AddToCart = ({
   updateSelectedQuantity,
   updateOutOfStock,
   outOfStock,
-}) => {
-  const openSizeSelector = () => {
-    console.log('OPEN SIZE SELECTOR CLICKED!');
-    const sizeSelector = document.getElementById('size-selector');
-
-    const showDropdown = (element) => {
-      const event = document.createEvent('MouseEvents');
-      event.initMouseEvent('mousedown', true, true, window);
-      element.dispatchEvent(event);
-    };
-    showDropdown(sizeSelector);
-    // simulateClick(sizeSelector);
-
-    // const event = document.createEvent('MouseEvents');
-    // event.initMouseEvent('mousedown', true, true, window);
-    // sizeSelector.dispatchEvent(event);
-    // const event = new MouseEvent('click', {
-    //   view: window,
-    //   bubbles: true,
-    //   cancelable: true,
-    // });
-    // sizeSelector.dispatchEvent(event);
-  };
-
-  return (
-    <div>
-      <div className="cart-top-container">
-        <SizeSelector
-          selectedStyle={selectedStyle}
-          selectedSize={selectedSize}
-          updateSelectedSize={updateSelectedSize}
-          updateOutOfStock={updateOutOfStock}
-          outOfStock={outOfStock}
-        />
-        <QuantitySelector
-          selectedStyle={selectedStyle}
-          selectedSize={selectedSize}
-          selectedQuantity={selectedQuantity}
-          updateSelectedQuantity={updateSelectedQuantity}
-        />
-      </div>
-      <div className="cart-bottom-container">
-        <div className="add-to-cart-container">
-          <div
-            type="submit"
-            tabIndex="0"
-            onClick={selectedSize === null ? openSizeSelector : addToCartHandler}
-            onKeyDown={selectedSize === null ? openSizeSelector : addToCartHandler}
-            aria-label="Add to bag"
-            role="button"
-            className="add-to-cart-button"
-            style={{ visibility: outOfStock ? 'hidden' : 'visible' }}
-          >
-            ADD TO BAG
-          </div>
-          <span
-            style={{ visibility: outOfStock ? 'hidden' : 'visible' }}
-            className="plus-icon"
-          >
-            <Icon icon={plusIcon} />
-          </span>
+  promptSelectSize,
+  displaySelectSizeMessage,
+}) => (
+  <div>
+    <div className="cart-top-container">
+      <SizeSelector
+        selectedStyle={selectedStyle}
+        selectedSize={selectedSize}
+        updateSelectedSize={updateSelectedSize}
+        updateOutOfStock={updateOutOfStock}
+        outOfStock={outOfStock}
+        displaySelectSizeMessage={displaySelectSizeMessage}
+      />
+      <QuantitySelector
+        selectedStyle={selectedStyle}
+        selectedSize={selectedSize}
+        selectedQuantity={selectedQuantity}
+        updateSelectedQuantity={updateSelectedQuantity}
+      />
+    </div>
+    <div className="cart-bottom-container">
+      <div className="add-to-cart-container">
+        <div
+          type="submit"
+          tabIndex="0"
+          onClick={selectedSize === null ? promptSelectSize : addToCartHandler}
+          onKeyDown={selectedSize === null ? promptSelectSize : addToCartHandler}
+          aria-label="Add to bag"
+          role="button"
+          className="add-to-cart-button"
+          style={{ visibility: outOfStock ? 'hidden' : 'visible' }}
+        >
+          ADD TO BAG
         </div>
         <span
-          className="mark-as-favorite-container"
-          onClick={isFavoriteHandler}
-          onKeyDown={isFavoriteHandler}
-          role="button"
-          tabIndex="0"
-          aria-label="Select as favorite"
+          style={{ visibility: outOfStock ? 'hidden' : 'visible' }}
+          className="plus-icon"
         >
-          <span className="gold-star-icon">
-            {isFavorite ? <Icon icon={star} color="gold" /> : <Icon icon={starOutline} /> }
-          </span>
+          <Icon icon={plusIcon} />
         </span>
       </div>
+      <span
+        className="mark-as-favorite-container"
+        onClick={isFavoriteHandler}
+        onKeyDown={isFavoriteHandler}
+        role="button"
+        tabIndex="0"
+        aria-label="Select as favorite"
+      >
+        <span className="gold-star-icon">
+          {isFavorite ? <Icon icon={star} color="gold" /> : <Icon icon={starOutline} /> }
+        </span>
+      </span>
     </div>
-  );
-};
+  </div>
+);
 
 AddToCart.propTypes = {
   addToCartHandler: PropTypes.func.isRequired,
@@ -121,6 +99,8 @@ AddToCart.propTypes = {
   updateSelectedQuantity: PropTypes.func.isRequired,
   updateOutOfStock: PropTypes.func.isRequired,
   outOfStock: PropTypes.bool.isRequired,
+  promptSelectSize: PropTypes.func.isRequired,
+  displaySelectSizeMessage: PropTypes.bool.isRequired,
 };
 
 AddToCart.defaultProps = {

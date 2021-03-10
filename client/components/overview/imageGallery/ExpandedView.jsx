@@ -116,7 +116,7 @@ ExpandedView.propTypes = {
   updateExpandedView: PropTypes.func.isRequired,
   nextImageId: PropTypes.number.isRequired,
   previousImageId: PropTypes.number.isRequired,
-  selectedImageId: PropTypes.number.isRequired,
+  selectedImageId: PropTypes.number,
   updateSelectedImageId: PropTypes.func.isRequired,
   photos: PropTypes.arrayOf(PropTypes.object).isRequired,
   magnified: PropTypes.bool.isRequired,
@@ -127,6 +127,7 @@ ExpandedView.propTypes = {
 
 ExpandedView.defaultProps = {
   magnifiedStartingCoordinates: [],
+  selectedImageId: null,
 };
 
 export default ExpandedView;
