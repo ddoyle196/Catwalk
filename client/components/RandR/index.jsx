@@ -46,6 +46,7 @@ class RandR extends React.PureComponent {
     const { productId } = this.props;
     axios.get(`metadata/${productId}`)
       .then((r) => {
+        console.log(r.data);
         this.setState({
           ratings: r.data,
         });
@@ -68,6 +69,7 @@ class RandR extends React.PureComponent {
 
     axios.get('http://localhost:3000/reviews', { params })
       .then((r) => {
+        console.log(r.data);
         this.setState({
           reviews: r.data,
         });
@@ -76,9 +78,9 @@ class RandR extends React.PureComponent {
 
   render() {
     const {
-      reviews, ratings, sort, ratingFilter,
+      reviews, ratings, sort, ratingFilter, parentRatings,
     } = this.state;
-    const { pName, productID } = this.props;
+    const { pName, productId } = this.props;
     const { updateSort } = this;
     let voteCount = 0;
     if (ratings) {
@@ -108,7 +110,8 @@ class RandR extends React.PureComponent {
               updateSort={this.updateSort}
               ratingFilter={ratingFilter}
               pName={pName}
-              product_id={productID}
+              product_id={productId}
+              parentRatings={ratings}
             />
           ) : null}
         </div>

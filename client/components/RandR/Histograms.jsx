@@ -15,13 +15,12 @@ class Histograms extends React.Component {
   render() {
     const { ratings, headObj } = this.state;
     const { updateRF, ratingFilter, clearRatingFilter } = this.props;
-    const { Fragment } = React;
     if (ratings) {
       return (
-        <div className="ratingSummary">
-          <h2 className="ratingLarge">{TotalRating(ratings)}</h2>
-          <div className="histoStars"><StarRating ratings={ratings} /></div>
-          <div className="barCharts">{Charts(headObj, updateRF, ratingFilter, clearRatingFilter)}</div>
+        <div className="ratingSummary" key={`summary${Date.now()}`}>
+          <h2 className="ratingLarge" key="ratingLarge">{TotalRating(ratings)}</h2>
+          <div className="histoStars" key="histoStars"><StarRating ratings={ratings} key="stars" /></div>
+          <div className="barCharts" key="barCharts">{Charts(headObj, updateRF, ratingFilter, clearRatingFilter)}</div>
         </div>
       );
     }

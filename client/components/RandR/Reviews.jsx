@@ -42,12 +42,6 @@ class Reviews extends React.Component {
         photo5: '',
       },
       characteristics: {
-        characteristicsize: '',
-        characteristicwidth: '',
-        characteristiccomfort: '',
-        characteristicquality: '',
-        characteristiclength: '',
-        characteristicfit: '',
       },
       newReview: {
         rating: '',
@@ -119,15 +113,18 @@ class Reviews extends React.Component {
     const inputNewChar = { ...characteristics };
     if (name.includes('photo')) {
       inputNewPhoto[name] = e.target.value;
-    } else if (name.includes('characteristic')) {
-      inputNewChar[name] = e.target.value;
-    } else {
+    } else if (parseInt(name) == name) {
+      inputNewChar[name] = parseInt(e.target.value, 10);
+    } else if (name === 'helpfulness') {
       inputNewReview[name] = e.target.value;
-    }
+    } else if (name === 'recommend') {
+      inputNewReview[name] = e.target.value === 'true';
+    } else { inputNewReview[name] = e.target.value; }
     this.setState({
       newReview: inputNewReview,
       photos: inputNewPhoto,
       characteristics: inputNewChar,
+
     });
   }
 
@@ -171,18 +168,19 @@ class Reviews extends React.Component {
     const {
       newReview, photos, reviewWithPhoto, characteristics,
     } = this.state;
-    const { product_id } = this.props;
     const photoArray = Object.values(photos).filter((photo) => photo !== '');
     const validatePhotos = photoArray.map((photo) => handleUrlValidation(photo));
+
     const validateReview = {
       rating: newReview.rating >= 1 && newReview.rating <= 5 && newReview.rating % 1 === 0 && newReview.rating !== '',
-      recommend: newReview.recommend === 'true' || newReview.recommend === 'false',
-      characteristics: Object.values(characteristics).every((trait) => parseInt(trait) >= 1 && parseInt(trait) <= 5 && parseInt(trait) % 1 === 0 && trait !== ''),
+      recommend: newReview.recommend === true || newReview.recommend === false,
+      characteristics: Object.values(characteristics).every((trait) => trait >= 1 && trait <= 5 && trait % 1 === 0 && trait !== ''),
       summary: newReview.summary.length > 3 || newReview.summary.length === 0,
       body: newReview.body.length >= 50,
       name: newReview.name.length > 3,
       email: newReview.email.length > 3 && handleEmailValidation(newReview.email),
     };
+
     if (
       validateReview.rating
       && validateReview.recommend
@@ -197,11 +195,12 @@ class Reviews extends React.Component {
       )
     ) {
       const newPhotoReview = {
-        ...newReview, characteristics, product_id, photos: photoArray,
+        ...newReview, characteristics, product_id: this.props.product_id, photos: photoArray,
       };
       axios.post('/reviews', newPhotoReview)
         .then((result) => {
           if (result.status === 201) {
+            console.log('Review created');
             this.setState({
               showReviewModal: false,
               showNotificationModal: true,
@@ -218,6 +217,23 @@ class Reviews extends React.Component {
                 email: true,
               },
               reviewWithPhoto: false,
+              photos: {
+                photo1: '',
+                photo2: '',
+                photo3: '',
+                photo4: '',
+                photo5: '',
+              },
+              characteristics: {
+              },
+              newReview: {
+                rating: '',
+                recommend: '',
+                summary: '',
+                body: '',
+                name: '',
+                email: '',
+              },
             });
           }
         });
@@ -244,13 +260,12 @@ class Reviews extends React.Component {
   }
 
   updateNewRating(e) {
-    console.log(e);
-    const { target } = e;
-    const { parentNode } = target;
-    const { value } = parentNode;
+    e.preventDefault();
+    const { currentTarget } = e;
+    const value = currentTarget.getAttribute('value');
     const { newReview } = this.state;
     const temp = { ...newReview };
-    temp.rating = value;
+    temp.rating = parseInt(value, 10);
     this.setState({
       newReview: temp,
     });
@@ -346,20 +361,30 @@ class Reviews extends React.Component {
 
   render() {
     const { displayCount, query, stars } = this.state;
-    const { ratingFilter, sort, pName } = this.props;
-    const { reviews } = this.props;
+    const {
+      ratingFilter, sort, pName, reviews, parentRatings,
+    } = this.props;
     const { results } = reviews;
+    const charsArray = [];
+    Object.keys(parentRatings.characteristics).forEach((key, index) => {
+      charsArray[index] = [key];
+    });
+    Object.entries(parentRatings.characteristics).forEach((value, index) => {
+      charsArray[index].push(value[1].id);
+    });
     const renderTwo = this.renderTwo.bind(this);
     const displayOptions = this.displayOptions.bind(this);
 
     const starOptions = ['Poor', 'Fair', 'Average', 'Good', 'Great'];
 
-    const sizeOptions = ['A size too small', '½ a size too small', 'Perfect', '½ a size too big', 'A size too wide'];
-    const widthOptions = ['Too narrow', 'Slightly narrow', 'Perfect', 'Slightly wide', 'Too wide'];
-    const comfortOptions = ['Uncomfortable', 'Slightly uncomfortable', 'Ok', 'Comfortable', 'Perfect'];
-    const qualityOptions = ['Poor', 'Below average', 'What I expected', 'Pretty great', 'Perfect'];
-    const lengthOptions = ['Runs Short', 'Runs slightly short', 'Perfect', 'Runs slightly long', 'Runs long'];
-    const fitOptions = ['Runs tight', 'Runs slightly tight', 'Perfect', 'Runs slightly long', 'Runs long'];
+    const options = {
+      Size: ['A size too small', '½ a size too small', 'Perfect', '½ a size too big', 'A size too wide'],
+      Width: ['Too narrow', 'Slightly narrow', 'Perfect', 'Slightly wide', 'Too wide'],
+      Comfort: ['Uncomfortable', 'Slightly uncomfortable', 'Ok', 'Comfortable', 'Perfect'],
+      Quality: ['Poor', 'Below average', 'What I expected', 'Pretty great', 'Perfect'],
+      Length: ['Runs Short', 'Runs slightly short', 'Perfect', 'Runs slightly long', 'Runs long'],
+      Fit: ['Runs tight', 'Runs slightly tight', 'Perfect', 'Runs slightly long', 'Runs long'],
+    };
 
     const {
       showReviewModal,
@@ -498,32 +523,35 @@ class Reviews extends React.Component {
                 Overall, how would you rate this product? *
               </span>
               <br />
-              <div className="rr-star-holder">
+              <div className="rr-star-holder" name="rating">
                 {stars.map((star, index) => {
                   const { newReview: inter } = this.state;
                   const { rating: newRating } = inter;
                   const indexCheck = index + 1;
                   return (
-                    <button
+                    <div
                       key={`star${index}`}
-                      type="submit"
                       className="rr-star-button pointer"
                       value={indexCheck}
+                      name="rating"
+                      type="submit"
                       onClick={(e) => { this.updateNewRating(e); }}
                     >
                       {indexCheck <= newRating ? (
                         <Icon
                           icon={Q4Star}
                           value={indexCheck}
+                          name="rating"
                         />
                       )
                         : (
                           <Icon
                             icon={Q0Star}
                             value={indexCheck}
+                            name="rating"
                           />
                         )}
-                    </button>
+                    </div>
                   );
                 })}
               </div>
@@ -557,205 +585,28 @@ class Reviews extends React.Component {
                 </span>
                 <br />
               </div>
-              <div>
+              {charsArray.map((indChar) => (
                 <div>
                   <span
                     className="rr-modal-input-titles-sub"
                   >
-                    Size:
+                    {indChar[0]}
                     {' '}
                   </span>
-                  {sizeOptions[this.state.characteristics.characteristicsize - 1]}
-                  <br />
                   <div className="rr-radio-group">
-                    <label htmlFor="characteristicsize" className="rr-choice ">
-                      <input type="radio" id="cs1" name="characteristicsize" value="1" onChange={this.handleInputChange} />
-                      1
-                    </label>
-                    <label htmlFor="characteristicsize" className="rr-choice">
-                      <input type="radio" id="cs2" name="characteristicsize" value="2" onChange={this.handleInputChange} />
-                      2
-                    </label>
-                    <label htmlFor="characteristicsize" className="rr-choice">
-                      <input type="radio" id="cs3" name="characteristicsize" value="3" onChange={this.handleInputChange} />
-                      3
-                    </label>
-                    <label htmlFor="characteristicsize" className="rr-choice">
-                      <input type="radio" id="cs4" name="characteristicsize" value="4" onChange={this.handleInputChange} />
-                      4
-                    </label>
-                    <label htmlFor="characteristicsize" className="rr-choice">
-                      <input type="radio" id="cs5" name="characteristicsize" value="5" onChange={this.handleInputChange} />
-                      5
-                    </label>
+                    {[1, 2, 3, 4, 5].map((val) => (
+                      <div className="rr-choice-holder">
+                        <div style={{ fontSize: '50%' }}>{options[indChar[0]][val - 1]}</div>
+                        <label htmlFor={`characteristic${indChar[1]}`} className="rr-choice ">
+                          <input type="radio" id={`c${indChar[1]}`} name={indChar[1]} value={val} onChange={this.handleInputChange} />
+                          {val}
+                        </label>
+                      </div>
+                    ))}
                   </div>
+                  <br />
                 </div>
-                <div>
-                  <br />
-                  <span
-                    className="rr-modal-input-titles-sub"
-                  >
-                    Width:
-                    {' '}
-                  </span>
-                  {widthOptions[this.state.characteristics.characteristicwidth - 1]}
-                  <br />
-                  <div className="rr-radio-group">
-                    <label htmlFor="characteristicwidth" className="rr-choice ">
-                      <input type="radio" id="cw1" name="characteristicwidth" value="1" onChange={this.handleInputChange} />
-                      1
-                    </label>
-                    <label htmlFor="characteristicwidth" className="rr-choice">
-                      <input type="radio" id="cw2" name="characteristicwidth" value="2" onChange={this.handleInputChange} />
-                      2
-                    </label>
-                    <label htmlFor="characteristicwidth" className="rr-choice">
-                      <input type="radio" id="cw3" name="characteristicwidth" value="3" onChange={this.handleInputChange} />
-                      3
-                    </label>
-                    <label htmlFor="characteristicwidth" className="rr-choice">
-                      <input type="radio" id="cw4" name="characteristicwidth" value="4" onChange={this.handleInputChange} />
-                      4
-                    </label>
-                    <label htmlFor="characteristicwidth" className="rr-choice">
-                      <input type="radio" id="cw5" name="characteristicwidth" value="5" onChange={this.handleInputChange} />
-                      5
-                    </label>
-                  </div>
-                </div>
-                <div>
-                  <br />
-                  <span
-                    className="rr-modal-input-titles-sub"
-                  >
-                    Comfort:
-                    {' '}
-                  </span>
-                  {comfortOptions[this.state.characteristics.characteristiccomfort - 1]}
-                  <br />
-                  <div className="rr-radio-group">
-                    <label htmlFor="characteristiccomfort" className="rr-choice ">
-                      <input type="radio" id="cc1" name="characteristiccomfort" value="1" onChange={this.handleInputChange} />
-                      1
-                    </label>
-                    <label htmlFor="characteristiccomfort" className="rr-choice">
-                      <input type="radio" id="cc2" name="characteristiccomfort" value="2" onChange={this.handleInputChange} />
-                      2
-                    </label>
-                    <label htmlFor="characteristiccomfort" className="rr-choice">
-                      <input type="radio" id="cc3" name="characteristiccomfort" value="3" onChange={this.handleInputChange} />
-                      3
-                    </label>
-                    <label htmlFor="characteristiccomfort" className="rr-choice">
-                      <input type="radio" id="cc4" name="characteristiccomfort" value="4" onChange={this.handleInputChange} />
-                      4
-                    </label>
-                    <label htmlFor="characteristiccomfort" className="rr-choice">
-                      <input type="radio" id="cc5" name="characteristiccomfort" value="5" onChange={this.handleInputChange} />
-                      5
-                    </label>
-                  </div>
-                </div>
-                <div>
-                  <br />
-                  <span
-                    className="rr-modal-input-titles-sub"
-                  >
-                    Quality:
-                    {' '}
-                  </span>
-                  {qualityOptions[this.state.characteristics.characteristicquality - 1]}
-                  <br />
-                  <div className="rr-radio-group">
-                    <label htmlFor="characteristicquality" className="rr-choice ">
-                      <input type="radio" id="cq1" name="characteristicquality" value="1" onChange={this.handleInputChange} />
-                      1
-                    </label>
-                    <label htmlFor="characteristicquality" className="rr-choice">
-                      <input type="radio" id="cq2" name="characteristicquality" value="2" onChange={this.handleInputChange} />
-                      2
-                    </label>
-                    <label htmlFor="characteristicquality" className="rr-choice">
-                      <input type="radio" id="cq3" name="characteristicquality" value="3" onChange={this.handleInputChange} />
-                      3
-                    </label>
-                    <label htmlFor="characteristicquality" className="rr-choice">
-                      <input type="radio" id="cq4" name="characteristicquality" value="4" onChange={this.handleInputChange} />
-                      4
-                    </label>
-                    <label htmlFor="characteristicquality" className="rr-choice">
-                      <input type="radio" id="cq5" name="characteristicquality" value="5" onChange={this.handleInputChange} />
-                      5
-                    </label>
-                  </div>
-                </div>
-                <div>
-                  <br />
-                  <span
-                    className="rr-modal-input-titles-sub"
-                  >
-                    Length:
-                    {' '}
-                  </span>
-                  {lengthOptions[this.state.characteristics.characteristiclength - 1]}
-                  <br />
-                  <div className="rr-radio-group">
-                    <label htmlFor="characteristiclength" className="rr-choice ">
-                      <input type="radio" id="cl1" name="characteristiclength" value="1" onChange={this.handleInputChange} />
-                      1
-                    </label>
-                    <label htmlFor="characteristiclength" className="rr-choice">
-                      <input type="radio" id="cl2" name="characteristiclength" value="2" onChange={this.handleInputChange} />
-                      2
-                    </label>
-                    <label htmlFor="characteristiclength" className="rr-choice">
-                      <input type="radio" id="cl3" name="characteristiclength" value="3" onChange={this.handleInputChange} />
-                      3
-                    </label>
-                    <label htmlFor="characteristiclength" className="rr-choice">
-                      <input type="radio" id="cl4" name="characteristiclength" value="4" onChange={this.handleInputChange} />
-                      4
-                    </label>
-                    <label htmlFor="characteristiclength" className="rr-choice">
-                      <input type="radio" id="cl5" name="characteristiclength" value="5" onChange={this.handleInputChange} />
-                      5
-                    </label>
-                  </div>
-                </div>
-                <div>
-                  <br />
-                  <span
-                    className="rr-modal-input-titles-sub"
-                  >
-                    Fit:
-                    {' '}
-                  </span>
-                  {fitOptions[this.state.characteristics.characteristicfit - 1]}
-                  <br />
-                  <div className="rr-radio-group">
-                    <label htmlFor="characteristicfit" className="rr-choice ">
-                      <input type="radio" id="cf1" name="characteristicfit" value="1" onChange={this.handleInputChange} />
-                      1
-                    </label>
-                    <label htmlFor="characteristicfit" className="rr-choice">
-                      <input type="radio" id="cf2" name="characteristicfit" value="2" onChange={this.handleInputChange} />
-                      2
-                    </label>
-                    <label htmlFor="characteristicfit" className="rr-choice">
-                      <input type="radio" id="cf3" name="characteristicfit" value="3" onChange={this.handleInputChange} />
-                      3
-                    </label>
-                    <label htmlFor="characteristicfit" className="rr-choice">
-                      <input type="radio" id="cf4" name="characteristicfit" value="4" onChange={this.handleInputChange} />
-                      4
-                    </label>
-                    <label htmlFor="characteristicfit" className="rr-choice">
-                      <input type="radio" id="cf5" name="characteristicfit" value="5" onChange={this.handleInputChange} />
-                      5
-                    </label>
-                  </div>
-                </div>
-              </div>
+              ))}
               {this.showValidationErrors('characteristics')}
             </div>
           </div>

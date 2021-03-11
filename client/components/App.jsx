@@ -11,7 +11,7 @@ const App = () => (
     <Overview />
     <RelatedProduct />
     <QuestionsAnswers />
-    <RandR productId={19380} pName="Ned 300 Jacket" />
+    <RandR productId={19092} pName="Ned 300 Jacket" />
   </div>
 );
 

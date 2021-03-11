@@ -1038,6 +1038,7 @@ button:hover {
 color: black;
 text-decoration: none;
 cursor: pointer;
+box-shadow: 2px 2px rgb(71, 71, 71);
 }
 
 .rr-button:active,
@@ -1045,6 +1046,7 @@ button:active {
 background-color: grey;
 color: white;
 outline: none;
+box-shadow: 2px 2px rgb(71, 71, 71);
 }
 
 .revContainer .qa-answer-box .qa-image-box .qa-image-thumbnails {
@@ -1223,6 +1225,11 @@ margin: 2% 0% 2% 0%;
 border: 1px solid black;
 }
 
+.rr-review-input:hover, .rr-review-input:active {
+  box-shadow: 2px 2px rgb(71, 71, 71);
+  }
+
+
 .rr-input {
 width: 90%;
 min-width: 50px;
@@ -1314,18 +1321,19 @@ vertical-align: middle;
     .rr-modal-submit .rr-modal-content .rr-modal-form .rr-modal-rating .rr-star-holder{
       display: inline-block;
       text-align: center;
-      width: 50%;
+      width: 75%;
       min-width: 150px;
       margin: 10px auto 0% auto;
       }
 
-      .rr-modal-submit .rr-modal-content .rr-modal-form .rr-modal-rating .rr-star-button{
-        }
+      /* .rr-modal-submit .rr-modal-content .rr-modal-form .rr-modal-rating .rr-star-button{
+        } */
 
-    .rr-modal-submit .rr-modal-content .rr-modal-form .rr-modal-rating .rr-star{
+    .rr-modal-submit .rr-modal-content .rr-modal-form .rr-modal-rating .rr-star-button{
       display: inline-block;
       margin: 0;
       font-size: 150%;
+      padding: 5px
       }
 
   .rr-modal-submit .rr-modal-content .rr-modal-form .rr-modal-recommend {
@@ -1341,6 +1349,11 @@ vertical-align: middle;
 .rr-modal-submit .rr-modal-content .rr-modal-form .rr-modal-characteristics {
   margin: 15px auto;
   }
+
+  .rr-modal-submit .rr-modal-content .rr-modal-form .rr-modal-characteristics .rr-radio-group .rr-choice-holder{
+    display: inline-block;
+    padding: 0% 3%;
+    }
 
   .rr-modal-submit .rr-modal-content .rr-modal-form .rr-modal-characteristics .rr-radio-group{
     text-align: center;
