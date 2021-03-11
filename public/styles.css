@@ -603,6 +603,42 @@ margin: auto;
   margin-top: 5px;
 }
 
+.rp-comparison-box {
+  position: fixed; /* Stay in place */
+  z-index: 5; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto; /* Enable scroll if needed */
+}
+
+.rp-comparison-box .rp-modal-content {
+  background-color: #fefefe;
+  margin: 10% auto; /* 15% from the top and centered */
+  padding: 30px;
+  border: 1px solid #888;
+  width: 30%; /* Could be more or less, depending on screen size */
+  cursor: pointer;
+}
+
+.rp-comparison-box .rp-modal-content .rp-comparing-modal .rp-comparing-title {
+  font-size: 14px;
+}
+
+.rp-comparison-box .rp-modal-content .rp-comparing-modal .rp-comparing-table .rp-table-body .rp-parent-product-value{
+  text-align: center;
+}
+
+.rp-comparison-box .rp-modal-content .rp-comparing-modal .rp-comparing-table .rp-table-body .rp-product-feature{
+  text-align: center;
+}
+
+.rp-comparison-box .rp-modal-content .rp-comparing-modal .rp-comparing-table .rp-table-body .rp-product-value{
+  text-align: center;
+}
+
+
 /******* QUESTIONS AND ANSWERS *******/
 .qa-box {
 width: 80%;

@@ -78,13 +78,13 @@ const Modal = class extends React.PureComponent {
     if (modalType === 'product-comparison') {
       return (
         <div
-          className="modal-image"
+          className="rp-comparison-box"
           onClick={() => this.closeModal('comparison')}
           role="button"
           onKeyDown={this.handleButtonClick}
           tabIndex={0}
         >
-          <div className="modal-content">
+          <div className="rp-modal-content">
             {children}
           </div>
         </div>

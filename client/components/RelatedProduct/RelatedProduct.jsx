@@ -10,6 +10,7 @@ const RelatedProduct = class extends React.PureComponent {
     this.state = {
       relatedProducts: [],
       parentProductFeatures: [],
+      parentProductName: '',
     };
     this.getRelatedProducts = this.getRelatedProducts.bind(this);
     this.handleNoRelatedProducts = this.handleNoRelatedProducts.bind(this);
@@ -37,6 +38,7 @@ const RelatedProduct = class extends React.PureComponent {
       .then((result) => {
         this.setState({
           parentProductFeatures: result.data.features,
+          parentProductName: result.data.name,
         });
       });
   }
@@ -52,7 +54,7 @@ const RelatedProduct = class extends React.PureComponent {
   }
 
   render() {
-    const { relatedProducts, parentProductFeatures } = this.state;
+    const { relatedProducts, parentProductFeatures, parentProductName } = this.state;
     return (
       <div className="rp-box">
         <span className="rp-box-title">RELATED PRODUCTS</span>
@@ -80,6 +82,7 @@ const RelatedProduct = class extends React.PureComponent {
                 thumbnailImages={newThumbnailImage}
                 salePrice={Number(sale_price)}
                 parentProductFeatures={parentProductFeatures}
+                parentProductName={parentProductName}
                 productFeatures={features}
               />
             );

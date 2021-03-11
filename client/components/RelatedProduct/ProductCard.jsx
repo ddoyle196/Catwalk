@@ -10,7 +10,6 @@ const ProductCard = class extends React.PureComponent {
     super(props);
     this.state = {
       showComparisonModal: false,
-      productComparison: [],
     };
     this.handleCloseModal = this.handleCloseModal.bind(this);
     this.processProductStyles = this.processProductStyles.bind(this);
@@ -45,7 +44,9 @@ const ProductCard = class extends React.PureComponent {
   }
 
   processProductComparison() {
-    const { parentProductFeatures, productFeatures } = this.props;
+    const {
+      parentProductFeatures, productFeatures, parentProductName, name,
+    } = this.props;
     const mergeData = (arr1, arr2) => {
       let getRelated = [];
       getRelated = arr1.map((obj) => {
@@ -58,18 +59,40 @@ const ProductCard = class extends React.PureComponent {
       });
       arr2.map((obj) => {
         const index = arr1.findIndex((el) => el.feature === obj.feature);
-        return index !== -1 ? {} : getRelated.push(obj);
+        return index !== -1 ? {} : getRelated.push({ feature: obj.feature, value1: obj.value });
       });
       return getRelated;
     };
 
     const productComparison = mergeData(parentProductFeatures, productFeatures);
 
-    console.log(productComparison);
     return (
-      <span>{JSON.stringify(productComparison)}</span>
+      <div className="rp-comparing-modal">
+        <div>
+          <span className="rp-comparing-title">COMPARING</span>
+        </div>
+        <table className="rp-comparing-table">
+          <thead className="rp-table-head">
+            <tr>
+              <th>{ parentProductName }</th>
+              <th>{' '}</th>
+              <th>{ name }</th>
+            </tr>
+          </thead>
+          <tbody className="rp-table-body">
+            {productComparison.map((feature) => (
+              <tr key={feature.feature}>
+                <td className="rp-parent-product-value">{feature.value === null || feature.value === undefined ? '' : String.fromCharCode(10003)}</td>
+                <td className="rp-product-feature">{feature.feature}</td>
+                <td className="rp-product-value">{feature.value1 === null || feature.value1 === undefined ? '' : String.fromCharCode(10003)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     );
   }
+  // &#10003;
 
   render() {
     const { showComparisonModal } = this.state;
@@ -90,8 +113,7 @@ const ProductCard = class extends React.PureComponent {
           modalType="product-comparison"
           modalCode=""
         >
-          <span className="">HI</span>
-          {showComparisonModal ? this.processProductComparison() : null}
+          {this.processProductComparison()}
         </Modal>
         {this.processProductStyles()}
         <div className="rp-product-details">
@@ -142,6 +164,7 @@ ProductCard.propTypes = {
       value: PropTypes.string,
     }).isRequired,
   ).isRequired,
+  parentProductName: PropTypes.string.isRequired,
 };
 
 export default ProductCard;
