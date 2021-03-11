@@ -15,7 +15,7 @@ const ProductCard = class extends React.PureComponent {
     this.handleCloseModal = this.handleCloseModal.bind(this);
     this.processProductStyles = this.processProductStyles.bind(this);
     this.processProductComparison = this.processProductComparison.bind(this);
-    this.displayDataOnModal = this.displayDataOnModal.bind(this);
+    this.showComparisonModal = this.showComparisonModal.bind(this);
   }
 
   handleCloseModal(modalType) {
@@ -26,11 +26,20 @@ const ProductCard = class extends React.PureComponent {
     }
   }
 
+  showComparisonModal(modalType) {
+    if (modalType === 'comparison') {
+      this.setState({
+        showComparisonModal: true,
+      });
+    }
+  }
+
   processProductStyles() {
     const { thumbnailImages } = this.props;
     return (
       <CardThumbnail
         thumbnailUrl={thumbnailImages}
+        openModal={() => this.showComparisonModal('comparison')}
       />
     );
   }
@@ -53,21 +62,12 @@ const ProductCard = class extends React.PureComponent {
       });
       return getRelated;
     };
-    const productComparison = mergeData(parentProductFeatures, productFeatures);
-    console.log(productComparison);
-    // this.setState({
-    //   productComparison,
-    // }, () => {
-    //   // this.displayDataOnModal();
-    // });
-  }
 
-  displayDataOnModal() {
-    const { productComparison } = this.state;
+    const productComparison = mergeData(parentProductFeatures, productFeatures);
+
+    console.log(productComparison);
     return (
-      <div>
-        <span>{productComparison}</span>
-      </div>
+      <span>{JSON.stringify(productComparison)}</span>
     );
   }
 
@@ -87,11 +87,11 @@ const ProductCard = class extends React.PureComponent {
           showModal={showComparisonModal}
           handleCloseModal={this.handleCloseModal}
           handleSubmit={() => {}}
-          modalType="comparison"
+          modalType="product-comparison"
           modalCode=""
         >
           <span className="">HI</span>
-          {this.processProductComparison()}
+          {showComparisonModal ? this.processProductComparison() : null}
         </Modal>
         {this.processProductStyles()}
         <div className="rp-product-details">
@@ -139,7 +139,7 @@ ProductCard.propTypes = {
   productFeatures: PropTypes.arrayOf(
     PropTypes.shape({
       feature: PropTypes.string.isRequired,
-      value: PropTypes.string.isRequired,
+      value: PropTypes.string,
     }).isRequired,
   ).isRequired,
 };
