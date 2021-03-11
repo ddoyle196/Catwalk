@@ -19,7 +19,6 @@ class MagnifiedView extends React.Component {
   }
 
   render() {
-    console.log('INSIDE MAGNIFIED VIEW!');
     const { magnifiedStartingCoordinates, selectedImageUrl } = this.props;
     const [startingX, startingY] = magnifiedStartingCoordinates;
     const { xPosition, yPosition } = this.state;

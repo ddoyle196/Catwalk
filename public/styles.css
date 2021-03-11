@@ -290,6 +290,15 @@ margin-block-start: 0;
 margin-block-end: 0;
 }
 
+.sale-price {
+  color: red;
+  margin-right: 0.5em;
+}
+
+.crossed-out-original-price {
+  text-decoration: line-through;
+}
+
 /* OVERVIEW WIDGET -- BOTTOM PRODUCT INFO */
 .bottom-product-info-container {
 width: 90%;

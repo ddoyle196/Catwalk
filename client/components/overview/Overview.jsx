@@ -235,7 +235,11 @@ class Overview extends React.Component {
             />
           </div>
           <div className="overview-top-right-container">
-            <SideProductInfo product={product} ratings={ratings} />
+            <SideProductInfo
+              product={product}
+              ratings={ratings}
+              selectedStyle={selectedStyle}
+            />
             <StyleSelector
               styles={styles}
               selectedStyle={selectedStyle}
