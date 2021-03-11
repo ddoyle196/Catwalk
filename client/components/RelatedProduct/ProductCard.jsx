@@ -10,10 +10,12 @@ const ProductCard = class extends React.PureComponent {
     super(props);
     this.state = {
       showComparisonModal: false,
+      productComparison: [],
     };
     this.handleCloseModal = this.handleCloseModal.bind(this);
     this.processProductStyles = this.processProductStyles.bind(this);
     this.processProductComparison = this.processProductComparison.bind(this);
+    this.displayDataOnModal = this.displayDataOnModal.bind(this);
   }
 
   handleCloseModal(modalType) {
@@ -35,21 +37,38 @@ const ProductCard = class extends React.PureComponent {
 
   processProductComparison() {
     const { parentProductFeatures, productFeatures } = this.props;
-    const mergedData = (arr1, arr2) => {
-      let result = [];
-      result = arr1.map((obj) => {
+    const mergeData = (arr1, arr2) => {
+      let getRelated = [];
+      getRelated = arr1.map((obj) => {
         const index = arr2.findIndex((el) => el.feature === obj.feature);
-        const toMergeStyle = index !== -1 ? arr2[index] : {};
+        const toMergeStyle = index !== -1 ? { value1: arr2[index].value } : {};
         return {
           ...obj,
           ...toMergeStyle,
         };
       });
-      return result;
+      arr2.map((obj) => {
+        const index = arr1.findIndex((el) => el.feature === obj.feature);
+        return index !== -1 ? {} : getRelated.push(obj);
+      });
+      return getRelated;
     };
-    console.log('parentProductFeatures', parentProductFeatures);
-    console.log('productFeatures', productFeatures);
-    console.log(mergedData(parentProductFeatures, productFeatures));
+    const productComparison = mergeData(parentProductFeatures, productFeatures);
+    console.log(productComparison);
+    // this.setState({
+    //   productComparison,
+    // }, () => {
+    //   // this.displayDataOnModal();
+    // });
+  }
+
+  displayDataOnModal() {
+    const { productComparison } = this.state;
+    return (
+      <div>
+        <span>{productComparison}</span>
+      </div>
+    );
   }
 
   render() {
