@@ -32,17 +32,17 @@ const SideProductInfo = ({
           <a href="#headerBlock">Read all reviews</a>
         </span>
       )}
-      {product.category && <p className="product-category">{product.category.toUpperCase()}</p>}
-      {product.name && <p className="expanded-product-name">{product.name}</p>}
+      {product.category && <p className="ov-product-category">{product.category.toUpperCase()}</p>}
+      {product.name && <p className="ov-expanded-product-name">{product.name}</p>}
       <p>
         {formattedSalePrice !== '' && (
-          <span className="sale-price">
+          <span className="ov-sale-price">
             $
             {formattedSalePrice}
           </span>
         )}
         $
-        <span className={formattedSalePrice !== '' ? 'crossed-out-original-price' : ''}>{formattedOriginalPrice}</span>
+        <span className={formattedSalePrice !== '' ? 'ov-crossed-out-original-price' : 'ov-original-price'}>{formattedOriginalPrice}</span>
       </p>
 
     </div>

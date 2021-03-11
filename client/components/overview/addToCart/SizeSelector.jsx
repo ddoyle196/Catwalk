@@ -36,12 +36,12 @@ const SizeSelector = ({
 
   return (
     <span>
-      {displaySelectSizeMessage && <p className="display-select-size-message">Please select a size!</p>}
-      <div className={displaySelectSizeMessage ? 'size-selector-container select-a-size-outline' : 'size-selector-container'}>
+      {displaySelectSizeMessage && <p className="ov-display-select-size-message">Please select a size!</p>}
+      <div className={displaySelectSizeMessage ? 'ov-size-selector-container select-a-size-outline' : 'ov-size-selector-container'}>
         <select
           onChange={(e) => updateSelectedSize(e.target.value)}
           value={selectedSize || (options.length === 0 ? 'out-of-stock' : 'select-size')}
-          className="size-selector"
+          className="ov-size-selector"
           id="size-selector"
           disabled={options.length === 0}
         >
@@ -49,7 +49,7 @@ const SizeSelector = ({
           {options.length === 0 && <option value="out-of-stock">OUT OF STOCK</option>}
           {options}
         </select>
-        <span className="option-arrow-icon"><Icon icon={chevronDown} /></span>
+        <span className="ov-option-arrow-icon"><Icon icon={chevronDown} /></span>
       </div>
     </span>
   );

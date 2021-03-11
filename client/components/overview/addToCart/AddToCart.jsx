@@ -22,7 +22,7 @@ const AddToCart = ({
   displaySelectSizeMessage,
 }) => (
   <div>
-    <div className="cart-top-container">
+    <div className="ov-cart-top-container">
       <SizeSelector
         selectedStyle={selectedStyle}
         selectedSize={selectedSize}
@@ -38,8 +38,8 @@ const AddToCart = ({
         updateSelectedQuantity={updateSelectedQuantity}
       />
     </div>
-    <div className="cart-bottom-container">
-      <div className="add-to-cart-container">
+    <div className="ov-cart-bottom-container">
+      <div className="ov-add-to-cart-container">
         <div
           type="submit"
           tabIndex="0"
@@ -47,27 +47,27 @@ const AddToCart = ({
           onKeyDown={selectedSize === null ? promptSelectSize : addToCartHandler}
           aria-label="Add to bag"
           role="button"
-          className="add-to-cart-button"
+          className="ov-add-to-cart-button"
           style={{ visibility: outOfStock ? 'hidden' : 'visible' }}
         >
           ADD TO BAG
         </div>
         <span
           style={{ visibility: outOfStock ? 'hidden' : 'visible' }}
-          className="plus-icon"
+          className="ov-plus-icon"
         >
           <Icon icon={plusIcon} />
         </span>
       </div>
       <span
-        className="mark-as-favorite-container"
+        className="ov-mark-as-favorite-container"
         onClick={isFavoriteHandler}
         onKeyDown={isFavoriteHandler}
         role="button"
         tabIndex="0"
         aria-label="Select as favorite"
       >
-        <span className="gold-star-icon">
+        <span className="ov-gold-star-icon">
           {isFavorite ? <Icon icon={star} color="gold" /> : <Icon icon={starOutline} /> }
         </span>
       </span>

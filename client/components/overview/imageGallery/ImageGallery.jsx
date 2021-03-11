@@ -88,28 +88,28 @@ const ImageGallery = ({
       thumbnails.push(
         <span
           key={keyCount += 1}
-          className={selectedImageId === photo.image_id ? 'thumbnail underlined' : 'thumbnail'}
+          className={selectedImageId === photo.image_id ? 'ov-thumbnail underlined' : 'ov-thumbnail'}
           onClick={() => updateSelectedImageId(photo.image_id)}
           onKeyDown={() => updateSelectedImageId(photo.image_id)}
           tabIndex="0"
           aria-label="thumbnail"
           role="button"
         >
-          <img className="thumbnail-image" src={photo.thumbnail} alt="" />
+          <img className="ov-thumbnail-image" src={photo.thumbnail} alt="" />
         </span>,
       );
     } else {
       thumbnails.push(
         <span
           key={keyCount += 1}
-          className={selectedStyle.style_id === photo.style_id ? 'thumbnail underlined' : 'thumbnail'}
+          className={selectedStyle.style_id === photo.style_id ? 'ov-thumbnail underlined' : 'ov-thumbnail'}
           onClick={() => updateSelectedImageId(photo.image_id)}
           onKeyDown={() => updateSelectedImageId(photo.image_id)}
           tabIndex="0"
           aria-label="thumbnail"
           role="button"
         >
-          <img className="thumbnail-image" src={photo.thumbnail} alt="" />
+          <img className="ov-thumbnail-image" src={photo.thumbnail} alt="" />
         </span>,
       );
     }
@@ -147,7 +147,7 @@ const ImageGallery = ({
   const last = (thumbnailSection + 1) * 7;
   thumbnails = thumbnails.slice(first, last);
   return (
-    <div className="image-gallery-container">
+    <div className="ov-image-gallery-container">
       {expandedView && (
         <ExpandedView
           selectedImageUrl={selectedImageUrl}
@@ -164,18 +164,18 @@ const ImageGallery = ({
         />
       )}
       <span
-        className="image-gallery-large-image-container"
+        className="ov-image-gallery-large-image-container"
         onClick={updateExpandedView}
         onKeyDown={updateExpandedView}
         aria-label="open expanded view"
         tabIndex="0"
         role="button"
       >
-        <img className="image-gallery-large-image" src={selectedImageUrl} alt="" />
+        <img className="ov-image-gallery-large-image" src={selectedImageUrl} alt="" />
       </span>
-      <div className="thumbnail-container">
+      <div className="ov-thumbnail-container">
         <span
-          className="image-gallery-chevron-up"
+          className="ov-image-gallery-chevron-up"
           onClick={() => updateDisplayedThumbnailSection(thumbnailSection - 1)}
           onKeyDown={() => updateDisplayedThumbnailSection(thumbnailSection - 1)}
           tabIndex="0"
@@ -187,7 +187,7 @@ const ImageGallery = ({
         </span>
         {thumbnails}
         <span
-          className="image-gallery-chevron-down"
+          className="ov-image-gallery-chevron-down"
           onClick={() => updateDisplayedThumbnailSection(thumbnailSection + 1)}
           onKeyDown={() => updateDisplayedThumbnailSection(thumbnailSection + 1)}
           tabIndex="0"
@@ -200,7 +200,7 @@ const ImageGallery = ({
       </div>
       {previousImageId !== -1 && (
         <span
-          className="image-gallery-left-arrow"
+          className="ov-image-gallery-left-arrow"
           onClick={() => updateSelectedImageId(previousImageId)}
           onKeyDown={() => updateSelectedImageId(previousImageId)}
           tabIndex="0"
@@ -212,7 +212,7 @@ const ImageGallery = ({
       )}
       {nextImageId !== -1 && (
         <span
-          className="image-gallery-right-arrow"
+          className="ov-image-gallery-right-arrow"
           onClick={() => updateSelectedImageId(nextImageId)}
           onKeyDown={() => updateSelectedImageId(nextImageId)}
           tabIndex="0"
@@ -223,7 +223,7 @@ const ImageGallery = ({
         </span>
       )}
       <span
-        className="image-gallery-expand-all"
+        className="ov-image-gallery-expand-all"
         onClick={updateExpandedView}
         onKeyDown={updateExpandedView}
         aria-label="open expanded view"

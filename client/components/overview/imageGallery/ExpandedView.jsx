@@ -31,7 +31,7 @@ const ExpandedView = ({
           aria-label="expanded view thumbnail icon"
           tabIndex="0"
           role="button"
-          className={photo.image_id === selectedImageId ? 'thumbnail-icon-highlighted' : 'thumbnail-icon'}
+          className={photo.image_id === selectedImageId ? 'ov-thumbnail-icon-highlighted' : 'ov-thumbnail-icon'}
         />,
       );
     } else {
@@ -43,23 +43,23 @@ const ExpandedView = ({
           aria-label="expanded view thumbnail icon"
           tabIndex="0"
           role="button"
-          className={photo.style_id === selectedStyleId ? 'thumbnail-icon-highlighted' : 'thumbnail-icon'}
+          className={photo.style_id === selectedStyleId ? 'ov-thumbnail-icon-highlighted' : 'ov-thumbnail-icon'}
         />,
       );
     }
   });
 
   return (
-    <div className="expanded-view-container">
+    <div className="ov-expanded-view-container">
       <div
-        className="expanded-image-container"
+        className="ov-expanded-image-container"
         onClick={updateMagnified}
         onKeyDown={updateMagnified}
         tabIndex="0"
         aria-label="expanded image"
         role="button"
       >
-        <img className="expanded-image" src={selectedImageUrl} alt="" style={{ visibility: `${magnified ? 'hidden' : 'visible'}` }} />
+        <img className="ov-expanded-image" src={selectedImageUrl} alt="" style={{ visibility: `${magnified ? 'hidden' : 'visible'}` }} />
         {magnified && (
           <MagnifiedView
             magnifiedStartingCoordinates={magnifiedStartingCoordinates}
@@ -68,7 +68,7 @@ const ExpandedView = ({
         )}
       </div>
       <span
-        className="close-expanded-view"
+        className="ov-close-expanded-view"
         onClick={updateExpandedView}
         onKeyDown={updateExpandedView}
         aria-label="close expanded view"
@@ -79,7 +79,7 @@ const ExpandedView = ({
       </span>
       {(previousImageId !== -1 && !magnified) && (
         <span
-          className="expanded-view-left-arrow"
+          className="ov-expanded-view-left-arrow"
           onClick={() => updateSelectedImageId(previousImageId)}
           onKeyDown={() => updateSelectedImageId(previousImageId)}
           tabIndex="0"
@@ -91,7 +91,7 @@ const ExpandedView = ({
       )}
       {(nextImageId !== -1 && !magnified) && (
         <span
-          className="expanded-view-right-arrow"
+          className="ov-expanded-view-right-arrow"
           onClick={() => updateSelectedImageId(nextImageId)}
           onKeyDown={() => updateSelectedImageId(nextImageId)}
           tabIndex="0"
@@ -103,7 +103,7 @@ const ExpandedView = ({
       )}
       {!magnified && (
         <div
-          className="expanded-view-thumbnail-icon-container"
+          className="ov-expanded-view-thumbnail-icon-container"
         >
           {thumbnailIcons}
         </div>

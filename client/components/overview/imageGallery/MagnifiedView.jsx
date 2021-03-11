@@ -25,7 +25,7 @@ class MagnifiedView extends React.Component {
     return (
       <div
         onMouseMove={this.updateCoordinates}
-        className="magnified-image"
+        className="ov-magnified-image"
         style={{ backgroundImage: `url(${selectedImageUrl})`, backgroundPositionX: `-${(xPosition || startingX) * 1.5}px`, backgroundPositionY: `-${(yPosition || startingY) * 1.5}px` }}
       />
     );

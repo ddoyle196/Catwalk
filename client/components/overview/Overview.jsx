@@ -41,7 +41,7 @@ class Overview extends React.Component {
   }
 
   componentDidMount() {
-    this.getProductAndStyles(19096);
+    this.getProductAndStyles(19095);
   }
 
   getProductAndStyles(productId) {
@@ -217,9 +217,9 @@ class Overview extends React.Component {
     }
 
     return (
-      <div className="overview-container">
-        <div className="overview-top-container">
-          <div className="overview-top-left-container">
+      <div className="ov-overview-container">
+        <div className="ov-overview-top-container">
+          <div className="ov-overview-top-left-container">
             <ImageGallery
               styles={styles}
               selectedStyle={selectedStyle}
@@ -234,7 +234,7 @@ class Overview extends React.Component {
               magnifiedStartingCoordinates={magnifiedStartingCoordinates}
             />
           </div>
-          <div className="overview-top-right-container">
+          <div className="ov-overview-top-right-container">
             <SideProductInfo
               product={product}
               ratings={ratings}
@@ -262,7 +262,7 @@ class Overview extends React.Component {
             />
           </div>
         </div>
-        <div className="overview-bottom-container">
+        <div className="ov-overview-bottom-container">
           <BottomProductInfo product={product} />
         </div>
       </div>

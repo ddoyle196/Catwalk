@@ -43,54 +43,54 @@ display:none;
 }
 
 /******* OVERVIEW WIDGET *******/
-.overview-container {
+.ov-overview-container {
 padding-top: 2em;
 padding-bottom: 2em;
 width: 80%;
 margin: auto;
 }
 
-.overview-top-container {
+.ov-overview-top-container {
 width: 100%;
 margin-bottom: 2em;
 }
 
-.overview-top-left-container {
+.ov-overview-top-left-container {
 display: inline-block;
 width: 71%;
 }
 
-.overview-top-right-container {
+.ov-overview-top-right-container {
 display: inline-block;
 vertical-align: top;
 padding-top: 2em;
 width: 29%;
 }
 
-.overview-bottom-container {
+.ov-overview-bottom-container {
 width: 100%;
 height: auto;
 }
 
 /* OVERVIEW WIDGET -- IMAGE GALLERY */
 
-.image-gallery-container {
+.ov-image-gallery-container {
 position: relative;
 width: 100%;
 height: fit-content;
 }
 
-.image-gallery-large-image-container {
+.ov-image-gallery-large-image-container {
   cursor: zoom-in;
 }
 
-.image-gallery-large-image {
+.ov-image-gallery-large-image {
   width: 95%;
   height: 33em;
   object-fit: cover;
 }
 
-.thumbnail-container {
+.ov-thumbnail-container {
 position: absolute;
 top: 0.5em;
 left: 2em;
@@ -99,7 +99,7 @@ display: flex;
 flex-direction: column;
 }
 
-.thumbnail {
+.ov-thumbnail {
   width: 100%;
   height: 3.5em;
   margin-bottom: 0.5em;
@@ -107,11 +107,11 @@ flex-direction: column;
   border: 3px solid transparent;
 }
 
-.thumbnail:focus {
+.ov-thumbnail:focus {
 outline: none;
 }
 
-.thumbnail-image {
+.ov-thumbnail-image {
 width: 100%;
 height: 100%;
 object-fit: cover;
@@ -122,8 +122,8 @@ padding-bottom: 2px;
 border-bottom: 3px solid white;
 }
 
-.image-gallery-chevron-up,
-.image-gallery-chevron-down {
+.ov-image-gallery-chevron-up,
+.ov-image-gallery-chevron-down {
 font-size: 1.5em;
 width: fit-content;
 margin: auto;
@@ -131,12 +131,12 @@ cursor: pointer;
 color: white;
 }
 
-.image-gallery-chevron-up:focus,
-.image-gallery-chevron-down:focus {
+.ov-image-gallery-chevron-up:focus,
+.ov-image-gallery-chevron-down:focus {
   outline: none;
 }
 
-.image-gallery-left-arrow {
+.ov-image-gallery-left-arrow {
   position: absolute;
   top: 45%;
   left: 5em;
@@ -145,7 +145,7 @@ color: white;
   cursor: pointer;
 }
 
-.image-gallery-right-arrow {
+.ov-image-gallery-right-arrow {
   position: absolute;
   top: 45%;
   right: 2.5em;
@@ -154,12 +154,12 @@ color: white;
   cursor: pointer;
 }
 
-.image-gallery-left-arrow:focus,
-.image-gallery-right-arrow:focus {
+.ov-image-gallery-left-arrow:focus,
+.ov-image-gallery-right-arrow:focus {
 outline: none;
 }
 
-.image-gallery-expand-all {
+.ov-image-gallery-expand-all {
   position: absolute;
   top: 1em;
   right: 2.5em;
@@ -168,13 +168,13 @@ outline: none;
   color: white;
 }
 
-.image-gallery-expand-all:focus {
+.ov-image-gallery-expand-all:focus {
   outline: none;
 }
 
 /* OVERVIEW WIDGET -- EXPANDED VIEW */
 
-.expanded-view-container {
+.ov-expanded-view-container {
   position: fixed;
   z-index: 6;
   top: 0;
@@ -184,7 +184,7 @@ outline: none;
   background-color: black;
 }
 
-.expanded-image-container {
+.ov-expanded-image-container {
   margin: auto;
   width: fit-content;
   height: fit-content;
@@ -192,15 +192,15 @@ outline: none;
 
 }
 
-.expanded-image {
+.ov-expanded-image {
   height: 100vh;
 }
 
-.expanded-image:hover {
+.ov-expanded-image:hover {
   cursor: url('https://api.iconify.design/mdi:plus.svg?height=24&color=%23ffffff'), auto;
 }
 
-.magnified-image {
+.ov-magnified-image {
   position: absolute;
   top: 0;
   left: 0;
@@ -209,11 +209,11 @@ outline: none;
   background-size: 250%;
 }
 
-.magnified-image:hover {
+.ov-magnified-image:hover {
   cursor: url('https://api.iconify.design/mdi:minus.svg?height=24&color=%23ffffff'), auto;
 }
 
-.close-expanded-view {
+.ov-close-expanded-view {
   position: fixed;
   top: 1.5em;
   right: 1.5em;
@@ -222,11 +222,11 @@ outline: none;
   color: white;
 }
 
-.close-expanded-view:focus {
+.ov-close-expanded-view:focus {
   outline: none;
 }
 
-.expanded-view-right-arrow {
+.ov-expanded-view-right-arrow {
   position: fixed;
   top: 50%;
   right: 2em;
@@ -235,7 +235,7 @@ outline: none;
   cursor: pointer;
 }
 
-.expanded-view-left-arrow {
+.ov-expanded-view-left-arrow {
   position: fixed;
   top: 50%;
   left: 2em;
@@ -244,19 +244,19 @@ outline: none;
   cursor: pointer;
 }
 
-.expanded-view-right-arrow:focus,
-.expanded-view-left-arrow:focus {
+.ov-expanded-view-right-arrow:focus,
+.ov-expanded-view-left-arrow:focus {
   outline: none;
 }
 
-.expanded-view-thumbnail-icon-container {
+.ov-expanded-view-thumbnail-icon-container {
   position: fixed;
   display: flex;
   justify-content: center;
   bottom: 5%;
   width: 100%;
 }
-.thumbnail-icon {
+.ov-thumbnail-icon {
   width: 0.75em;
   height: 0.75em;
   border-radius: 50%;
@@ -266,7 +266,7 @@ outline: none;
   cursor: pointer;
 }
 
-.thumbnail-icon-highlighted {
+.ov-thumbnail-icon-highlighted {
   width: 0.75em;
   height: 0.75em;
   border-radius: 50%;
@@ -275,38 +275,38 @@ outline: none;
   border: 1px black solid;
   cursor: pointer;
 }
-.thumbnail-icon:focus,
-.thumbnail-icon-highlighted:focus {
+.ov-thumbnail-icon:focus,
+.ov-thumbnail-icon-highlighted:focus {
   outline: none;
 }
 
 /* OVERVIEW WIDGET -- SIDE PRODUCT INFO */
-.product-category {
+.ov-product-category {
 margin-block-end: 0;
 }
-.expanded-product-name {
+.ov-expanded-product-name {
 font-size: 2.5em;
 margin-block-start: 0;
 margin-block-end: 0;
 }
 
-.sale-price {
+.ov-sale-price {
   color: red;
   margin-right: 0.5em;
 }
 
-.crossed-out-original-price {
+.ov-crossed-out-original-price {
   text-decoration: line-through;
 }
 
 /* OVERVIEW WIDGET -- BOTTOM PRODUCT INFO */
-.bottom-product-info-container {
+.ov-bottom-product-info-container {
 width: 90%;
 margin: auto;
 height: fit-content;
 }
 
-.bottom-product-info-left-container {
+.ov-bottom-product-info-left-container {
 display: inline-block;
 vertical-align: text-top;
 padding-top: 0.3em;
@@ -315,7 +315,7 @@ padding-right: 2em;
 border-right: 2px solid black;
 }
 
-.bottom-product-info-right-container {
+.ov-bottom-product-info-right-container {
 padding-left: 1.5em;
 display: inline-block;
 vertical-align: text-top;
@@ -324,67 +324,66 @@ height: 100%;
 position: relative;
 }
 
-.feature-text-container {
+.ov-feature-text-container {
 margin-block-start: 0;
 margin-block-end: 0;
 }
 
-.feature-check-icon {
+.ov-feature-check-icon {
 position: relative;
 top: 3px;
 left: 0;
 }
 
-.feature-text {
+.ov-feature-text {
 margin-left: 0.5em;
 }
 
-.slogan {
+.ov-slogan {
 margin-block-start: 0;
 font-size: 1.2em;
 }
 
-.social-media-icon-container {
-/* float: right; */
+.ov-social-media-icon-container {
 position: absolute;
 top: 5px;
 right: 0;
 }
 
-.social-media-icon {
+.ov-social-media-icon {
 margin-left: 0.25em;
 font-size: 1.25em;
 cursor: pointer;
 }
 
-.social-media-icon:hover {
+.ov-social-media-icon:hover {
 color: lightgray;
 }
 
 /* OVERVIEW WIDGET -- STAR RATING */
 
-.star-rating-container {
+.ov-star-rating-container {
 display: inline-block;
 margin-right: 0.5em;
 }
 
 /* OVERVIEW WIDGET -- STYLE SELECTOR */
 
-.style-label {
+.ov-style-label {
 margin-right: 0.5em;
 }
 
-.selected-style-text {
+.ov-selected-style-text {
 margin-left: 0.5em;
 }
 
-.style-circles-container {
+.ov-style-circles-container {
 width: 100%;
 display: flex;
 flex-wrap: wrap;
 }
 
-.style-circle {
+.ov-style-circle {
   cursor: pointer;
   position: relative;
   height: 3.5em;
@@ -395,17 +394,17 @@ flex-wrap: wrap;
   margin-bottom: 1em;
 }
 
-.style-circle-image {
+.ov-style-circle-image {
   width: 100%;
   height: 100%;
   border-radius: 50%;
   object-fit: cover;
 }
-.style-circle:focus {
+.ov-style-circle:focus {
 outline: none;
 }
 
-.selected-check-background {
+.ov-selected-check-background {
 position: absolute;
 top: 0px;
 right: 0px;
@@ -415,7 +414,7 @@ border-radius: 50%;
 background-color: white;
 }
 
-.selected-check-container {
+.ov-selected-check-container {
 width: 16px;
 height: 16px;
 position: absolute;
@@ -426,18 +425,18 @@ border-radius: 50%;
 
 /* OVERVIEW WIDGET -- ADD TO CART */
 
-.cart-top-container {
+.ov-cart-top-container {
 width: 100%;
 margin-bottom: 1em;
 }
 
-.size-selector-container,
-.quantity-selector-container {
+.ov-size-selector-container,
+.ov-quantity-selector-container {
 position: relative;
 display: inline-block;
 }
 
-.size-selector-container {
+.ov-size-selector-container {
 margin-right: 0.5em;
 width: 60%;
 }
@@ -446,12 +445,12 @@ width: 60%;
   border: 2px solid red;
 }
 
-.quantity-selector-container {
+.ov-quantity-selector-container {
 margin-left: 0.5em;
 width: 30%;
 }
 
-.option-arrow-icon {
+.ov-option-arrow-icon {
 z-index: -1;
 position: absolute;
 top: 0.65em;
@@ -459,8 +458,8 @@ right: 0.65em;
 font-size: 1.2em;
 }
 
-.size-selector,
-.quantity-selector {
+.ov-size-selector,
+.ov-quantity-selector {
 appearance: none;
 width: 100%;
 cursor: pointer;
@@ -469,19 +468,19 @@ padding: 15px 20px;
 display: inline-block;
 }
 
-.quantity-selector:focus,
-.size-selector:focus {
+.ov-quantity-selector:focus,
+.ov-size-selector:focus {
 outline: none;
 }
 
-.add-to-cart-container {
+.ov-add-to-cart-container {
 width: 75%;
 margin-right: 0.5em;
 position: relative;
 display: inline-block;
 }
 
-.plus-icon {
+.ov-plus-icon {
 z-index: -1;
 position: absolute;
 top: 0.70em;
@@ -489,7 +488,7 @@ right: 0.65em;
 font-size: 1.2em;
 }
 
-.add-to-cart-button {
+.ov-add-to-cart-button {
   width: 100%;
   height: 3em;
   cursor: pointer;
@@ -498,15 +497,15 @@ font-size: 1.2em;
   padding: 15px 20px;
   border: 1px solid black;
 }
-.add-to-cart-button:hover {
+.ov-add-to-cart-button:hover {
   color: black;
 }
 
-.add-to-cart-button:focus {
+.ov-add-to-cart-button:focus {
 outline: none;
 }
 
-.mark-as-favorite-container {
+.ov-mark-as-favorite-container {
   width: 3em;
   height: 3em;
   position: relative;
@@ -517,23 +516,23 @@ outline: none;
   justify-content: center;
   vertical-align: center;
 }
-.mark-as-favorite-container:focus {
+.ov-mark-as-favorite-container:focus {
   outline: none;
 }
 
-.gold-star-icon {
+.ov-gold-star-icon {
   position: absolute;
   top: 25%;
   left: 27%;
   font-size: 1.3em;
 }
 
-.cart-bottom-container {
+.ov-cart-bottom-container {
 display: flex;
 width: 100%;
 }
 
-.display-select-size-message {
+.ov-display-select-size-message {
   color: red;
   margin-top: 0;
   margin-bottom: 0;
