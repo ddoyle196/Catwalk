@@ -6,6 +6,7 @@ import SideProductInfo from './productInfo/SideProductInfo';
 import BottomProductInfo from './productInfo/BottomProductInfo';
 import StyleSelector from './styleSelector/StyleSelector';
 import AddToCart from './addToCart/AddToCart';
+import Navbar from './navbar/Navbar';
 
 class Overview extends React.Component {
   constructor(props) {
@@ -50,18 +51,23 @@ class Overview extends React.Component {
     axios.get(`/products/${productId}`)
       .then((response) => {
         product = response.data;
-        axios.get(`products/${productId}/styles`)
+        axios.get(`/products/${productId}/styles`)
           .then((res) => {
             styles = res.data.results;
             const [selectedStyle] = styles;
-            axios.get(`metadata/${productId}`)
+            axios.get(`/metadata/${productId}`)
               .then((r) => {
-                this.setState({
-                  product,
-                  styles,
-                  selectedStyle,
-                  ratings: r.data.ratings,
-                });
+                const { ratings } = r.data;
+                axios.get('/cart')
+                  .then((resp) => {
+                    this.setState({
+                      product,
+                      styles,
+                      selectedStyle,
+                      ratings,
+                      cart: [...resp.data],
+                    });
+                  });
               });
           });
       })
@@ -73,38 +79,51 @@ class Overview extends React.Component {
 
   addToCartHandler() {
     const {
-      cart,
-      product,
       selectedStyle,
       selectedSize,
       selectedQuantity,
     } = this.state;
+    const { skus } = selectedStyle;
 
-    if (selectedStyle !== null && selectedQuantity !== null) {
-      const cartItem = {
-        product: product.id,
-        style: selectedStyle.style_id,
-        size: selectedSize,
-        quantity: selectedQuantity,
-      };
-
-      // update the quantity of the selected size of the currently selected style
-      const sizes = selectedStyle.skus;
-      const sizeKeys = Object.keys(selectedStyle.skus);
-      for (let i = 0; i < sizeKeys.length; i += 1) {
-        const sizeKey = sizeKeys[i];
-        if (sizes[sizeKey].size === selectedSize) {
-          sizes[sizeKey].quantity -= Number(selectedQuantity);
-          break;
-        }
+    // find the sku id of selected size
+    let skuId = '';
+    // eslint-disable-next-line no-restricted-syntax
+    for (const key in skus) {
+      if (skus[key].size === selectedSize) {
+        skuId = key;
+        break;
       }
+    }
 
-      this.setState({
-        cart: [...cart, cartItem],
-        selectedSize: null,
-        selectedQuantity: null,
-        selectedStyle,
-      });
+    for (let i = 0; i < Number(selectedQuantity); i += 1) {
+      axios.post('/cart', {
+        sku_id: skuId,
+      })
+        .then(() => {
+          axios.get('/cart')
+            .then((res) => {
+              this.setState({
+                cart: [...res.data],
+                selectedSize: null,
+                selectedQuantity: null,
+                selectedStyle,
+              });
+            });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+
+    // update the quantity of the selected size of the currently selected style
+    const sizes = selectedStyle.skus;
+    const sizeKeys = Object.keys(selectedStyle.skus);
+    for (let i = 0; i < sizeKeys.length; i += 1) {
+      const sizeKey = sizeKeys[i];
+      if (sizes[sizeKey].size === selectedSize) {
+        sizes[sizeKey].quantity -= Number(selectedQuantity);
+        break;
+      }
     }
   }
 
@@ -210,6 +229,7 @@ class Overview extends React.Component {
       magnified,
       magnifiedStartingCoordinates,
       displaySelectSizeMessage,
+      cart,
     } = this.state;
 
     if (product === null || styles === null || ratings === null || selectedStyle === null) {
@@ -218,6 +238,7 @@ class Overview extends React.Component {
 
     return (
       <div className="ov-overview-container">
+        <Navbar cart={cart} />
         <div className="ov-overview-top-container">
           <div className="ov-overview-top-left-container">
             <ImageGallery

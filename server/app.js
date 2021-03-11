@@ -16,12 +16,6 @@ const pId = 19380;
 app.use(express.static(path.join(__dirname, '../public')));
 app.use(express.json());
 
-app.get('/test', (req, res) => {
-  // eslint-disable-next-line no-console
-  console.log('GET');
-  res.send('Howdy!');
-});
-
 app.get('/questions', (req, res) => {
   axios.get(`${urlQuestions}?product_id=${pId}&page=${req.query.page || 1}&count=${req.query.count || 4}`, {
     headers: {
@@ -292,6 +286,36 @@ app.get('/metadata/:id', (req, res) => {
     })
     .catch((err) => {
       console.log(err);
+    });
+});
+
+// POST ITEM TO CART
+app.post('/cart', (req, res) => {
+  axios.post('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe/cart', req.body, {
+    headers: {
+      Authorization: GITHUB_API_KEY,
+    },
+  })
+    .then(() => {
+      res.status(201).send('Created');
+    })
+    .catch(() => {
+      res.status(404).send('Invalid');
+    });
+});
+
+// GET CART
+app.get('/cart', (req, res) => {
+  axios.get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe/cart', {
+    headers: {
+      Authorization: GITHUB_API_KEY,
+    },
+  })
+    .then((response) => {
+      res.status(200).send(response.data);
+    })
+    .catch(() => {
+      res.sendStatus(404);
     });
 });
 

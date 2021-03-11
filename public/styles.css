@@ -44,7 +44,7 @@ display:none;
 
 /******* OVERVIEW WIDGET *******/
 .ov-overview-container {
-padding-top: 2em;
+/* padding-top: 2em; */
 padding-bottom: 2em;
 width: 80%;
 margin: auto;
@@ -70,6 +70,44 @@ width: 29%;
 .ov-overview-bottom-container {
 width: 100%;
 height: auto;
+}
+
+/* OVERVIEW WIDGET -- NAVBAR */
+
+.ov-navbar-container {
+  border-bottom: 1px solid black;
+  height: 4em;
+  position: relative;
+  width: 100vw;
+  margin-left: -50vw;
+  left: 50%;
+  margin-bottom: 2em;
+}
+
+.ov-navbar-title {
+  position: absolute;
+  top: -0.20em;
+  left: 1em;
+}
+
+.ov-exterior-cart-container {
+  /* float: right; */
+  position: absolute;
+  top: 1em;
+  right: 2em;
+}
+
+.ov-interior-cart-container {
+  position: relative;
+  font-size: 2.5em;
+}
+
+.ov-cart-item-number {
+  position: absolute;
+  top: -10px;
+  right: -15px;
+  width: 18px;
+  font-size: 0.4em;
 }
 
 /* OVERVIEW WIDGET -- IMAGE GALLERY */
