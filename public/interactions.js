@@ -19,6 +19,9 @@ $(window).on('load', () => {
       if (widget === 'ov') {
         widget = 'Overview';
       }
+      if (widget === 'rp') {
+        widget = 'Related Products';
+      }
       const body = {
         widget,
         element,

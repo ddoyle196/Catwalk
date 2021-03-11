@@ -75,55 +75,40 @@ const Modal = class extends React.PureComponent {
         </div>
       );
     }
-    if (modalType === 'image') {
+    if (modalType === 'product-comparison') {
       return (
         <div
-          className="modal-image"
+          className="rp-comparison-box"
           onClick={() => this.closeModal('comparison')}
           role="button"
           onKeyDown={this.handleButtonClick}
           tabIndex={0}
         >
-          <div className="modal-content">
+          <div className="rp-modal-content">
             {children}
           </div>
         </div>
       );
     }
-    if (modalType === 'image') {
+    if (modalType === 'submit-rr') {
       return (
-        <div
-          className="modal-image"
-          onClick={() => this.closeModal('image')}
-          role="button"
-          onKeyDown={this.handleButtonClick}
-          tabIndex={0}
-        >
-          <div className="modal-content">
-            {children}
-          </div>
-        </div>
-      );
-    }
-    if (modalType === 'submit-review') { // CHANGE IT
-      return (
-        <div className="modal-submit">
-          <div className="modal-content">
+        <div className="rr-modal-submit">
+          <div className="rr-modal-content">
             { children }
-            <div className="modal-buttons">
+            <div className="rr-modal-buttons">
               <button
                 type="button"
                 onClick={this.submit}
-                className="modal-submit-button"
+                className="rr-button"
               >
-                Submit
+                SUBMIT
               </button>
               <button
-                type="submit"
-                onClick={() => { this.closeModal('submit-review'); }}
-                className="modal-close"
+                type="button"
+                onClick={() => { this.closeModal('submit-rr'); }}
+                className="rr-button"
               >
-                Close
+                CLOSE
               </button>
             </div>
           </div>

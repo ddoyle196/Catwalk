@@ -81,14 +81,16 @@ const AddToCart = ({
           </span>
         </div>
         <span
-          className="mark-as-favorite"
+          className="mark-as-favorite-container"
           onClick={isFavoriteHandler}
           onKeyDown={isFavoriteHandler}
           role="button"
           tabIndex="0"
           aria-label="Select as favorite"
         >
-          {isFavorite ? <Icon icon={star} color="gold" /> : <Icon icon={starOutline} /> }
+          <span className="gold-star-icon">
+            {isFavorite ? <Icon icon={star} color="gold" /> : <Icon icon={starOutline} /> }
+          </span>
         </span>
       </div>
     </div>

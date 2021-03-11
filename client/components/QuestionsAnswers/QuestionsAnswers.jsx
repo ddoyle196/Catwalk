@@ -1,14 +1,11 @@
 import React from 'react';
 import axios from 'axios';
-// npm install --save-dev @iconify/react @iconify-icons/mdi
+import PropTypes from 'prop-types';
 import { Icon } from '@iconify/react';
 import magnifyIcon from '@iconify-icons/mdi/magnify';
 
 import Question from './Questions';
 import Modal from '../shared/Modal';
-
-const pId = 19378;
-const pName = 'Alberto Romper';
 
 const handleEmailValidation = (email) => {
   const mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
@@ -18,8 +15,9 @@ const handleEmailValidation = (email) => {
 let apiCalls = 0;
 
 const QuestionsAnswers = class extends React.PureComponent {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    const { pId } = this.props;
     this.state = {
       questionsDisplayed: [],
       questionsList: [],
@@ -58,11 +56,13 @@ const QuestionsAnswers = class extends React.PureComponent {
   }
 
   componentDidMount() {
+    const { pId } = this.props;
     this.getQuestionListById(pId, 'get'); // Check
   }
 
   handleMoreQuestions() {
     const { page } = this.state;
+    const { pId } = this.props;
     const newPage = page + 1;
     this.setState({
       page: newPage,
@@ -101,6 +101,7 @@ const QuestionsAnswers = class extends React.PureComponent {
   }
 
   handleQuestionHelpfulness(id) {
+    const { pId } = this.props;
     axios.put(`/questions/${id}/helpful`, '')
       .then((result) => {
         if (result.status === 204) {
@@ -285,6 +286,7 @@ const QuestionsAnswers = class extends React.PureComponent {
       notificationMessage,
       noQuestions,
     } = this.state;
+    const { pName } = this.props;
     const { name, body, email } = validateQuestionInput;
     return (
       <div className="qa-box">
@@ -412,6 +414,11 @@ const QuestionsAnswers = class extends React.PureComponent {
       </div>
     );
   }
+};
+
+QuestionsAnswers.propTypes = {
+  pId: PropTypes.number.isRequired,
+  pName: PropTypes.string.isRequired,
 };
 
 export default QuestionsAnswers;

@@ -8,9 +8,9 @@ const port = 3000;
 
 const urlQuestions = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe/qa/questions/';
 const urlAnswers = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe/qa/answers/';
+const urlReviews = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe/reviews/';
 const urlInteractions = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe/interactions';
 const urlProduct = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe/products/';
-const pId = 19378;
 
 app.use(express.static(path.join(__dirname, '../public')));
 app.use(express.json());
@@ -22,7 +22,7 @@ app.get('/test', (req, res) => {
 });
 
 app.get('/questions', (req, res) => {
-  axios.get(`${urlQuestions}?product_id=${pId}&page=${req.query.page || 1}&count=${req.query.count || 4}`, {
+  axios.get(`${urlQuestions}?product_id=${req.query.product_id}&page=${req.query.page || 1}&count=${req.query.count || 4}`, {
     headers: {
       Authorization: GITHUB_API_KEY,
     },
@@ -185,13 +185,42 @@ app.get('/related/:productId', (req, res) => {
           },
         })));
 
-      const relatedProduct = [...relatedProductDetails, ...relatedProductStyles];
+      const relatedProductRating = response.data.map((product) => (
+        axios.get(`${urlReviews}meta?product_id=${product}`, {
+          headers: {
+            Authorization: GITHUB_API_KEY,
+          },
+        })));
+
+      const relatedProduct = [
+        ...relatedProductDetails,
+        ...relatedProductStyles,
+        ...relatedProductRating];
       axios.all(relatedProduct)
         .then(axios.spread((...responses) => {
           const data = responses.map((product) => (
             product.data
           ));
-          res.status(200).json(data);
+          const divideData = Math.abs(data.length / 3);
+          const dataRP = data.slice(0, divideData);
+          const dataRPS = data.slice(divideData, divideData * 2);
+          const dataRPR = data.slice(divideData * 2);
+          const mergedData = (arr1, arr2, arr3) => {
+            let result = [];
+            result = arr1.map((obj) => {
+              const index = arr2.findIndex((el) => Number(el.product_id) === obj.id);
+              const index2 = arr3.findIndex((el) => Number(el.product_id) === obj.id);
+              const toMergeStyle = index !== -1 ? arr2[index] : {};
+              const toMergeRating = index2 !== -1 ? arr3[index2] : {};
+              return {
+                ...obj,
+                ...toMergeStyle,
+                ...toMergeRating,
+              };
+            });
+            return result;
+          };
+          res.status(200).json(mergedData(dataRP, dataRPS, dataRPR));
         }))
         .catch(() => {
           res.status(404).send('Invalid');
@@ -215,6 +244,52 @@ app.get('/reviews', (req, res) => {
     });
 });
 
+app.post('/reviews', (req, res) => {
+  // eslint-disable-next-line no-console
+  const params = (req.query);
+  console.log(params);
+  // axios.put(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe/reviews?page=${params.page}&count=${params.count}&sort=${params.sort}&product_id=${params.productId}`, {
+  //   headers: {
+  //     Authorization: GITHUB_API_KEY,
+  //   },
+  res.status(201).send('Received');
+});
+// .then((response) => {
+//   res.json(response.data);
+// })
+// .catch((err) => {
+//   console.log(err);
+// });
+// });
+
+app.put('/reviews/:id/helpful', (req, res) => {
+  axios.put(`${urlReviews + req.params.id}/helpful`, '', {
+    headers: {
+      Authorization: GITHUB_API_KEY,
+    },
+  })
+    .then(() => {
+      res.status(204).send('No Content');
+    })
+    .catch(() => {
+      res.status(404).send('Invalid');
+    });
+});
+
+app.put('/reviews/:id/report', (req, res) => {
+  axios.put(`${urlReviews + req.params.id}/report`, '', {
+    headers: {
+      Authorization: GITHUB_API_KEY,
+    },
+  })
+    .then(() => {
+      res.status(204).send('No Content');
+    })
+    .catch(() => {
+      res.status(404).send('Invalid');
+    });
+});
+
 // GET STYLES FOR A GIVEN PRODUCT
 app.get('/products/:id/styles', (req, res) => {
   const productId = req.params.id;
@@ -235,7 +310,7 @@ app.get('/products/:id/styles', (req, res) => {
 // GET REVIEW METADATA FOR A GIVEN PRODUCT
 app.get('/metadata/:id', (req, res) => {
   const productId = req.params.id;
-  axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe/reviews/meta?product_id=${productId}`, {
+  axios.get(`${urlReviews}meta?product_id=${productId}`, {
     headers: {
       Authorization: GITHUB_API_KEY,
     },
