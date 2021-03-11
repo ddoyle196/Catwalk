@@ -51,7 +51,7 @@ const ExpandedView = ({
 
   return (
     <div className="expanded-view-container">
-      <span
+      <div
         className="expanded-image-container"
         onClick={updateMagnified}
         onKeyDown={updateMagnified}
@@ -59,13 +59,14 @@ const ExpandedView = ({
         aria-label="expanded image"
         role="button"
       >
-        {magnified ? (
+        <img className="expanded-image" src={selectedImageUrl} alt="" style={{ visibility: `${magnified ? 'hidden' : 'visible'}` }} />
+        {magnified && (
           <MagnifiedView
             magnifiedStartingCoordinates={magnifiedStartingCoordinates}
             selectedImageUrl={selectedImageUrl}
           />
-        ) : (<img className="expanded-image" src={selectedImageUrl} alt="" />)}
-      </span>
+        )}
+      </div>
       <span
         className="close-expanded-view"
         onClick={updateExpandedView}

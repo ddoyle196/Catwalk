@@ -181,18 +181,19 @@ outline: none;
   left: 0;
   width: 100vw;
   height: 100vh;
+  background-color: black;
 }
 
 .expanded-image-container {
-  width: 100%;
-  height: 100%;
+  margin: auto;
+  width: fit-content;
+  height: fit-content;
+  position: relative;
+
 }
 
 .expanded-image {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  background-color: black;
+  height: 100vh;
 }
 
 .expanded-image:hover {
@@ -200,10 +201,12 @@ outline: none;
 }
 
 .magnified-image {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   background-size: 250%;
-  object-fit: scale-down;
 }
 
 .magnified-image:hover {

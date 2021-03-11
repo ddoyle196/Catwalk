@@ -19,6 +19,7 @@ class MagnifiedView extends React.Component {
   }
 
   render() {
+    console.log('INSIDE MAGNIFIED VIEW!');
     const { magnifiedStartingCoordinates, selectedImageUrl } = this.props;
     const [startingX, startingY] = magnifiedStartingCoordinates;
     const { xPosition, yPosition } = this.state;
@@ -26,7 +27,7 @@ class MagnifiedView extends React.Component {
       <div
         onMouseMove={this.updateCoordinates}
         className="magnified-image"
-        style={{ backgroundImage: `url(${selectedImageUrl})`, backgroundPositionX: `-${(xPosition || startingX) * 1.5}px`, backgroundPositionY: `-${(yPosition || startingY) * 1.75}px` }}
+        style={{ backgroundImage: `url(${selectedImageUrl})`, backgroundPositionX: `-${(xPosition || startingX) * 1.5}px`, backgroundPositionY: `-${(yPosition || startingY) * 1.5}px` }}
       />
     );
   }
