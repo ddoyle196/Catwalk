@@ -12,6 +12,7 @@ const StyleSelector = ({ styles, selectedStyle, updateSelectedStyle }) => {
     if (!colors.includes(s.name)) {
       colors.push(s.name);
       keyCount += 1;
+      const stylePhoto = s.photos[0].url;
       styleCircles.push(
         <div
           onClick={() => updateSelectedStyle(s)}
@@ -20,13 +21,13 @@ const StyleSelector = ({ styles, selectedStyle, updateSelectedStyle }) => {
           tabIndex="0"
           aria-label={`Select ${s.name} style`}
           key={keyCount}
-          className="style-circle"
-          style={{ backgroundColor: s.name }}
+          className="ov-style-circle"
         >
+          <img className="ov-style-circle-image" src={stylePhoto} alt="" />
           {s.name === selectedStyle.name && (
             <span>
-              <span className="selected-check-background" />
-              <span className="selected-check-container">
+              <span className="ov-selected-check-background" />
+              <span className="ov-selected-check-container">
                 <Icon icon={checkCircleOutline} />
               </span>
             </span>
@@ -39,14 +40,14 @@ const StyleSelector = ({ styles, selectedStyle, updateSelectedStyle }) => {
     <div>
       <p>
         <strong>
-          <span className="style-label">STYLE</span>
+          <span className="ov-style-label">STYLE</span>
           &gt;
         </strong>
-        <span className="selected-style-text">
+        <span className="ov-selected-style-text">
           {selectedStyle.name.toUpperCase()}
         </span>
       </p>
-      <div className="style-circles-container">
+      <div className="ov-style-circles-container">
         {styleCircles}
       </div>
     </div>

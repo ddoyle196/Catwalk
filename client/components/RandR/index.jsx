@@ -89,7 +89,7 @@ class RandR extends React.PureComponent {
     }
     return (
       <div className="r-box">
-        <div className="headerBlock">RATINGS & REVIEWS</div>
+        <div className="headerBlock" id="headerBlock">RATINGS & REVIEWS</div>
         <div className="histogramBlock">
           {ratings ? (
             <Histograms

@@ -38,7 +38,7 @@ $(window).on('load', () => {
         url: '/interactions',
         data: JSON.stringify(body),
         success: () => {
-          // console.log('success');
+          console.log('BODY: ', body);
         },
         contentType: 'application/json',
       });
