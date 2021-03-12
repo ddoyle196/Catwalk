@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import React from 'react';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 import ImageGallery from './imageGallery/ImageGallery';
 import SideProductInfo from './productInfo/SideProductInfo';
 import BottomProductInfo from './productInfo/BottomProductInfo';
@@ -42,7 +43,8 @@ class Overview extends React.Component {
   }
 
   componentDidMount() {
-    this.getProductAndStyles(19095);
+    const { pId } = this.props;
+    this.getProductAndStyles(pId);
   }
 
   getProductAndStyles(productId) {
@@ -290,5 +292,9 @@ class Overview extends React.Component {
     );
   }
 }
+
+Overview.propTypes = {
+  pId: PropTypes.number.isRequired,
+};
 
 export default Overview;
