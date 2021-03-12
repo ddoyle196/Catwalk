@@ -9,6 +9,7 @@ const SizeSelector = ({
   updateSelectedSize,
   updateOutOfStock,
   outOfStock,
+  displaySelectSizeMessage,
 }) => {
   const sizes = selectedStyle.skus;
   const sizeKeys = Object.keys(selectedStyle.skus);
@@ -30,26 +31,27 @@ const SizeSelector = ({
   }
 
   if (options.length === 0 && outOfStock === false) {
-    // hide the 'add to cart' button if the current style is out of stock
-    console.log('UPDATE OUT OF STOCK ACTIVATED IN SIZE SELECTOR COMPONENT');
     updateOutOfStock();
   }
 
   return (
-    <div className="size-selector-container">
-      <select
-        onChange={(e) => updateSelectedSize(e.target.value)}
-        value={selectedSize || (options.length === 0 ? 'out-of-stock' : 'select-size')}
-        className="size-selector"
-        id="size-selector"
-        disabled={options.length === 0}
-      >
-        {selectedSize === null && <option value="select-size">SELECT SIZE</option>}
-        {options.length === 0 && <option value="out-of-stock">OUT OF STOCK</option>}
-        {options}
-      </select>
-      <span className="option-arrow-icon"><Icon icon={chevronDown} /></span>
-    </div>
+    <span>
+      {displaySelectSizeMessage && <p className="ov-display-select-size-message">Please select a size!</p>}
+      <div className={displaySelectSizeMessage ? 'ov-size-selector-container select-a-size-outline' : 'ov-size-selector-container'}>
+        <select
+          onChange={(e) => updateSelectedSize(e.target.value)}
+          value={selectedSize || (options.length === 0 ? 'out-of-stock' : 'select-size')}
+          className="ov-size-selector"
+          id="size-selector"
+          disabled={options.length === 0}
+        >
+          {selectedSize === null && <option value="select-size">SELECT SIZE</option>}
+          {options.length === 0 && <option value="out-of-stock">OUT OF STOCK</option>}
+          {options}
+        </select>
+        <span className="ov-option-arrow-icon"><Icon icon={chevronDown} /></span>
+      </div>
+    </span>
   );
 };
 
@@ -68,6 +70,7 @@ SizeSelector.propTypes = {
   updateSelectedSize: PropTypes.func.isRequired,
   updateOutOfStock: PropTypes.func.isRequired,
   outOfStock: PropTypes.bool.isRequired,
+  displaySelectSizeMessage: PropTypes.bool.isRequired,
 };
 
 SizeSelector.defaultProps = {

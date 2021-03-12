@@ -12,24 +12,24 @@ const BottomProductInfo = ({ product }) => {
   const features = product.features.map((item) => {
     keyCount += 1;
     return (
-      <p key={keyCount} className="feature-text-container">
-        <span className="feature-check-icon"><InlineIcon key={keyCount} icon={check} width="1.5em" height="1.5em" /></span>
-        <span className="feature-text">{item.feature}</span>
+      <p key={keyCount} className="ov-feature-text-container">
+        <span className="ov-feature-check-icon"><InlineIcon key={keyCount} icon={check} width="1.5em" height="1.5em" /></span>
+        <span className="ov-feature-text">{item.feature}</span>
       </p>
     );
   });
   return (
-    <div className="bottom-product-info-container">
-      <div className="bottom-product-info-left-container">
-        {product.slogan && <p className="slogan"><strong>{product.slogan}</strong></p>}
-        {product.description && <p className="description">{product.description}</p>}
+    <div className="ov-bottom-product-info-container">
+      <div className="ov-bottom-product-info-left-container">
+        {product.slogan && <p className="ov-slogan"><strong>{product.slogan}</strong></p>}
+        {product.description && <p className="ov-description">{product.description}</p>}
       </div>
-      <div className="bottom-product-info-right-container">
+      <div className="ov-bottom-product-info-right-container">
         {features}
-        <div className="social-media-icon-container">
-          <span className="social-media-icon"><InlineIcon icon={facebookIcon} /></span>
-          <span className="social-media-icon"><InlineIcon icon={twitterIcon} /></span>
-          <span className="social-media-icon"><InlineIcon icon={pinterestIcon} /></span>
+        <div className="ov-social-media-icon-container">
+          <span className="ov-social-media-icon"><InlineIcon icon={facebookIcon} /></span>
+          <span className="ov-social-media-icon"><InlineIcon icon={twitterIcon} /></span>
+          <span className="ov-social-media-icon"><InlineIcon icon={pinterestIcon} /></span>
         </div>
       </div>
     </div>

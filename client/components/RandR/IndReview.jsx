@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import axios from 'axios';
@@ -17,6 +16,7 @@ class IndReview extends React.Component {
     this.state = {
       reported: false,
       helpfulness: false,
+      unhelpfulness: Math.round(Math.random(this.props.helpfulness * 2) * 10),
       showNotificationModal: false,
       notificationCode: '',
       notificationMessage: '',
@@ -26,7 +26,7 @@ class IndReview extends React.Component {
     this.handleCloseModal = this.handleCloseModal.bind(this);
     this.showPhotos = this.showPhotos.bind(this);
     this.showPhotosLarge = this.showPhotosLarge.bind(this);
-    this.AddReviewrHelpfulness = this.AddReviewHelpfulness.bind(this);
+    this.ReviewHelpfulness = this.AddReviewHelpfulness.bind(this);
     this.handleReviewReport = this.handleReviewReport.bind(this);
   }
 
@@ -54,18 +54,17 @@ class IndReview extends React.Component {
           });
         }
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
+        this.setState({
+          showNotificationModal: true,
+          notificationCode: 'error',
+          notificationMessage: 'There was an error in the server, please try later',
+        });
       });
   }
 
-  handleAnswerHelpfulness(id) {
-    axios.put(`/answers/${id}/helpful`)
-      .then((result) => {
-        if (result.status === 204) {
-          this.getAnswersFromQuestionId('refresh'); // Check
-        }
-      })
+  handleReviewHelpfulness(id) {
+    axios.put(`/reviews/${id}/helpful`)
       .catch(() => {
         this.setState({
           showNotificationModal: true,
@@ -76,10 +75,12 @@ class IndReview extends React.Component {
   }
 
   AddReviewHelpfulness() {
-    const { id, AnswerHelpfulness } = this.props;
+    const { review } = this.props;
+    console.log(review);
+    const { review_id } = review;
     const { helpfulness } = this.state;
     if (!helpfulness) {
-      AnswerHelpfulness(id);
+      this.handleReviewHelpfulness(review_id);
       this.setState({
         helpfulness: true,
       });
@@ -124,6 +125,8 @@ class IndReview extends React.Component {
   render() {
     const { Fragment } = React;
     const { review } = this.props;
+    const { helpfulness } = review;
+    const { unhelpfulness } = this.state;
 
     if (review) {
       const bodyDisplay = review.body.slice(0, 249);
@@ -131,7 +134,6 @@ class IndReview extends React.Component {
       const id = review.review_id;
       const {
         reported,
-        helpfulness,
         showNotificationModal,
         notificationCode,
         notificationMessage,
@@ -208,7 +210,7 @@ class IndReview extends React.Component {
               <div className="recommendation">
                 <Icon icon={checkCircleOutline} />
                 {' '}
-              I recommend this product
+                I recommend this product
               </div>
             ) : null}
           </div>
@@ -226,21 +228,34 @@ class IndReview extends React.Component {
               {'Helpful? '}
               <u
                 className="pointer"
-                onClick={() => this.AddAnswerHelpfulness()}
+                onClick={() => this.AddReviewHelpfulness()}
                 onKeyDown={this.handleButtonClick}
                 role="button"
                 tabIndex={0}
               >
                 Yes
-            </u>
+              </u>
               {` (${helpfulness})`}
+            </span>
+          </div>
+          <div className="rr-review-format">
+            <span>
+              <u
+                className="pointer"
+                onKeyDown={this.handleButtonClick}
+                role="button"
+                tabIndex={0}
+              >
+                No
+              </u>
+              {` (${unhelpfulness})`}
             </span>
           </div>
           <div className="rr-review-format rr-reset-format">
             <span>
               <u
                 className="pointer"
-                onClick={() => this.handleAnswerReport(id)}
+                onClick={() => this.handleReviewReport(id)}
                 onKeyDown={this.handleButtonClick}
                 role="button"
                 tabIndex={0}
@@ -249,11 +264,11 @@ class IndReview extends React.Component {
               </u>
             </span>
           </div>
+          <hr />
         </div>
       );
-    } else {
-      return null;
     }
+    return null;
   }
 }
 
