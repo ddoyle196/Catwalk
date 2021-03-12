@@ -11,7 +11,7 @@ class RandR extends React.PureComponent {
     this.state = {
       ratings: null,
       page: 1,
-      count: 10,
+      count: 50,
       reviews: null,
       sort: 'relevant',
       ratingFilter: [false, false, false, false, false],
@@ -19,6 +19,7 @@ class RandR extends React.PureComponent {
     this.updateSort = this.updateSort.bind(this);
     this.updateRatingFilter = this.updateRatingFilter.bind(this);
     this.clearRatingFilter = this.clearRatingFilter.bind(this);
+    this.updateReviews = this.updateReviews.bind(this);
   }
 
   componentDidMount() {
@@ -76,10 +77,10 @@ class RandR extends React.PureComponent {
 
   render() {
     const {
-      reviews, ratings, sort, ratingFilter,
+      reviews, ratings, sort, ratingFilter, parentRatings,
     } = this.state;
-    const { pName, productID } = this.props;
-    const { updateSort } = this;
+    const { pName, productId } = this.props;
+    const { updateReviews } = this;
     let voteCount = 0;
     if (ratings) {
       for (const key in ratings.ratings) {
@@ -108,7 +109,9 @@ class RandR extends React.PureComponent {
               updateSort={this.updateSort}
               ratingFilter={ratingFilter}
               pName={pName}
-              product_id={productID}
+              product_id={productId}
+              parentRatings={ratings}
+              updateReviews={updateReviews}
             />
           ) : null}
         </div>

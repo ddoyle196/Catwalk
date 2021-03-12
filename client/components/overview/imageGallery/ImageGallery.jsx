@@ -1,10 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Icon } from '@iconify/react';
-import arrowRight from '@iconify-icons/mdi/arrow-right';
-import arrowLeft from '@iconify-icons/mdi/arrow-left';
 import chevronUp from '@iconify-icons/mdi/chevron-up';
 import chevronDown from '@iconify-icons/mdi/chevron-down';
+import arrowExpandAll from '@iconify-icons/mdi/arrow-expand-all';
+import arrowLeftBoldOutline from '@iconify-icons/mdi/arrow-left-bold-outline';
+import arrowRightBoldOutline from '@iconify-icons/mdi/arrow-right-bold-outline';
+import ExpandedView from './ExpandedView';
 
 const ImageGallery = ({
   styles,
@@ -13,6 +15,11 @@ const ImageGallery = ({
   updateSelectedImageId,
   displayedThumbnailSection,
   updateDisplayedThumbnailSection,
+  expandedView,
+  updateExpandedView,
+  magnified,
+  updateMagnified,
+  magnifiedStartingCoordinates,
 }) => {
   const photos = [];
   for (let i = 0; i < styles.length; i += 1) {
@@ -23,9 +30,9 @@ const ImageGallery = ({
       image: style.photos[0].url,
     });
   }
-  let previousImageId = '';
-  let selectedImageUrl = '';
-  let nextImageId = '';
+  let previousImageId = -1;
+  let selectedImageUrl;
+  let nextImageId = -1;
 
   if (selectedImageId !== null) {
     for (let i = 0; i < photos.length; i += 1) {
@@ -62,12 +69,13 @@ const ImageGallery = ({
   }
 
   let thumbnails = [];
-  let highlightedThumbnailCount = 0;
 
+  let keyCount = 0;
   photos.forEach((photo) => {
     if (selectedImageId !== null) {
       thumbnails.push(
         <span
+          key={keyCount += 1}
           className={selectedImageId === photo.id ? 'thumbnail underlined' : 'thumbnail'}
           onClick={() => updateSelectedImageId(photo.id)}
           onKeyDown={() => updateSelectedImageId(photo.id)}
@@ -78,10 +86,10 @@ const ImageGallery = ({
           <img className="thumbnail-image" src={photo.thumbnail} alt="" />
         </span>,
       );
-      highlightedThumbnailCount += 1;
     } else {
       thumbnails.push(
         <span
+          key={keyCount += 1}
           className={selectedStyle.style_id === photo.id ? 'thumbnail underlined' : 'thumbnail'}
           onClick={() => updateSelectedImageId(photo.id)}
           onKeyDown={() => updateSelectedImageId(photo.id)}
@@ -92,45 +100,94 @@ const ImageGallery = ({
           <img className="thumbnail-image" src={photo.thumbnail} alt="" />
         </span>,
       );
-      highlightedThumbnailCount += 1;
     }
   });
 
-  // TO DO -- CONTINUE WORKING HERE ON THE THUMBNAIL ARROW FUNCTIONALITY
-  // console.log('HIGHLIGHTED THUMBNAILS: ', highlightedThumbnailCount);
-  // const thumbnailSection = Math.floor(highlightedThumbnailCount / 4);
-  // console.log('thumbnail section: ', thumbnailSection);
-  // const first = thumbnailSection * 3;
-  // const last = (thumbnailSection + 1) * 3;
-  // thumbnails = thumbnails.slice(first, last);
+  let highlightedThumbnailPosition = 0;
+
+  if (displayedThumbnailSection === null) {
+    if (selectedImageId !== null) {
+      for (let i = 0; i < photos.length; i += 1) {
+        const photo = photos[i];
+        if (photo.id === selectedImageId) {
+          highlightedThumbnailPosition += (i + 1);
+          break;
+        }
+      }
+    } else {
+      for (let i = 0; i < photos.length; i += 1) {
+        const photo = photos[i];
+        if (photo.id === selectedStyle.style_id) {
+          highlightedThumbnailPosition += (i + 1);
+          break;
+        }
+      }
+    }
+  }
+
+  let thumbnailSection;
+  if (displayedThumbnailSection === null) {
+    thumbnailSection = Math.floor(highlightedThumbnailPosition / 8);
+  } else {
+    thumbnailSection = displayedThumbnailSection;
+  }
+  const first = thumbnailSection * 7;
+  const last = (thumbnailSection + 1) * 7;
+  thumbnails = thumbnails.slice(first, last);
 
   return (
     <div className="image-gallery-container">
-      <img className="image-gallery-large-image" src={selectedImageUrl} alt="" />
+      {expandedView && (
+        <ExpandedView
+          selectedImageUrl={selectedImageUrl}
+          updateExpandedView={updateExpandedView}
+          previousImageId={previousImageId}
+          nextImageId={nextImageId}
+          updateSelectedImageId={updateSelectedImageId}
+          photos={photos}
+          magnified={magnified}
+          updateMagnified={updateMagnified}
+          magnifiedStartingCoordinates={magnifiedStartingCoordinates}
+        />
+      )}
+      <span
+        className="image-gallery-large-image-container"
+        onClick={updateExpandedView}
+        onKeyDown={updateExpandedView}
+        aria-label="open expanded view"
+        tabIndex="0"
+        role="button"
+      >
+        <img className="image-gallery-large-image" src={selectedImageUrl} alt="" />
+      </span>
       <div className="thumbnail-container">
-        <span
-          className="image-gallery-chevron-up"
-          onClick={() => updateDisplayedThumbnailSection(thumbnailSection - 1)}
-          onKeyDown={() => updateDisplayedThumbnailSection(thumbnailSection - 1)}
-          tabIndex="0"
-          aria-label="thumbnail"
-          role="button"
-        >
-          <Icon icon={chevronUp} />
-        </span>
+        {thumbnailSection > 0 && (
+          <span
+            className="image-gallery-chevron-up"
+            onClick={() => updateDisplayedThumbnailSection(thumbnailSection - 1)}
+            onKeyDown={() => updateDisplayedThumbnailSection(thumbnailSection - 1)}
+            tabIndex="0"
+            aria-label="thumbnail"
+            role="button"
+          >
+            <Icon icon={chevronUp} />
+          </span>
+        )}
         {thumbnails}
-        <span
-          className="image-gallery-chevron-down"
-          onClick={() => updateDisplayedThumbnailSection(thumbnailSection + 1)}
-          onKeyDown={() => updateDisplayedThumbnailSection(thumbnailSection + 1)}
-          tabIndex="0"
-          aria-label="thumbnail"
-          role="button"
-        >
-          <Icon icon={chevronDown} />
-        </span>
+        {(photos.length - (thumbnailSection + 1) * 7) > 0 && (
+          <span
+            className="image-gallery-chevron-down"
+            onClick={() => updateDisplayedThumbnailSection(thumbnailSection + 1)}
+            onKeyDown={() => updateDisplayedThumbnailSection(thumbnailSection + 1)}
+            tabIndex="0"
+            aria-label="thumbnail"
+            role="button"
+          >
+            <Icon icon={chevronDown} />
+          </span>
+        )}
       </div>
-      {previousImageId !== '' && (
+      {previousImageId !== -1 && (
         <span
           className="image-gallery-left-arrow"
           onClick={() => updateSelectedImageId(previousImageId)}
@@ -139,10 +196,10 @@ const ImageGallery = ({
           aria-label="previous image"
           role="button"
         >
-          <Icon icon={arrowLeft} />
+          <Icon icon={arrowLeftBoldOutline} />
         </span>
       )}
-      {nextImageId !== '' && (
+      {nextImageId !== -1 && (
         <span
           className="image-gallery-right-arrow"
           onClick={() => updateSelectedImageId(nextImageId)}
@@ -151,9 +208,10 @@ const ImageGallery = ({
           aria-label="next image"
           role="button"
         >
-          <Icon icon={arrowRight} />
+          <Icon icon={arrowRightBoldOutline} />
         </span>
       )}
+      {/* <span className="image-gallery-expand-all"><Icon icon={arrowExpandAll} /></span> */}
     </div>
   );
 };
@@ -174,11 +232,17 @@ ImageGallery.propTypes = {
   selectedImageId: PropTypes.number,
   displayedThumbnailSection: PropTypes.number,
   updateDisplayedThumbnailSection: PropTypes.func.isRequired,
+  expandedView: PropTypes.bool.isRequired,
+  updateExpandedView: PropTypes.func.isRequired,
+  magnified: PropTypes.bool.isRequired,
+  updateMagnified: PropTypes.func.isRequired,
+  magnifiedStartingCoordinates: PropTypes.arrayOf(PropTypes.number),
 };
 
 ImageGallery.defaultProps = {
   selectedImageId: null,
   displayedThumbnailSection: null,
+  magnifiedStartingCoordinates: [],
 };
 
 export default ImageGallery;
