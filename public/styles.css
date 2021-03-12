@@ -645,12 +645,13 @@ margin: 2% auto;
 
 .rp-box .rp-single-box .rp-image-box .rp-button-right {
   position: absolute;
-  left: 79%;
+  left: 78%;
   top: 45%;
   z-index: 0;
   color: white;
   background-color: rgba(0, 0, 0, 0.2);;
   border: none;
+  transform: rotateY(180deg)
 }
 
 .rp-box .rp-single-box .rp-product-details {
@@ -766,7 +767,7 @@ margin-bottom: 3%;
 }
 
 .qa-box .qa-question-scroll {
-height: 650px;
+max-height: 650px;
 overflow: auto;
 }
 
