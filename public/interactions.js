@@ -5,7 +5,12 @@ $(window).on('load', () => {
   $(document).on('click', (e) => {
     const { target } = e;
     const { className } = target;
-    const classDecript = className.split(/[\s-]+/).filter((element) => element !== 'pointer' && element !== '');
+    let classDecript;
+    if (typeof className !== 'object') {
+      classDecript = className.split(/[\s-]+/).filter((element) => element !== 'pointer' && element !== '');
+    } else {
+      classDecript = className.animVal.split(/[\s-]+/).filter((element) => element !== 'pointer' && element !== '');
+    }
     if (classDecript.length !== 0) {
       let widget = classDecript[0];
       const element = classDecript.filter((elm) => elm !== widget).join(' ');
