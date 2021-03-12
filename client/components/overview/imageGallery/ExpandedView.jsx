@@ -11,6 +11,8 @@ const ExpandedView = ({
   updateExpandedView,
   nextImageId,
   previousImageId,
+  selectedImageId,
+  selectedStyleId,
   updateSelectedImageId,
   photos,
   magnified,
@@ -20,38 +22,53 @@ const ExpandedView = ({
   const thumbnailIcons = [];
   let keyCount = 0;
   photos.forEach((photo) => {
-    thumbnailIcons.push(
-      <span
-        key={keyCount += 1}
-        onClick={() => updateSelectedImageId(photo.id)}
-        onKeyDown={() => updateSelectedImageId(photo.id)}
-        aria-label="expanded view thumbnail icon"
-        tabIndex="0"
-        role="button"
-        className={photo.image === selectedImageUrl ? 'thumbnail-icon-highlighted' : 'thumbnail-icon'}
-      />,
-    );
+    if (selectedImageId !== null) {
+      thumbnailIcons.push(
+        <span
+          key={keyCount += 1}
+          onClick={() => updateSelectedImageId(photo.image_id)}
+          onKeyDown={() => updateSelectedImageId(photo.image_id)}
+          aria-label="expanded view thumbnail icon"
+          tabIndex="0"
+          role="button"
+          className={photo.image_id === selectedImageId ? 'ov-thumbnail-icon-highlighted' : 'ov-thumbnail-icon'}
+        />,
+      );
+    } else {
+      thumbnailIcons.push(
+        <span
+          key={keyCount += 1}
+          onClick={() => updateSelectedImageId(photo.image_id)}
+          onKeyDown={() => updateSelectedImageId(photo.image_id)}
+          aria-label="expanded view thumbnail icon"
+          tabIndex="0"
+          role="button"
+          className={photo.style_id === selectedStyleId ? 'ov-thumbnail-icon-highlighted' : 'ov-thumbnail-icon'}
+        />,
+      );
+    }
   });
 
   return (
-    <div className="expanded-view-container">
-      <span
-        className="expanded-image-container"
+    <div className="ov-expanded-view-container">
+      <div
+        className="ov-expanded-image-container"
         onClick={updateMagnified}
         onKeyDown={updateMagnified}
         tabIndex="0"
         aria-label="expanded image"
         role="button"
       >
-        {magnified ? (
+        <img className="ov-expanded-image" src={selectedImageUrl} alt="" style={{ visibility: `${magnified ? 'hidden' : 'visible'}` }} />
+        {magnified && (
           <MagnifiedView
             magnifiedStartingCoordinates={magnifiedStartingCoordinates}
             selectedImageUrl={selectedImageUrl}
           />
-        ) : (<img className="expanded-image" src={selectedImageUrl} alt="" />)}
-      </span>
+        )}
+      </div>
       <span
-        className="close-expanded-view"
+        className="ov-close-expanded-view"
         onClick={updateExpandedView}
         onKeyDown={updateExpandedView}
         aria-label="close expanded view"
@@ -62,7 +79,7 @@ const ExpandedView = ({
       </span>
       {(previousImageId !== -1 && !magnified) && (
         <span
-          className="expanded-view-left-arrow"
+          className="ov-expanded-view-left-arrow"
           onClick={() => updateSelectedImageId(previousImageId)}
           onKeyDown={() => updateSelectedImageId(previousImageId)}
           tabIndex="0"
@@ -74,7 +91,7 @@ const ExpandedView = ({
       )}
       {(nextImageId !== -1 && !magnified) && (
         <span
-          className="expanded-view-right-arrow"
+          className="ov-expanded-view-right-arrow"
           onClick={() => updateSelectedImageId(nextImageId)}
           onKeyDown={() => updateSelectedImageId(nextImageId)}
           tabIndex="0"
@@ -86,7 +103,7 @@ const ExpandedView = ({
       )}
       {!magnified && (
         <div
-          className="expanded-view-thumbnail-icon-container"
+          className="ov-expanded-view-thumbnail-icon-container"
         >
           {thumbnailIcons}
         </div>
@@ -100,15 +117,18 @@ ExpandedView.propTypes = {
   updateExpandedView: PropTypes.func.isRequired,
   nextImageId: PropTypes.number.isRequired,
   previousImageId: PropTypes.number.isRequired,
+  selectedImageId: PropTypes.number,
   updateSelectedImageId: PropTypes.func.isRequired,
   photos: PropTypes.arrayOf(PropTypes.object).isRequired,
   magnified: PropTypes.bool.isRequired,
   updateMagnified: PropTypes.func.isRequired,
   magnifiedStartingCoordinates: PropTypes.arrayOf(PropTypes.number),
+  selectedStyleId: PropTypes.number.isRequired,
 };
 
 ExpandedView.defaultProps = {
   magnifiedStartingCoordinates: [],
+  selectedImageId: null,
 };
 
 export default ExpandedView;

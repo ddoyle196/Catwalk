@@ -1,14 +1,20 @@
+/* eslint-disable camelcase */
 import React from 'react';
+import PropTypes from 'prop-types';
 import Modal from '../shared/Modal';
+import StarRating from '../overview/productInfo/StarRating';
+import CardThumbnail from './CardThumbnails';
 
 const ProductCard = class extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
       showComparisonModal: false,
-      thumbnailImageIndex: 1,
     };
     this.handleCloseModal = this.handleCloseModal.bind(this);
+    this.processProductStyles = this.processProductStyles.bind(this);
+    this.processProductComparison = this.processProductComparison.bind(this);
+    this.showComparisonModal = this.showComparisonModal.bind(this);
   }
 
   handleCloseModal(modalType) {
@@ -19,88 +25,146 @@ const ProductCard = class extends React.PureComponent {
     }
   }
 
-  handleThumbnailImage(index) {
-    const { thumbnailImageIndex } = this.state;
-    let newIndex = thumbnailImageIndex + index;
-    if (newIndex > 4) {
-      newIndex = 1;
+  showComparisonModal(modalType) {
+    if (modalType === 'comparison') {
+      this.setState({
+        showComparisonModal: true,
+      });
     }
-    if (newIndex < 1) {
-      newIndex = 4;
-    }
-    this.setState({
-      thumbnailImageIndex: newIndex,
-    });
   }
 
+  processProductStyles() {
+    const { thumbnailImages } = this.props;
+    return (
+      <CardThumbnail
+        thumbnailUrl={thumbnailImages}
+        openModal={() => this.showComparisonModal('comparison')}
+      />
+    );
+  }
+
+  processProductComparison() {
+    const {
+      parentProductFeatures, productFeatures, parentProductName, name,
+    } = this.props;
+    const mergeData = (arr1, arr2) => {
+      let getRelated = [];
+      getRelated = arr1.map((obj) => {
+        const index = arr2.findIndex((el) => el.feature === obj.feature);
+        const toMergeStyle = index !== -1 ? { value1: arr2[index].value } : {};
+        return {
+          ...obj,
+          ...toMergeStyle,
+        };
+      });
+      arr2.map((obj) => {
+        const index = arr1.findIndex((el) => el.feature === obj.feature);
+        return index !== -1 ? {} : getRelated.push({ feature: obj.feature, value1: obj.value });
+      });
+      return getRelated;
+    };
+
+    const productComparison = mergeData(parentProductFeatures, productFeatures);
+
+    return (
+      <div className="rp-comparing-modal">
+        <div>
+          <span className="rp-comparing-title">COMPARING</span>
+        </div>
+        <table className="rp-comparing-table">
+          <thead className="rp-table-head">
+            <tr>
+              <th>{ parentProductName }</th>
+              <th>{' '}</th>
+              <th>{ name }</th>
+            </tr>
+          </thead>
+          <tbody className="rp-table-body">
+            {productComparison.map((feature) => (
+              <tr key={feature.feature}>
+                <td className="rp-parent-product-value">{feature.value === null || feature.value === undefined ? '' : String.fromCharCode(10003)}</td>
+                <td className="rp-product-feature">{feature.feature}</td>
+                <td className="rp-product-value">{feature.value1 === null || feature.value1 === undefined ? '' : String.fromCharCode(10003)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    );
+  }
+  // &#10003;
+
   render() {
-    const { showComparisonModal, thumbnailImageIndex } = this.state;
+    const { showComparisonModal } = this.state;
+    const {
+      productId,
+      name,
+      category,
+      ratings,
+      price,
+      salePrice,
+    } = this.props;
     return (
       <div className="rp-single-box">
         <Modal
           showModal={showComparisonModal}
           handleCloseModal={this.handleCloseModal}
           handleSubmit={() => {}}
-          modalType="comparison"
+          modalType="product-comparison"
           modalCode=""
         >
-          <span className="">HI</span>
+          {this.processProductComparison()}
         </Modal>
-        <div className="rp-image-box">
-          <span className="rp-starred">S</span>
-          <img
-            className={`rp-product-thumbnail ${thumbnailImageIndex === 1 ? '' : 'no-display'}`}
-            src="https://cdn.mos.cms.futurecdn.net/otjbibjaAbiifyN9uVaZyL.jpg"
-            alt="cat"
-          />
-          <img
-            className={`rp-product-thumbnail ${thumbnailImageIndex === 2 ? '' : 'no-display'}`}
-            src="https://i.guim.co.uk/img/media/20098ae982d6b3ba4d70ede3ef9b8f79ab1205ce/0_0_969_581/master/969.jpg?width=1200&height=900&quality=85&auto=format&fit=crop&s=a368f449b1cc1f37412c07a1bd901fb5"
-            alt="cat"
-          />
-          <img
-            className={`rp-product-thumbnail ${thumbnailImageIndex === 3 ? '' : 'no-display'}`}
-            src="https://woodgreen.org.uk/image/image/image/V8Iw3SL87ubcIekoP1DmmhekPFXPNbBL5yB4JpVR.jpeg?w=800&h=422&fit=crop-center"
-            alt="cat"
-          />
-          <img
-            className={`rp-product-thumbnail ${thumbnailImageIndex === 4 ? '' : 'no-display'}`}
-            src="https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/gettyimages-937042456-1580320856.jpg?crop=0.670xw:1.00xh;0.106xw,0&resize=480:*"
-            alt="cat"
-          />
-          <button
-            className="rp-button-left"
-            onClick={() => this.handleThumbnailImage(-1)}
-            type="button"
-          >
-            &#10094;
-          </button>
-          <button
-            className="rp-button-right"
-            onClick={() => this.handleThumbnailImage(1)}
-            type="button"
-          >
-            &#10095;
-          </button>
-        </div>
+        {this.processProductStyles()}
         <div className="rp-product-details">
           <div className="rp-product-category">
-            <span>CATEGORY</span>
+            <span>{category}</span>
           </div>
           <div className="rp-product-name">
-            <span>Product Name too long to fit in one line</span>
+            <span>{name}</span>
           </div>
           <div className="rp-product-price">
-            <span className="rp-regular-price line-through">$100</span>
-            <span className="rp-sale-price red-colored">$99.99</span>
+            <span className={`rp-regular-price ${salePrice === 0 ? '' : 'line-through'}`}>{`$${price}`}</span>
+            <span className={`rp-sale-price red-colored ${salePrice === 0 ? 'no-display' : ''}`}>{`$${salePrice}`}</span>
           </div>
           <div className="rp-product-rating">
-            <span>RATING</span>
+            <StarRating ratings={ratings} />
           </div>
         </div>
       </div>
     );
   }
+};
+
+ProductCard.propTypes = {
+  productId: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+  ratings: PropTypes.shape({
+    1: PropTypes.string,
+    2: PropTypes.string,
+    3: PropTypes.string,
+    4: PropTypes.string,
+    5: PropTypes.string,
+  }).isRequired,
+  price: PropTypes.number.isRequired,
+  category: PropTypes.string.isRequired,
+  salePrice: PropTypes.number.isRequired,
+  thumbnailImages: PropTypes.arrayOf(
+    PropTypes.string.isRequired,
+  ).isRequired,
+  parentProductFeatures: PropTypes.arrayOf(
+    PropTypes.shape({
+      feature: PropTypes.string.isRequired,
+      value: PropTypes.string.isRequired,
+    }).isRequired,
+  ).isRequired,
+  productFeatures: PropTypes.arrayOf(
+    PropTypes.shape({
+      feature: PropTypes.string.isRequired,
+      value: PropTypes.string,
+    }).isRequired,
+  ).isRequired,
+  parentProductName: PropTypes.string.isRequired,
 };
 
 export default ProductCard;

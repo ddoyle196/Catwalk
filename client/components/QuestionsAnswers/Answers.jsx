@@ -26,7 +26,7 @@ const Answers = class extends React.PureComponent {
   }
 
   handleAnswerReport(id) {
-    axios.put(`/answerss/${id}/report`)
+    axios.put(`/answers/${id}/report`)
       .then((result) => {
         if (result.status === 204) {
           this.setState({
