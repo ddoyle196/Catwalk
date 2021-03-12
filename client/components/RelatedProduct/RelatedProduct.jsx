@@ -57,36 +57,41 @@ const RelatedProduct = class extends React.PureComponent {
     const { relatedProducts, parentProductFeatures, parentProductName } = this.state;
     return (
       <div className="rp-box">
-        <span className="rp-box-title">RELATED PRODUCTS</span>
-        <div className="rp-scroll-horizontal">
-          {this.handleNoRelatedProducts()}
-          {relatedProducts.map((singleRelatedProduct) => {
-            const {
-              id, name, ratings, default_price, category, results, features,
-            } = singleRelatedProduct;
-            const getDefault = results
-              .filter((singleStyle) => !!singleStyle['default?'])[0];
-            const newDefault = getDefault === undefined ? results[0] : getDefault;
-            const getThumbnailImages = newDefault
-              .photos.map((thumbnails) => (thumbnails.thumbnail_url));
-            const newThumbnailImage = getThumbnailImages[0] === null ? ['https://www.publicdomainpictures.net/pictures/280000/velka/not-found-image-15383864787lu.jpg'] : getThumbnailImages;
-            const { sale_price } = newDefault;
-            return (
-              <ProductCard
-                key={id}
-                productId={id}
-                name={name}
-                ratings={ratings}
-                price={Number(default_price)}
-                category={category}
-                thumbnailImages={newThumbnailImage}
-                salePrice={Number(sale_price)}
-                parentProductFeatures={parentProductFeatures}
-                parentProductName={parentProductName}
-                productFeatures={features}
-              />
-            );
-          })}
+        <div className="rp-list">
+          <span className="rp-box-title">RELATED PRODUCTS</span>
+          <div className="rp-scroll-horizontal">
+            {this.handleNoRelatedProducts()}
+            {relatedProducts.map((singleRelatedProduct) => {
+              const {
+                id, name, ratings, default_price, category, results, features,
+              } = singleRelatedProduct;
+              const getDefault = results
+                .filter((singleStyle) => !!singleStyle['default?'])[0];
+              const newDefault = getDefault === undefined ? results[0] : getDefault;
+              const getThumbnailImages = newDefault
+                .photos.map((thumbnails) => (thumbnails.thumbnail_url));
+              const newThumbnailImage = getThumbnailImages[0] === null ? ['https://www.publicdomainpictures.net/pictures/280000/velka/not-found-image-15383864787lu.jpg'] : getThumbnailImages;
+              const { sale_price } = newDefault;
+              return (
+                <ProductCard
+                  key={id}
+                  productId={id}
+                  name={name}
+                  ratings={ratings}
+                  price={Number(default_price)}
+                  category={category}
+                  thumbnailImages={newThumbnailImage}
+                  salePrice={Number(sale_price)}
+                  parentProductFeatures={parentProductFeatures}
+                  parentProductName={parentProductName}
+                  productFeatures={features}
+                />
+              );
+            })}
+          </div>
+        </div>
+        <div className="rp-ourfit">
+          <span className="rp-box-title">YOUR OUTFIT</span>
         </div>
       </div>
     );

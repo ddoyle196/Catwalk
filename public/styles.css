@@ -496,7 +496,7 @@ width: 100%;
 /******* RELATED PRODUCTS ********/
 .rp-box {
 width: 80%;
-margin: auto;
+margin: 2% auto;
 }
 
 .rp-scroll-horizontal {
@@ -624,6 +624,10 @@ margin: auto;
 
 .rp-comparison-box .rp-modal-content .rp-comparing-modal .rp-comparing-title {
   font-size: 14px;
+}
+
+.rp-comparison-box .rp-modal-content .rp-comparing-modal .rp-comparing-table {
+  margin: auto;
 }
 
 .rp-comparison-box .rp-modal-content .rp-comparing-modal .rp-comparing-table .rp-table-body .rp-parent-product-value{
