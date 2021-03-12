@@ -26,7 +26,7 @@ const RelatedProduct = class extends React.PureComponent {
     const { relatedProducts } = this.state;
     if (relatedProducts.length === 0) {
       return (
-        <span className="no-related-products">There are related products</span>
+        <span className="no-related-products">There are NO related products</span>
       );
     }
     return null;

@@ -4,15 +4,15 @@ import Overview from './overview/Overview';
 import QuestionsAnswers from './QuestionsAnswers/QuestionsAnswers';
 import RelatedProduct from './RelatedProduct/RelatedProduct';
 // import Config from '../../config.js';
-const pId = 19095;
+const pId = 19092;
 const pName = 'Alberto Romper';
 
 const App = () => (
   <div>
-    {/* <Overview /> */}
+    <Overview pId={pId} />
     <RelatedProduct pId={pId} />
-    {/* <QuestionsAnswers pId={pId} pName={pName} />
-    <RandR productId={pId} pName={pName} /> */}
+    <QuestionsAnswers pId={pId} pName={pName} />
+    <RandR productId={pId} pName={pName} />
   </div>
 );
 

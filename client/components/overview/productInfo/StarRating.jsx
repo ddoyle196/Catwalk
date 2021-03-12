@@ -43,7 +43,7 @@ const StarRating = ({ ratings }) => {
   }
 
   return (
-    <div className="star-rating-container">
+    <div className="ov-star-rating-container">
       {stars}
     </div>
   );

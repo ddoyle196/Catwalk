@@ -15,12 +15,6 @@ const urlProduct = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe/products
 app.use(express.static(path.join(__dirname, '../public')));
 app.use(express.json());
 
-app.get('/test', (req, res) => {
-  // eslint-disable-next-line no-console
-  console.log('GET');
-  res.send('Howdy!');
-});
-
 app.get('/questions', (req, res) => {
   axios.get(`${urlQuestions}?product_id=${req.query.product_id}&page=${req.query.page || 1}&count=${req.query.count || 4}`, {
     headers: {
@@ -246,21 +240,18 @@ app.get('/reviews', (req, res) => {
 
 app.post('/reviews', (req, res) => {
   // eslint-disable-next-line no-console
-  const params = (req.query);
-  console.log(params);
-  // axios.put(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe/reviews?page=${params.page}&count=${params.count}&sort=${params.sort}&product_id=${params.productId}`, {
-  //   headers: {
-  //     Authorization: GITHUB_API_KEY,
-  //   },
-  res.status(201).send('Received');
+  axios.post(`${urlReviews}`, req.body, {
+    headers: {
+      Authorization: GITHUB_API_KEY,
+    },
+  })
+    .then((response) => {
+      res.status(response.status).send('Created');
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 });
-// .then((response) => {
-//   res.json(response.data);
-// })
-// .catch((err) => {
-//   console.log(err);
-// });
-// });
 
 app.put('/reviews/:id/helpful', (req, res) => {
   axios.put(`${urlReviews + req.params.id}/helpful`, '', {
@@ -320,6 +311,36 @@ app.get('/metadata/:id', (req, res) => {
     })
     .catch((err) => {
       console.log(err);
+    });
+});
+
+// POST ITEM TO CART
+app.post('/cart', (req, res) => {
+  axios.post('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe/cart', req.body, {
+    headers: {
+      Authorization: GITHUB_API_KEY,
+    },
+  })
+    .then(() => {
+      res.status(201).send('Created');
+    })
+    .catch(() => {
+      res.status(404).send('Invalid');
+    });
+});
+
+// GET CART
+app.get('/cart', (req, res) => {
+  axios.get('https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe/cart', {
+    headers: {
+      Authorization: GITHUB_API_KEY,
+    },
+  })
+    .then((response) => {
+      res.status(200).send(response.data);
+    })
+    .catch(() => {
+      res.sendStatus(404);
     });
 });
 

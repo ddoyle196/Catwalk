@@ -39,16 +39,16 @@ const QuantitySelector = ({
   }
 
   return (
-    <div className="quantity-selector-container">
+    <div className="ov-quantity-selector-container">
       <select
         onChange={(e) => updateSelectedQuantity(e.target.value)}
         value={selectedQuantity || (selectedSize !== null ? '1' : 'none')}
-        className="quantity-selector"
+        className="ov-quantity-selector"
       >
         {selectedSize === null && <option value="none">-</option>}
         {options}
       </select>
-      <span className="option-arrow-icon"><Icon icon={chevronDown} /></span>
+      <span className="ov-option-arrow-icon"><Icon icon={chevronDown} /></span>
     </div>
   );
 };
