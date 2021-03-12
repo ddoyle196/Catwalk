@@ -168,6 +168,7 @@ class Reviews extends React.Component {
     const {
       newReview, photos, reviewWithPhoto, characteristics,
     } = this.state;
+    const { updateReviews } = this.props;
     const photoArray = Object.values(photos).filter((photo) => photo !== '');
     const validatePhotos = photoArray.map((photo) => handleUrlValidation(photo));
 
@@ -200,7 +201,6 @@ class Reviews extends React.Component {
       axios.post('/reviews', newPhotoReview)
         .then((result) => {
           if (result.status === 201) {
-            console.log('Review created');
             this.setState({
               showReviewModal: false,
               showNotificationModal: true,
@@ -236,6 +236,9 @@ class Reviews extends React.Component {
               },
             });
           }
+        })
+        .then(() => {
+          updateReviews();
         });
     } else {
       validateReview.photo = !validatePhotos.includes(false);

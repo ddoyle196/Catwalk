@@ -1165,7 +1165,9 @@ white-space: pre;
 .qualityBar.spacer{
 display: inline-block;
 width: 1%;
-background-color: white;
+background-color: transparent;
+height: 6px;
+vertical-align: top;
 }
 
 .rr-review-format {
@@ -1352,7 +1354,7 @@ vertical-align: middle;
 
   .rr-modal-submit .rr-modal-content .rr-modal-form .rr-modal-characteristics .rr-radio-group .rr-choice-holder{
     display: inline-block;
-    padding: 0% 3%;
+    padding: 0% 1%;
     }
 
   .rr-modal-submit .rr-modal-content .rr-modal-form .rr-modal-characteristics .rr-radio-group{
